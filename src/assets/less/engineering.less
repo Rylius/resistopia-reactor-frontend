@@ -1,0 +1,59 @@
+@import "stylesheet";
+
+@text-color: #ebebeb;
+
+@nav-item-color: @text-color;
+@nav-item-background: darken(@display-background, 10%);
+
+@nav-item-active-color: @text-color;
+@nav-item-active-background: lighten(@display-background, 10%);
+
+html {
+    background: url(/static/img/grunge_overlay.png) repeat, @display-background;
+    background-blend-mode: multiply;
+}
+
+.content {
+    padding: 20px;
+
+    background: @display-background;
+
+    color: @text-color;
+}
+
+nav {
+    padding: 5px;
+
+    .warning-strip;
+
+    .nav-item-wrapper {
+        padding: 2px;
+
+        &, &:focus {
+            outline: none;
+        }
+    }
+
+    .nav-item {
+        display: block;
+
+        padding: 10px;
+
+        border-radius: 6px;
+
+        color: @nav-item-color;
+        background-color: @nav-item-background;
+
+        text-decoration: none;
+        text-align: center;
+
+        &, &:focus {
+            outline: none;
+        }
+
+        &.router-link-exact-active {
+            color: @nav-item-active-color;
+            background-color: @nav-item-active-background;
+        }
+    }
+}
