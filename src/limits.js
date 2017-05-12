@@ -30,4 +30,24 @@ export default {
             ],
         },
     },
+    input: {
+        'storage-matter': {
+            releasedMatterPerTick: {
+                min: 0,
+                max: 250,
+            },
+        },
+        'storage-antimatter': {
+            releasedAntimatterPerTick: {
+                min: 0,
+                max: 250,
+            },
+        },
+        'reactor-cooling': {
+            cooling: {
+                min: 0,
+                max: 500,
+            },
+        },
+    },
 };
