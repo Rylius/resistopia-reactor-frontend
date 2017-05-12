@@ -8,7 +8,7 @@
                         <span v-if="state.reactor.shutdownRemaining">offline</span>
                     </div>
                     <div class="block" style="width: 50%;">
-                        <seven-segment-display :value="values['reactor'].heat.data + '°C'"
+                        <seven-segment-display :value="Math.round(values['reactor'].heat.data) + '°C'"
                                                :color="values['reactor'].heat.color"
                                                :digits="6" :decimals="0"></seven-segment-display>
                     </div>
@@ -24,7 +24,7 @@
                         <span v-if="state.distributor.shutdownRemaining">offline</span>
                     </div>
                     <div class="block" style="width: 50%;">
-                        <seven-segment-display :value="values['distributor'].heat.data + '°C'"
+                        <seven-segment-display :value="Math.round(values['distributor'].heat.data) + '°C'"
                                                :color="values['distributor'].heat.color"
                                                :digits="6" :decimals="0"></seven-segment-display>
                     </div>
