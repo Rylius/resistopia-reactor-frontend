@@ -38,6 +38,21 @@
             <div class="block" style="width: 20%;">
                 <div class="block-group">
                     <div class="block" style="width: 30%;">
+                        cooling
+                    </div>
+                    <div class="block" style="width: 60%;">
+                        <seven-segment-display
+                            :value="values['reactor-cooling'].powerConsumed.data"
+                            :color="values['reactor-cooling'].powerSatisfaction.color"
+                            :digits="4" :decimals="1"></seven-segment-display>
+                    </div>
+                    <div class="block" style="width: 10%;">
+                        kWh
+                    </div>
+                </div>
+
+                <div class="block-group">
+                    <div class="block" style="width: 30%;">
                         core
                     </div>
                     <div class="block" style="width: 60%;">
@@ -92,7 +107,7 @@
 
             <div class="block block-group" style="width: 25%;">
                 <div class="block">
-                    cooling: {{ Math.round(state['reactor-cooling'].cooling) }}
+                    cooling: {{ Math.round(state['reactor-cooling'].effectiveCooling) }}/{{ Math.round(state['reactor-cooling'].cooling) }}
                     <slider :vertical="false"
                             :value="rangeToNormalized(state['reactor-cooling'].cooling, 0, 1)"
                             @update="value => state['reactor-cooling'].cooling = normalizedToRange(value, limits.input['reactor-cooling'].cooling.min, limits.input['reactor-cooling'].cooling.max)"></slider>

@@ -8,6 +8,14 @@ export default {
                 {from: 1000, to: Infinity, id: 'critical', color: 'red'},
             ],
         },
+        'reactor-cooling': {
+            powerConsumed: [],
+            powerSatisfaction: [
+                {from: -Infinity, to: 0.25, id: 'critical', color: 'red'},
+                {from: 0.25, to: 0.75, id: 'warning', color: 'orange'},
+                {from: 0.75, to: Infinity, id: 'normal', color: 'green'},
+            ],
+        },
         distributor: {
             heat: [
                 {from: -Infinity, to: 50, id: 'normal', color: 'green',},
