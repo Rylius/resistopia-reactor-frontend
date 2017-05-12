@@ -102,8 +102,8 @@ export default function createRangeSlider(target, event, vertical) {
     }
 
     function dragInit() {
-        cacheValue = clamp(isSet(event.value) ? event.value : 0, 0, 100);
-        dragger.style[css] = (((cacheValue / 100) * rangerSize) - (draggerSize / 2)) + 'px';
+        cacheValue = clamp(isSet(event.value) ? event.value : 0, 0, 1);
+        dragger.style[css] = ((cacheValue * rangerSize) - (draggerSize / 2)) + 'px';
         if (isFunc(event.create)) event.create(cacheValue, target);
         if (isFunc(event.drag)) event.drag(cacheValue, target);
     }
@@ -133,11 +133,11 @@ export default function createRangeSlider(target, event, vertical) {
         e = e || win.event;
         var pos = e.touches ? e.touches[0][page] : e[page],
             move = clamp(pos - rangerDistance, 0, rangerSize),
-            value = clamp(((pos - rangerDistance) / rangerSize) * 100, 0, 100);
+            value = clamp(((pos - rangerDistance) / rangerSize), 0, 1);
         if (!pos) pos = e[client] + doc.body[scroll] + doc.documentElement[scroll];
         if (drag) {
             dragger.style[css] = (move - (draggerSize / 2)) + 'px';
-            cacheValue = Math.round(value);
+            cacheValue = value;
             if (isFunc(event.drag)) event.drag(cacheValue, target, e);
         }
     }
@@ -150,7 +150,7 @@ export default function createRangeSlider(target, event, vertical) {
 
     on("resize", win, function(e) {
         setSize(), drag = false;
-        dragger.style[css] = (((cacheValue / 100) * rangerSize) - (draggerSize / 2)) + 'px';
+        dragger.style[css] = ((cacheValue * rangerSize) - (draggerSize / 2)) + 'px';
     });
 
     ranger.appendChild(dragger);
