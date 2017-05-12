@@ -77,25 +77,25 @@
         <div class="block-group">
             <div class="block block-group" style="width: 25%;">
                 <div class="block">
-                    matter: {{ state['storage-matter'].releasedMatterPerTick }}
+                    matter: {{ Math.round(state['storage-matter'].releasedMatterPerTick) }}
                     <slider :vertical="false"
                             :value="state['storage-matter'].releasedMatterPerTick"
-                            @update="value => state['storage-matter'].releasedMatterPerTick = value"></slider>
+                            @update="value => state['storage-matter'].releasedMatterPerTick = normalizedToRange(value, limits.input['storage-matter'].releasedMatterPerTick.min, limits.input['storage-matter'].releasedMatterPerTick.max)"></slider>
                 </div>
                 <div class="block">
-                    antimatter: {{ state['storage-antimatter'].releasedAntimatterPerTick }}
+                    antimatter: {{ Math.round(state['storage-antimatter'].releasedAntimatterPerTick) }}
                     <slider :vertical="false"
                             :value="state['storage-antimatter'].releasedAntimatterPerTick"
-                            @update="value => state['storage-antimatter'].releasedAntimatterPerTick = value"></slider>
+                            @update="value => state['storage-antimatter'].releasedAntimatterPerTick = normalizedToRange(value, limits.input['storage-antimatter'].releasedAntimatterPerTick.min, limits.input['storage-antimatter'].releasedAntimatterPerTick.max)"></slider>
                 </div>
             </div>
 
             <div class="block block-group" style="width: 25%;">
                 <div class="block">
-                    cooling: {{ state['reactor-cooling'].cooling }}
+                    cooling: {{ Math.round(state['reactor-cooling'].cooling) }}
                     <slider :vertical="false"
-                            :value="state['reactor-cooling'].cooling"
-                            @update="value => state['reactor-cooling'].cooling = value"></slider>
+                            :value="rangeToNormalized(state['reactor-cooling'].cooling, 0, 1)"
+                            @update="value => state['reactor-cooling'].cooling = normalizedToRange(value, limits.input['reactor-cooling'].cooling.min, limits.input['reactor-cooling'].cooling.max)"></slider>
                 </div>
             </div>
         </div>
@@ -107,6 +107,8 @@
     import Lamp from '../../controls/Lamp';
     import Slider from '../../controls/Slider';
 
+    import {normalizedToRange, rangeToNormalized} from '../../../util/math';
+
     import limits from '../../../limits';
 
     export default {
@@ -115,6 +117,11 @@
             state: {
                 required: true,
             },
+        },
+        data() {
+            return {
+                limits,
+            };
         },
         computed: {
             values() {
@@ -153,6 +160,8 @@
 
                 return range;
             },
+            rangeToNormalized,
+            normalizedToRange,
         },
         components: {
             SevenSegmentDisplay,
