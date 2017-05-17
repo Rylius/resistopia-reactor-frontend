@@ -94,23 +94,24 @@
                 <div class="block">
                     matter: {{ Math.round(state['storage-matter'].releasedMatterPerTick) }}
                     <slider :vertical="false"
-                            :value="state['storage-matter'].releasedMatterPerTick"
-                            @update="value => state['storage-matter'].releasedMatterPerTick = mapRange(value, limits.input['storage-matter'].releasedMatterPerTick)"></slider>
+                            :value="normalizedProperty('storage-matter', 'releasedMatterPerTick')"
+                            @update="value => changeState('storage-matter', 'releasedMatterPerTick', value)"></slider>
                 </div>
                 <div class="block">
                     antimatter: {{ Math.round(state['storage-antimatter'].releasedAntimatterPerTick) }}
                     <slider :vertical="false"
-                            :value="state['storage-antimatter'].releasedAntimatterPerTick"
-                            @update="value => state['storage-antimatter'].releasedAntimatterPerTick = mapRange(value, limits.input['storage-antimatter'].releasedAntimatterPerTick)"></slider>
+                            :value="normalizedProperty('storage-antimatter', 'releasedAntimatterPerTick')"
+                            @update="value => changeState('storage-antimatter', 'releasedAntimatterPerTick', value)"></slider>
                 </div>
             </div>
 
             <div class="block block-group" style="width: 25%;">
                 <div class="block">
-                    cooling: {{ Math.round(state['reactor-cooling'].effectiveCooling) }}/{{ Math.round(state['reactor-cooling'].cooling) }}
+                    cooling: {{ Math.round(state['reactor-cooling'].effectiveCooling)
+                    }}/{{ Math.round(state['reactor-cooling'].cooling) }}
                     <slider :vertical="false"
-                            :value="rangeToNormalized(state['reactor-cooling'].cooling, 0, 1)"
-                            @update="value => state['reactor-cooling'].cooling = mapRange(value, limits.input['reactor-cooling'].cooling)"></slider>
+                            :value="normalizedProperty('reactor-cooling', 'cooling')"
+                            @update="value => changeState('reactor-cooling', 'cooling', value)"></slider>
                 </div>
             </div>
         </div>
@@ -177,8 +178,22 @@
             },
             rangeToNormalized,
             normalizedToRange,
+            mapNormalized(value, limit) {
+                return this.rangeToNormalized(value, limit.min, limit.max);
+            },
             mapRange(value, limit) {
-                return normalizedToRange(value, limit.min, limit.max);
+                return this.normalizedToRange(value, limit.min, limit.max);
+            },
+            normalizedProperty(stateMachine, property) {
+                return this.mapNormalized(this.state[stateMachine][property], limits.input[stateMachine][property]);
+            },
+            changeState(stateMachine, property, value) {
+                const changes = {
+                    [stateMachine]: {
+                        [property]: this.mapRange(value, limits.input[stateMachine][property]),
+                    },
+                };
+                this.$emit('changeState', changes);
             },
         },
         components: {

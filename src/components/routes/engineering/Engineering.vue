@@ -12,7 +12,7 @@
         </nav>
 
         <section class="content">
-            <router-view :state="state.stateMachines"></router-view>
+            <router-view :state="state.stateMachines" @changeState="changeState"></router-view>
         </section>
 
         <div class="warning-strip">&nbsp;</div>
@@ -27,6 +27,8 @@
     import {createInitialState, update} from 'resistopia-reactor-simulation';
     import prototype from 'resistopia-reactor-simulation/data/prototype';
 
+    import merge from 'deepmerge';
+
     export default {
         name: 'dashboard',
         data() {
@@ -35,6 +37,7 @@
             return {
                 stateMachine: stateMachine,
                 state: createInitialState(stateMachine),
+                stateChanges: {},
                 simulationIntervalId: null,
                 navigation: [
                     {
@@ -60,10 +63,20 @@
                 ],
             };
         },
+        methods: {
+            changeState(changes) {
+                this.stateChanges = merge(this.stateChanges, changes);
+            },
+        },
         mounted() {
             // TODO
             this.simulationIntervalId = setInterval(() => {
-                this.state = update(this.stateMachine, this.state);
+                // Copy previous state and apply changes
+                const state = merge({}, this.state);
+                state.stateMachines = merge(state.stateMachines, this.stateChanges);
+                this.stateChanges = {};
+
+                this.state = update(this.stateMachine, state);
             }, 1000);
         },
         beforeDestroy() {
