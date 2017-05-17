@@ -95,13 +95,13 @@
                     matter: {{ Math.round(state['storage-matter'].releasedMatterPerTick) }}
                     <slider :vertical="false"
                             :value="state['storage-matter'].releasedMatterPerTick"
-                            @update="value => state['storage-matter'].releasedMatterPerTick = normalizedToRange(value, limits.input['storage-matter'].releasedMatterPerTick.min, limits.input['storage-matter'].releasedMatterPerTick.max)"></slider>
+                            @update="value => state['storage-matter'].releasedMatterPerTick = mapRange(value, limits.input['storage-matter'].releasedMatterPerTick)"></slider>
                 </div>
                 <div class="block">
                     antimatter: {{ Math.round(state['storage-antimatter'].releasedAntimatterPerTick) }}
                     <slider :vertical="false"
                             :value="state['storage-antimatter'].releasedAntimatterPerTick"
-                            @update="value => state['storage-antimatter'].releasedAntimatterPerTick = normalizedToRange(value, limits.input['storage-antimatter'].releasedAntimatterPerTick.min, limits.input['storage-antimatter'].releasedAntimatterPerTick.max)"></slider>
+                            @update="value => state['storage-antimatter'].releasedAntimatterPerTick = mapRange(value, limits.input['storage-antimatter'].releasedAntimatterPerTick)"></slider>
                 </div>
             </div>
 
@@ -110,7 +110,7 @@
                     cooling: {{ Math.round(state['reactor-cooling'].effectiveCooling) }}/{{ Math.round(state['reactor-cooling'].cooling) }}
                     <slider :vertical="false"
                             :value="rangeToNormalized(state['reactor-cooling'].cooling, 0, 1)"
-                            @update="value => state['reactor-cooling'].cooling = normalizedToRange(value, limits.input['reactor-cooling'].cooling.min, limits.input['reactor-cooling'].cooling.max)"></slider>
+                            @update="value => state['reactor-cooling'].cooling = mapRange(value, limits.input['reactor-cooling'].cooling)"></slider>
                 </div>
             </div>
         </div>
@@ -177,6 +177,9 @@
             },
             rangeToNormalized,
             normalizedToRange,
+            mapRange(value, limit) {
+                return normalizedToRange(value, limit.min, limit.max);
+            },
         },
         components: {
             SevenSegmentDisplay,
