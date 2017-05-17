@@ -68,7 +68,7 @@
         },
         beforeDestroy() {
             if (this.simulationIntervalId) {
-                clearInterval(simulationIntervalId);
+                clearInterval(this.simulationIntervalId);
             }
         },
     };
