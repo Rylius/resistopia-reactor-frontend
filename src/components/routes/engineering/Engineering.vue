@@ -88,7 +88,7 @@
                 clearInterval(this.simulationIntervalId);
             }
 
-            stopUpdate(this.animationFrame);
+            stopUpdate();
         },
     };
 </script>
