@@ -27,6 +27,8 @@
     import {createInitialState, update} from 'resistopia-reactor-simulation';
     import prototype from 'resistopia-reactor-simulation/data/prototype';
 
+    import {startUpdate, stopUpdate} from '../../../util/tween';
+
     import merge from 'deepmerge';
 
     export default {
@@ -78,11 +80,15 @@
 
                 this.state = update(this.stateMachine, state);
             }, 1000);
+
+            startUpdate();
         },
         beforeDestroy() {
             if (this.simulationIntervalId) {
                 clearInterval(this.simulationIntervalId);
             }
+
+            stopUpdate(this.animationFrame);
         },
     };
 </script>
