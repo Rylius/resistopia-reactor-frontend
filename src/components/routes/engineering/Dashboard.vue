@@ -1,16 +1,21 @@
 <template>
     <section>
         <div class="block-group">
-            <div class="block" style="width: 30%;">
+            <div class="block" style="width: 40%;">
                 <div class="block-group">
                     <div class="block" style="width: 30%;">
                         reactor
-                        <span v-if="state.reactor.shutdownRemaining">offline</span>
+                        <span v-if="state.reactor.shutdownRemaining">(offline)</span>
                     </div>
-                    <div class="block" style="width: 50%;">
-                        <seven-segment-display :value="Math.round(values['reactor'].heat.data) + '°C'"
+                    <div class="block" style="width: 35%;">
+                        <seven-segment-display :value="Math.round(values['reactor'].heat.data)"
                                                :color="values['reactor'].heat.color"
-                                               :digits="6" :decimals="0"></seven-segment-display>
+                                               :digits="4" :decimals="0"></seven-segment-display>
+                    </div>
+                    <div class="block" style="width: 15%;">
+                        <seven-segment-display value="°C"
+                                               :color="values['reactor'].heat.color"
+                                               :digits="2" :decimals="0"></seven-segment-display>
                     </div>
                     <div class="block" style="width: 20%;">
                         <lamp :enabled="values['reactor'].heat.type === 'critical'"
@@ -21,12 +26,17 @@
                 <div class="block-group">
                     <div class="block" style="width: 30%;">
                         distributor
-                        <span v-if="state.distributor.shutdownRemaining">offline</span>
+                        <span v-if="state.distributor.shutdownRemaining">(offline)</span>
                     </div>
-                    <div class="block" style="width: 50%;">
-                        <seven-segment-display :value="Math.round(values['distributor'].heat.data) + '°C'"
+                    <div class="block" style="width: 35%;">
+                        <seven-segment-display :value="Math.round(values['distributor'].heat.data)"
                                                :color="values['distributor'].heat.color"
-                                               :digits="6" :decimals="0"></seven-segment-display>
+                                               :digits="4" :decimals="0"></seven-segment-display>
+                    </div>
+                    <div class="block" style="width: 15%;">
+                        <seven-segment-display value="°C"
+                                               :color="values['distributor'].heat.color"
+                                               :digits="2" :decimals="0"></seven-segment-display>
                     </div>
                     <div class="block" style="width: 20%;">
                         <lamp :enabled="values['distributor'].heat.type === 'critical'"
