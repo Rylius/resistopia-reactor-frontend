@@ -2,47 +2,15 @@
     <section>
         <div class="block-group">
             <div class="block" style="width: 40%;">
-                <div class="block-group">
-                    <div class="block" style="width: 30%;">
-                        reactor
-                        <span v-if="state.reactor.shutdownRemaining">(offline)</span>
-                    </div>
-                    <div class="block" style="width: 35%;">
-                        <seven-segment-display :value="Math.round(values['reactor'].heat.data)"
-                                               :color="values['reactor'].heat.color"
-                                               :digits="4" :decimals="0"></seven-segment-display>
-                    </div>
-                    <div class="block" style="width: 15%;">
-                        <seven-segment-display value="°C"
-                                               :color="values['reactor'].heat.color"
-                                               :digits="2" :decimals="0"></seven-segment-display>
-                    </div>
-                    <div class="block" style="width: 20%;">
-                        <lamp :enabled="values['reactor'].heat.type === 'critical'"
-                              color="red" :flash="true"></lamp>
-                    </div>
-                </div>
+                <temperature-display :values="values" stateMachine="reactor" property="heat" label="reactor"
+                                     style="width: 100%">
+                    <span slot="status" v-if="state.reactor.shutdownRemaining">(offline)</span>
+                </temperature-display>
 
-                <div class="block-group">
-                    <div class="block" style="width: 30%;">
-                        distributor
-                        <span v-if="state.distributor.shutdownRemaining">(offline)</span>
-                    </div>
-                    <div class="block" style="width: 35%;">
-                        <seven-segment-display :value="Math.round(values['distributor'].heat.data)"
-                                               :color="values['distributor'].heat.color"
-                                               :digits="4" :decimals="0"></seven-segment-display>
-                    </div>
-                    <div class="block" style="width: 15%;">
-                        <seven-segment-display value="°C"
-                                               :color="values['distributor'].heat.color"
-                                               :digits="2" :decimals="0"></seven-segment-display>
-                    </div>
-                    <div class="block" style="width: 20%;">
-                        <lamp :enabled="values['distributor'].heat.type === 'critical'"
-                              color="red" :flash="true"></lamp>
-                    </div>
-                </div>
+                <temperature-display :values="values" stateMachine="distributor" property="heat" label="distributor"
+                                     style="width: 100%">
+                    <span slot="status" v-if="state.distributor.shutdownRemaining">(offline)</span>
+                </temperature-display>
             </div>
 
             <div class="block" style="width: 20%;">
@@ -91,12 +59,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="block" style="width: 25%;">
-            </div>
-
-            <div class="block" style="width: 25%;">
-            </div>
         </div>
 
         <div class="block-group">
@@ -132,6 +94,8 @@
     import SevenSegmentDisplay from '../../controls/SevenSegmentDisplay';
     import Lamp from '../../controls/Lamp';
     import Slider from '../../controls/Slider';
+
+    import TemperatureDisplay from '../../controls/engineering/TemperatureDisplay';
 
     import {normalizedToRange, rangeToNormalized} from '../../../util/math';
 
@@ -210,6 +174,7 @@
             SevenSegmentDisplay,
             Lamp,
             Slider,
+            TemperatureDisplay,
         },
     };
 </script>
