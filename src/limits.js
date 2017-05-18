@@ -2,10 +2,10 @@ export default {
     ranges: {
         reactor: {
             heat: [
-                {from: -Infinity, to: 100, id: 'cold', color: 'blue',},
-                {from: 100, to: 500, id: 'normal', color: 'green'},
-                {from: 500, to: 1000, id: 'warning', color: 'orange'},
-                {from: 1000, to: Infinity, id: 'critical', color: 'red'},
+                {from: -Infinity, to: 1000, id: 'cold', color: 'blue',},
+                {from: 1000, to: 2000, id: 'normal', color: 'green'},
+                {from: 2000, to: 4000, id: 'warning', color: 'orange'},
+                {from: 4000, to: Infinity, id: 'critical', color: 'red'},
             ],
         },
         'reactor-cooling': {
