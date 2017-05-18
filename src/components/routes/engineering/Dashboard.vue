@@ -15,19 +15,13 @@
 
             <div class="block" style="width: 20%;">
                 <power-consumption-display :values="values" stateMachine="reactor-cooling"
-                                           consumptionProperty="powerConsumed" satisfactionProperty="powerSatisfaction"
-                                           label="cooling" style="width: 100%">
-                </power-consumption-display>
+                                           label="cooling" style="width: 100%"></power-consumption-display>
 
                 <power-consumption-display :values="values" stateMachine="core"
-                                           consumptionProperty="powerConsumed" satisfactionProperty="powerSatisfaction"
-                                           label="core" style="width: 100%">
-                </power-consumption-display>
+                                           label="core" style="width: 100%"></power-consumption-display>
 
                 <power-consumption-display :values="values" stateMachine="base"
-                                           consumptionProperty="powerConsumed" satisfactionProperty="powerSatisfaction"
-                                           label="base" style="width: 100%">
-                </power-consumption-display>
+                                           label="base" style="width: 100%"></power-consumption-display>
             </div>
         </div>
 
