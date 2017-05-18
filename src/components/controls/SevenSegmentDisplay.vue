@@ -46,6 +46,9 @@
 
             text-align: right;
 
+            &.blue {
+                color: @signal-blue-highlight;
+            }
             &.green {
                 color: @signal-green-highlight;
             }
