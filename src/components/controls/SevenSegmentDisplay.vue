@@ -84,7 +84,7 @@
         },
         data() {
             return {
-                animatedValue: 0,
+                animatedValue: this.value,
             };
         },
         computed: {
@@ -116,7 +116,7 @@
                     .easing(TWEEN.Easing.Linear.None)
                     .to({value: newValue}, 1000)
                     .onUpdate(function () {
-                        vm.animatedValue = this.value
+                        vm.animatedValue = this.value;
                     })
                     .start();
             },
