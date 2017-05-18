@@ -14,50 +14,20 @@
             </div>
 
             <div class="block" style="width: 20%;">
-                <div class="block-group">
-                    <div class="block" style="width: 30%;">
-                        cooling
-                    </div>
-                    <div class="block" style="width: 60%;">
-                        <seven-segment-display
-                            :value="values['reactor-cooling'].powerConsumed.data"
-                            :color="values['reactor-cooling'].powerSatisfaction.color"
-                            :digits="4" :decimals="1"></seven-segment-display>
-                    </div>
-                    <div class="block" style="width: 10%;">
-                        kWh
-                    </div>
-                </div>
+                <power-consumption-display :values="values" stateMachine="reactor-cooling"
+                                           consumptionProperty="powerConsumed" satisfactionProperty="powerSatisfaction"
+                                           label="cooling" style="width: 100%">
+                </power-consumption-display>
 
-                <div class="block-group">
-                    <div class="block" style="width: 30%;">
-                        core
-                    </div>
-                    <div class="block" style="width: 60%;">
-                        <seven-segment-display
-                            :value="values['core'].powerRequired.data * values['core'].powerSatisfaction.data"
-                            :color="values['core'].powerSatisfaction.color"
-                            :digits="4" :decimals="1"></seven-segment-display>
-                    </div>
-                    <div class="block" style="width: 10%;">
-                        kWh
-                    </div>
-                </div>
+                <power-consumption-display :values="values" stateMachine="core"
+                                           consumptionProperty="powerConsumed" satisfactionProperty="powerSatisfaction"
+                                           label="core" style="width: 100%">
+                </power-consumption-display>
 
-                <div class="block-group">
-                    <div class="block" style="width: 30%;">
-                        base
-                    </div>
-                    <div class="block" style="width: 60%;">
-                        <seven-segment-display
-                            :value="values['base'].powerRequired.data * values['base'].powerSatisfaction.data"
-                            :color="values['base'].powerSatisfaction.color"
-                            :digits="4" :decimals="1"></seven-segment-display>
-                    </div>
-                    <div class="block" style="width: 10%;">
-                        kWh
-                    </div>
-                </div>
+                <power-consumption-display :values="values" stateMachine="base"
+                                           consumptionProperty="powerConsumed" satisfactionProperty="powerSatisfaction"
+                                           label="base" style="width: 100%">
+                </power-consumption-display>
             </div>
         </div>
 
@@ -100,6 +70,7 @@
     import {normalizedToRange, rangeToNormalized} from '../../../util/math';
 
     import limits from '../../../limits';
+    import PowerConsumptionDisplay from "../../controls/engineering/PowerConsumptionDisplay";
 
     export default {
         name: 'dashboard',
@@ -171,6 +142,7 @@
             },
         },
         components: {
+            PowerConsumptionDisplay,
             SevenSegmentDisplay,
             Lamp,
             Slider,
