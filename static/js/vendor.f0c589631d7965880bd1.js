@@ -8993,24 +8993,27 @@ process.umask = function() { return 0; };
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__prototype_json__ = __webpack_require__(80);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__prototype_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__prototype_json__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_util__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__prototype_json__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__prototype_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__prototype_json__);
+
+
 
 
 function initial(stateMachine, property, defaultValue) {
-    return (__WEBPACK_IMPORTED_MODULE_0__prototype_json___default.a.initial[stateMachine.id] || {})[property] || defaultValue;
+    return (__WEBPACK_IMPORTED_MODULE_1__prototype_json___default.a.initial[stateMachine.id] || {})[property] || defaultValue;
 }
 
 function cooling(stateMachine, defaultValue) {
-    return __WEBPACK_IMPORTED_MODULE_0__prototype_json___default.a.cooling[stateMachine.id] || defaultValue;
+    return __WEBPACK_IMPORTED_MODULE_1__prototype_json___default.a.cooling[stateMachine.id] || defaultValue;
 }
 
 function production(stateMachine, property, defaultValue) {
-    return (__WEBPACK_IMPORTED_MODULE_0__prototype_json___default.a.production[stateMachine.id] || {})[property] || defaultValue;
+    return (__WEBPACK_IMPORTED_MODULE_1__prototype_json___default.a.production[stateMachine.id] || {})[property] || defaultValue;
 }
 
 function limit(stateMachine, property, defaultValue) {
-    return (__WEBPACK_IMPORTED_MODULE_0__prototype_json___default.a.limits[stateMachine.id] || {})[property] || defaultValue;
+    return (__WEBPACK_IMPORTED_MODULE_1__prototype_json___default.a.limits[stateMachine.id] || {})[property] || defaultValue;
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (function () {
@@ -9065,8 +9068,8 @@ function limit(stateMachine, property, defaultValue) {
             };
         },
         input(prevState) {
-            const maxMatterInput = production(reactor, 'maxMatterInput', 1000);
-            const maxAntimatterInput = production(reactor, 'maxAntimatterInput', 1000);
+            const maxMatterInput = production(reactor, 'maxMatterInput', 500);
+            const maxAntimatterInput = production(reactor, 'maxAntimatterInput', 500);
 
             const running = prevState.shutdownRemaining <= 0;
 
@@ -9087,14 +9090,17 @@ function limit(stateMachine, property, defaultValue) {
             };
         },
         update(prevState, input) {
-            const requiredMatter = production(reactor, 'maxMatterConsumption', 100);
-            const requiredAntimatter = production(reactor, 'maxAntimatterConsumption', 100);
+            const requiredMatter = production(reactor, 'maxMatterInput', 500);
+            const requiredAntimatter = production(reactor, 'maxAntimatterInput', 500);
             const powerGeneration = production(reactor, 'maxPowerGeneration', 100);
             const heatGeneration = production(reactor, 'maxHeatGeneration', 100);
 
             const powerToHeat = production(reactor, 'powerToHeatFactor', 1);
 
             const minTemperature = production(reactor, 'minTemperature', 25);
+            const minOperatingTemperature = production(reactor, 'minOperatingTemperature', 100);
+            const minOptimalTemperature = production(reactor, 'minOptimalTemperature', 1000);
+            const maxOptimalTemperature = production(reactor, 'maxOptimalTemperature', 2000);
             const maxOperatingTemperature = production(reactor, 'maxOperatingTemperature', 5000);
 
             const shutdownDuration = production(reactor, 'shutdownDuration', 600);
@@ -9116,18 +9122,27 @@ function limit(stateMachine, property, defaultValue) {
 
             const running = state.shutdownRemaining <= 0;
             if (running) {
-                const availableMatter = Math.min(state.storedMatter, requiredMatter,);
-                const availableAntimatter = Math.min(state.storedAntimatter, requiredAntimatter,);
+                const availableMatter = Math.min(state.storedMatter, requiredMatter);
+                const availableAntimatter = Math.min(state.storedAntimatter, requiredAntimatter);
 
-                let productivity = Math.max(
+                const productivity = Math.max(
                     Math.min(
                         availableMatter / requiredMatter,
                         availableAntimatter / requiredAntimatter,
-                        maxOperatingTemperature / heatGeneration,
                         1,
                     ),
                     0,
                 );
+
+                let heatEfficiency = 0;
+                if (state.heat < minOptimalTemperature) {
+                    heatEfficiency = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__src_util__["a" /* normalizeRange */])(state.heat, minOperatingTemperature, minOptimalTemperature);
+                } else if (state.heat > maxOptimalTemperature) {
+                    heatEfficiency = 1 - __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__src_util__["a" /* normalizeRange */])(state.heat, maxOptimalTemperature, maxOperatingTemperature);
+                } else {
+                    heatEfficiency = 1;
+                }
+                heatEfficiency = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__src_util__["b" /* clamp */])(heatEfficiency, 0, 1);
 
                 const consumedMatter = requiredMatter * productivity;
                 const consumedAntimatter = requiredAntimatter * productivity;
@@ -9135,7 +9150,7 @@ function limit(stateMachine, property, defaultValue) {
                 state.storedMatter -= consumedMatter;
                 state.storedAntimatter -= consumedAntimatter;
 
-                state.power += powerGeneration * productivity;
+                state.power += powerGeneration * productivity * heatEfficiency;
                 state.heat += heatGeneration * productivity;
             }
 
@@ -9145,10 +9160,12 @@ function limit(stateMachine, property, defaultValue) {
     const distributor = {
         id: 'distributor',
         initialState() {
+            const minTemperature = production(distributor, 'minTemperature', 30);
+
             return {
                 cooling: cooling(distributor, 100),
                 power: 0,
-                heat: 0,
+                heat: minTemperature,
                 shutdownRemaining: 0,
             };
         },
@@ -9167,20 +9184,19 @@ function limit(stateMachine, property, defaultValue) {
             return input;
         },
         update(prevState, input) {
+            const minTemperature = production(distributor, 'minTemperature', 30);
+            const maxTemperature = production(distributor, 'maxTemperature', 200);
             const generatedHeat = prevState.power * production(distributor, 'powerToHeatFactor', 1);
-            const heatTolerance = production(distributor, 'heatTolerance', 200);
             const shutdownDuration = production(distributor, 'shutdownDuration', 60);
 
             const state = {
                 cooling: prevState.cooling,
                 power: input.power,
-                heat: prevState.heat + generatedHeat,
+                heat: Math.max((prevState.heat + generatedHeat) - prevState.cooling, minTemperature),
                 shutdownRemaining: Math.max(prevState.shutdownRemaining - 1, 0),
             };
 
-            state.heat -= Math.min(state.cooling, state.heat);
-
-            if (state.heat > heatTolerance) {
+            if (state.heat > maxTemperature) {
                 state.shutdownRemaining = shutdownDuration;
             }
 
@@ -9398,7 +9414,22 @@ return index;
 
 
 /***/ }),
-/* 82 */,
+/* 82 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = normalizeRange;
+/* harmony export (immutable) */ __webpack_exports__["b"] = clamp;
+function normalizeRange(value, min, max) {
+    return (value - min) / (max - min);
+}
+
+function clamp(value, min, max) {
+    return Math.max(Math.min(value, max), min);
+}
+
+
+/***/ }),
 /* 83 */,
 /* 84 */,
 /* 85 */,
@@ -9424,7 +9455,8 @@ return index;
 /* 105 */,
 /* 106 */,
 /* 107 */,
-/* 108 */
+/* 108 */,
+/* 109 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11895,7 +11927,7 @@ if (inBrowser && window.Vue) {
 
 
 /***/ }),
-/* 109 */
+/* 110 */
 /***/ (function(module, exports) {
 
 /**
@@ -11928,7 +11960,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 110 */
+/* 111 */
 /***/ (function(module, exports) {
 
 /*
@@ -12010,7 +12042,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 111 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -12029,7 +12061,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(109)
+var listToStyles = __webpack_require__(110)
 
 /*
 type StyleObject = {
@@ -12232,4 +12264,4 @@ function applyToTag (styleElement, obj) {
 
 /***/ })
 ]);
-//# sourceMappingURL=vendor.a8c67e58805020e0e8d8.js.map
+//# sourceMappingURL=vendor.f0c589631d7965880bd1.js.map
