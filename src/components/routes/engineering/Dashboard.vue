@@ -1,101 +1,53 @@
 <template>
     <section>
         <div class="block-group">
-            <div class="block" style="width: 30%;">
-                <div class="block-group">
-                    <div class="block" style="width: 30%;">
-                        reactor
-                        <span v-if="state.reactor.shutdownRemaining">offline</span>
-                    </div>
-                    <div class="block" style="width: 50%;">
-                        <seven-segment-display :value="values['reactor'].heat.data + '°C'"
-                                               :color="values['reactor'].heat.color"
-                                               :digits="6" :decimals="0"></seven-segment-display>
-                    </div>
-                    <div class="block" style="width: 20%;">
-                        <lamp :enabled="values['reactor'].heat.type === 'critical'"
-                              color="red" :flash="true"></lamp>
-                    </div>
-                </div>
+            <div class="block" style="width: 40%;">
+                <temperature-display :values="values" stateMachine="reactor" property="heat" label="reactor"
+                                     style="width: 100%">
+                    <span slot="status" v-if="state.reactor.shutdownRemaining">(offline)</span>
+                </temperature-display>
 
-                <div class="block-group">
-                    <div class="block" style="width: 30%;">
-                        distributor
-                        <span v-if="state.distributor.shutdownRemaining">offline</span>
-                    </div>
-                    <div class="block" style="width: 50%;">
-                        <seven-segment-display :value="values['distributor'].heat.data + '°C'"
-                                               :color="values['distributor'].heat.color"
-                                               :digits="6" :decimals="0"></seven-segment-display>
-                    </div>
-                    <div class="block" style="width: 20%;">
-                        <lamp :enabled="values['distributor'].heat.type === 'critical'"
-                              color="red" :flash="true"></lamp>
-                    </div>
-                </div>
+                <temperature-display :values="values" stateMachine="distributor" property="heat" label="distributor"
+                                     style="width: 100%">
+                    <span slot="status" v-if="state.distributor.shutdownRemaining">(offline)</span>
+                </temperature-display>
             </div>
 
             <div class="block" style="width: 20%;">
-                <div class="block-group">
-                    <div class="block" style="width: 30%;">
-                        core
-                    </div>
-                    <div class="block" style="width: 60%;">
-                        <seven-segment-display
-                            :value="values['core'].powerRequired.data * values['core'].powerSatisfaction.data"
-                            :color="values['core'].powerSatisfaction.color"
-                            :digits="4" :decimals="1"></seven-segment-display>
-                    </div>
-                    <div class="block" style="width: 10%;">
-                        kWh
-                    </div>
-                </div>
+                <power-consumption-display :values="values" stateMachine="reactor-cooling"
+                                           label="cooling" style="width: 100%"></power-consumption-display>
 
-                <div class="block-group">
-                    <div class="block" style="width: 30%;">
-                        base
-                    </div>
-                    <div class="block" style="width: 60%;">
-                        <seven-segment-display
-                            :value="values['base'].powerRequired.data * values['base'].powerSatisfaction.data"
-                            :color="values['base'].powerSatisfaction.color"
-                            :digits="4" :decimals="1"></seven-segment-display>
-                    </div>
-                    <div class="block" style="width: 10%;">
-                        kWh
-                    </div>
-                </div>
-            </div>
+                <power-consumption-display :values="values" stateMachine="core"
+                                           label="core" style="width: 100%"></power-consumption-display>
 
-            <div class="block" style="width: 25%;">
-            </div>
-
-            <div class="block" style="width: 25%;">
+                <power-consumption-display :values="values" stateMachine="base"
+                                           label="base" style="width: 100%"></power-consumption-display>
             </div>
         </div>
 
         <div class="block-group">
             <div class="block block-group" style="width: 25%;">
                 <div class="block">
-                    matter: {{ state['storage-matter'].releasedMatterPerTick }}
+                    matter: {{ Math.round(state['storage-matter'].releasedMatterPerTick) }}
                     <slider :vertical="false"
-                            :value="state['storage-matter'].releasedMatterPerTick"
-                            @update="value => state['storage-matter'].releasedMatterPerTick = value"></slider>
+                            :value="normalizedProperty('storage-matter', 'releasedMatterPerTick')"
+                            @update="value => changeState('storage-matter', 'releasedMatterPerTick', value)"></slider>
                 </div>
                 <div class="block">
-                    antimatter: {{ state['storage-antimatter'].releasedAntimatterPerTick }}
+                    antimatter: {{ Math.round(state['storage-antimatter'].releasedAntimatterPerTick) }}
                     <slider :vertical="false"
-                            :value="state['storage-antimatter'].releasedAntimatterPerTick"
-                            @update="value => state['storage-antimatter'].releasedAntimatterPerTick = value"></slider>
+                            :value="normalizedProperty('storage-antimatter', 'releasedAntimatterPerTick')"
+                            @update="value => changeState('storage-antimatter', 'releasedAntimatterPerTick', value)"></slider>
                 </div>
             </div>
 
             <div class="block block-group" style="width: 25%;">
                 <div class="block">
-                    cooling: {{ state['reactor-cooling'].cooling }}
+                    cooling: {{ Math.round(state['reactor-cooling'].effectiveCooling)
+                    }}/{{ Math.round(state['reactor-cooling'].cooling) }}
                     <slider :vertical="false"
-                            :value="state['reactor-cooling'].cooling"
-                            @update="value => state['reactor-cooling'].cooling = value"></slider>
+                            :value="normalizedProperty('reactor-cooling', 'cooling')"
+                            @update="value => changeState('reactor-cooling', 'cooling', value)"></slider>
                 </div>
             </div>
         </div>
@@ -107,7 +59,12 @@
     import Lamp from '../../controls/Lamp';
     import Slider from '../../controls/Slider';
 
+    import TemperatureDisplay from '../../controls/engineering/TemperatureDisplay';
+
+    import {normalizedToRange, rangeToNormalized} from '../../../util/math';
+
     import limits from '../../../limits';
+    import PowerConsumptionDisplay from "../../controls/engineering/PowerConsumptionDisplay";
 
     export default {
         name: 'dashboard',
@@ -115,6 +72,11 @@
             state: {
                 required: true,
             },
+        },
+        data() {
+            return {
+                limits,
+            };
         },
         computed: {
             values() {
@@ -153,11 +115,32 @@
 
                 return range;
             },
+            rangeToNormalized,
+            normalizedToRange,
+            mapNormalized(value, limit) {
+                return this.rangeToNormalized(value, limit.min, limit.max);
+            },
+            mapRange(value, limit) {
+                return this.normalizedToRange(value, limit.min, limit.max);
+            },
+            normalizedProperty(stateMachine, property) {
+                return this.mapNormalized(this.state[stateMachine][property], limits.input[stateMachine][property]);
+            },
+            changeState(stateMachine, property, value) {
+                const changes = {
+                    [stateMachine]: {
+                        [property]: this.mapRange(value, limits.input[stateMachine][property]),
+                    },
+                };
+                this.$emit('changeState', changes);
+            },
         },
         components: {
+            PowerConsumptionDisplay,
             SevenSegmentDisplay,
             Lamp,
             Slider,
+            TemperatureDisplay,
         },
     };
 </script>

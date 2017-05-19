@@ -4,6 +4,9 @@ import Router from 'vue-router';
 import EngineeringLayout from '../components/routes/engineering/Engineering.vue';
 import EngineeringDashboard from '../components/routes/engineering/Dashboard.vue';
 import EngineeringReactor from '../components/routes/engineering/Reactor.vue';
+import EngineeringCooling from '../components/routes/engineering/Cooling.vue';
+import EngineeringPower from '../components/routes/engineering/Power.vue';
+import EngineeringStorage from '../components/routes/engineering/Storage.vue';
 
 import TestEverything from '../components/routes/test/TestEverything.vue';
 
@@ -28,17 +31,17 @@ export default new Router({
                 {
                     path: 'cooling',
                     name: 'engineering/cooling',
-                    component: EngineeringDashboard,
+                    component: EngineeringCooling,
                 },
                 {
                     path: 'power',
                     name: 'engineering/power',
-                    component: EngineeringDashboard,
+                    component: EngineeringPower,
                 },
                 {
                     path: 'storage',
                     name: 'engineering/storage',
-                    component: EngineeringDashboard,
+                    component: EngineeringStorage,
                 },
             ],
         },

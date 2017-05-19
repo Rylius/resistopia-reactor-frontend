@@ -46,6 +46,9 @@
 
             text-align: right;
 
+            &.blue {
+                color: @signal-blue-highlight;
+            }
             &.green {
                 color: @signal-green-highlight;
             }
@@ -60,6 +63,8 @@
 </style>
 
 <script>
+    import TWEEN from 'tween.js';
+
     export default {
         name: 'seven-segment-display',
         props: {
@@ -80,6 +85,11 @@
                 default: 'orange',
             },
         },
+        data() {
+            return {
+                animatedValue: this.value,
+            };
+        },
         computed: {
             formattedValue() {
                 if (typeof this.value === 'string') {
@@ -88,7 +98,7 @@
                 }
 
                 const factor = Math.pow(10, this.decimals);
-                const rounded = Math.round(this.value * factor) / factor;
+                const rounded = Math.round(this.animatedValue * factor) / factor;
                 return rounded.toFixed(this.decimals);
             },
             backgroundDigits() {
@@ -100,6 +110,18 @@
                     }
                 }
                 return digits;
+            },
+        },
+        watch: {
+            value: function (newValue, oldValue) {
+                const vm = this;
+                new TWEEN.Tween({value: oldValue})
+                    .easing(TWEEN.Easing.Linear.None)
+                    .to({value: newValue}, 1000)
+                    .onUpdate(function () {
+                        vm.animatedValue = this.value;
+                    })
+                    .start();
             },
         },
     }

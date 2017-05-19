@@ -5,7 +5,7 @@
 
 <script>
     export default {
-        name: 'reactor',
+        name: 'cooling',
         props: {
             state: {
                 required: true,
