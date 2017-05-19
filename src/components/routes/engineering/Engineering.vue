@@ -12,7 +12,7 @@
         </nav>
 
         <section class="content">
-            <router-view :state="state.stateMachines" @changeState="changeState"></router-view>
+            <router-view :state="state" @changeState="changeState"></router-view>
         </section>
 
         <div class="warning-strip">&nbsp;</div>
@@ -38,9 +38,10 @@
 
             return {
                 stateMachine: stateMachine,
-                state: createInitialState(stateMachine),
+                state: createInitialState(stateMachine).stateMachines,
                 stateChanges: {},
-                simulationIntervalId: null,
+                intervalId: null,
+                websocket: null,
                 navigation: [
                     {
                         to: {name: 'engineering/dashboard'},
@@ -68,27 +69,68 @@
         methods: {
             changeState(changes) {
                 this.stateChanges = merge(this.stateChanges, changes);
+
+                // TODO Debounce
+
+                if (!this.websocket || this.websocket.readyState !== WebSocket.OPEN) {
+                    return;
+                }
+
+                this.websocket.send(JSON.stringify({
+                    type: 'change-state',
+                    data: this.stateChanges,
+                }));
+
+                this.stateChanges = {};
+            },
+            onServerError() {
+                console.log('websocket connection error:', arguments);
+            },
+            onServerMessage(message) {
+                // TODO
+                const data = JSON.parse(message.data);
+                console.log(data);
+
+                switch (data.type) {
+                    case 'state':
+                        this.state = data.data;
+                        break;
+                    default:
+                        console.error(`Unknown websocket message type "${data.type}"`);
+                        return;
+                }
             },
         },
         mounted() {
-            // TODO
-            this.simulationIntervalId = setInterval(() => {
+            this.intervalId = setInterval(() => {
                 // Copy previous state and apply changes
-                const state = merge({}, this.state);
-                state.stateMachines = merge(state.stateMachines, this.stateChanges);
-                this.stateChanges = {};
+//                const state = merge({}, this.state);
+//                state.stateMachines = merge(state.stateMachines, this.stateChanges);
+//                this.stateChanges = {};
 
-                this.state = update(this.stateMachine, state);
+//                this.state = update(this.stateMachine, state);
             }, 1000);
 
             startUpdate();
+
+            // TODO Read URL from config/env variable
+            this.websocket = new WebSocket('ws://localhost:8081/ws/frontend', 'json');
+            this.websocket.onerror = this.onServerError;
+            this.websocket.onmessage = this.onServerMessage;
+            // TODO
+            this.websocket.onclose = () => this.websocket = null;
         },
         beforeDestroy() {
-            if (this.simulationIntervalId) {
-                clearInterval(this.simulationIntervalId);
+            if (this.intervalId) {
+                clearInterval(this.intervalId);
             }
 
             stopUpdate();
+
+            if (this.websocket) {
+                this.websocket.close();
+                this.websocket = null;
+            }
         },
     };
 </script>
