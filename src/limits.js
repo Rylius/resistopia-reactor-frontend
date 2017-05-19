@@ -19,7 +19,7 @@ export default {
         distributor: {
             heat: [
                 {from: -Infinity, to: 50, id: 'normal', color: 'green',},
-                {from: 100, to: 150, id: 'warning', color: 'orange'},
+                {from: 50, to: 150, id: 'warning', color: 'orange'},
                 {from: 150, to: Infinity, id: 'critical', color: 'red'},
             ],
         },
@@ -42,19 +42,19 @@ export default {
         'storage-matter': {
             releasedMatterPerTick: {
                 min: 0,
-                max: 250,
+                max: 500,
             },
         },
         'storage-antimatter': {
             releasedAntimatterPerTick: {
                 min: 0,
-                max: 250,
+                max: 500,
             },
         },
         'reactor-cooling': {
             cooling: {
                 min: 0,
-                max: 500,
+                max: 200,
             },
         },
     },
