@@ -2,14 +2,24 @@
     <section>
         <section class="content">
             <p>
-                Tick: {{ state.tick }}
+                <span style="display: inline-block; width: 100px;">
+                    Tick: {{ state.tick }}
+                </span>
+                <span style="margin-right: 20px;">
+                    <button @click="stopSimulation" :disabled="!simulationRunning">Pause</button>
+                    <button @click="startSimulation" :disabled="simulationRunning">Resume</button>
+                    <button @click="stepSimulation">Step</button>
+                </span>
+                <span style="margin-right: 20px;">
+                    <button @click="resetSimulation">Reset</button>
+                </span>
             </p>
 
             <div class="state-machines">
-                <state-machine v-for="stateMachine in display.stateMachines" :key="stateMachine.id"
-                               :id="stateMachine.id" :state="state.stateMachines[stateMachine.id]"
-                               :position="stateMachine.position"
-                               @update="(property, value) => stateMachineChanged(stateMachine.id, property, value)">
+                <state-machine v-for="program in display.stateMachines" :key="program.id"
+                               :id="program.id" :state="state.stateMachines[program.id]"
+                               :position="program.position"
+                               @update="(property, value) => stateMachineChanged(program.id, property, value)">
                 </state-machine>
             </div>
         </section>
@@ -28,17 +38,26 @@
     import {startUpdate, stopUpdate} from '../../../util/tween';
 
     import merge from 'deepmerge';
-    import StateMachine from "./components/StateMachine";
+
+    import StateMachine from './components/StateMachine';
+
+    const updateSimulation = function () {
+        // Copy previous state and apply changes
+        const state = merge({}, this.state);
+        state.stateMachines = merge(state.stateMachines, this.stateChanges);
+        this.stateChanges = {};
+
+        this.state = Simulation.update(this.program, state);
+    };
 
     export default {
-        components: {StateMachine},
         name: 'simulation',
         data() {
-            const stateMachine = Simulation.Program.Prototype;
+            const program = Simulation.Program.Prototype;
 
             return {
-                stateMachine: stateMachine,
-                state: Simulation.createInitialState(stateMachine),
+                program: program,
+                state: Simulation.createInitialState(program),
                 stateChanges: {},
                 simulationIntervalId: null,
                 display: {
@@ -82,25 +101,46 @@
             stateMachineChanged(stateMachine, property, value) {
                 this.changeState({[stateMachine]: {[property]: value}});
             },
-        },
-        mounted() {
-            this.simulationIntervalId = setInterval(() => {
-                // Copy previous state and apply changes
-                const state = merge({}, this.state);
-                state.stateMachines = merge(state.stateMachines, this.stateChanges);
+            stopSimulation() {
+                if (this.simulationIntervalId) {
+                    clearInterval(this.simulationIntervalId);
+                    this.simulationIntervalId = null;
+                }
+            },
+            startSimulation() {
+                this.simulationIntervalId = setInterval(updateSimulation.bind(this), 1000);
+            },
+            stepSimulation() {
+                updateSimulation.bind(this).apply();
+            },
+            resetSimulation() {
+                const wasRunning = this.simulationRunning;
+
+                this.stopSimulation();
+
+                this.state = Simulation.createInitialState(this.program);
                 this.stateChanges = {};
 
-                this.state = Simulation.update(this.stateMachine, state);
-            }, 1000);
-
+                if (wasRunning) {
+                    this.startSimulation();
+                }
+            },
+        },
+        computed: {
+            simulationRunning() {
+                return !!this.simulationIntervalId;
+            },
+        },
+        mounted() {
             startUpdate();
+            this.startSimulation();
         },
         beforeDestroy() {
-            if (this.simulationIntervalId) {
-                clearInterval(this.simulationIntervalId);
-            }
-
+            this.stopSimulation();
             stopUpdate();
+        },
+        components: {
+            StateMachine,
         },
     };
 </script>
