@@ -16,10 +16,11 @@
             </p>
 
             <div class="state-machines">
-                <state-machine v-for="program in display.stateMachines" :key="program.id"
-                               :id="program.id" :state="state.stateMachines[program.id]"
-                               :position="program.position"
-                               @update="(property, value) => stateMachineChanged(program.id, property, value)">
+                <state-machine v-for="stateMachine in display.stateMachines" :key="stateMachine.id"
+                               :id="stateMachine.id" :state="state.stateMachines[stateMachine.id]"
+                               :definition="program.stateMachines.find(machine => machine.id === stateMachine.id)"
+                               :position="stateMachine.position"
+                               @update="(property, value) => stateMachineChanged(stateMachine.id, property, value)">
                 </state-machine>
             </div>
         </section>
@@ -56,7 +57,7 @@
             const program = Simulation.Program.Prototype;
 
             return {
-                program: program,
+                program,
                 state: Simulation.createInitialState(program),
                 stateChanges: {},
                 simulationIntervalId: null,
