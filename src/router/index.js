@@ -10,6 +10,8 @@ import EngineeringStorage from '../components/routes/engineering/Storage.vue';
 
 import TestEverything from '../components/routes/test/TestEverything.vue';
 
+import DebugSimulation from '../components/routes/debug/Simulation.vue';
+
 Vue.use(Router);
 
 export default new Router({
@@ -48,6 +50,10 @@ export default new Router({
         {
             path: '/test/everything',
             component: TestEverything,
+        },
+        {
+            path: '/debug/simulation',
+            component: DebugSimulation,
         },
     ],
 });
