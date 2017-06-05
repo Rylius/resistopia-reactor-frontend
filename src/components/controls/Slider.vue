@@ -76,7 +76,7 @@
     import createRangeSlider from '../../controls/range-slider';
 
     export default {
-        name: 'vertical-slider',
+        name: 'slider',
         props: {
             value: {
                 type: Number,
