@@ -34,7 +34,7 @@
         components: {StateMachine},
         name: 'simulation',
         data() {
-            const stateMachine = Simulation.Program.Prototype();
+            const stateMachine = Simulation.Program.Prototype;
 
             return {
                 stateMachine: stateMachine,
