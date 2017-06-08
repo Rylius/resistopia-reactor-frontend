@@ -95,10 +95,10 @@
                 return Object.keys(this.state).filter(property => !this.editableProperties.includes(property) && !this.outputProperties.includes(property));
             },
             editableProperties() {
-                return Object.keys(this.state).filter(property => this.definition.public[property]);
+                return Object.keys(this.state).filter(property => this.definition.public ? this.definition.public[property] : false);
             },
             outputProperties() {
-                return Object.keys(this.state).filter(property => this.definition.output.includes(property));
+                return Object.keys(this.state).filter(property => this.definition.output ? this.definition.output.includes(property) : false);
             },
         },
     }
