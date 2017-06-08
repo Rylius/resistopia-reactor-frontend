@@ -24,8 +24,7 @@
 </style>
 
 <script>
-    import {createInitialState, update} from 'resistopia-reactor-simulation';
-    import prototype from 'resistopia-reactor-simulation/data/prototype';
+    import Simulation from 'resistopia-reactor-simulation';
 
     import {startUpdate, stopUpdate} from '../../../util/tween';
 
@@ -34,11 +33,11 @@
     export default {
         name: 'dashboard',
         data() {
-            const stateMachine = prototype();
+            const program = Simulation.Program.Prototype;
 
             return {
-                stateMachine: stateMachine,
-                state: createInitialState(stateMachine),
+                program: program,
+                state: Simulation.createInitialState(program),
                 stateChanges: {},
                 simulationIntervalId: null,
                 navigation: [
@@ -78,7 +77,7 @@
                 state.stateMachines = merge(state.stateMachines, this.stateChanges);
                 this.stateChanges = {};
 
-                this.state = update(this.stateMachine, state);
+                this.state = Simulation.update(this.program, state);
             }, 1000);
 
             startUpdate();
