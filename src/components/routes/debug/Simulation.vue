@@ -15,11 +15,14 @@
                 </span>
             </p>
 
+            <canvas id="connections-canvas" width="984" height="768"
+                    style="pointer-events: none; z-index: 100; position: absolute"></canvas>
+
             <div class="state-machines">
                 <state-machine v-for="stateMachine in display.stateMachines" :key="stateMachine.id"
                                :id="stateMachine.id" :state="state.stateMachines[stateMachine.id]"
                                :definition="program.stateMachines.find(machine => machine.id === stateMachine.id)"
-                               :position="stateMachine.position"
+                               :position="stateMachine.position" :targets="stateMachine.targets"
                                @update="(property, value) => stateMachineChanged(stateMachine.id, property, value)">
                 </state-machine>
             </div>
@@ -66,18 +69,29 @@
                         {
                             id: 'storage-matter',
                             position: [0, 0],
+                            targets: [{id: 'reactor', fromOffset: {y: 50}, toOffset: {y: -50}}],
                         },
                         {
                             id: 'storage-antimatter',
                             position: [1, 0],
+                            targets: [{id: 'reactor', fromOffset: {y: 50}, toOffset: {x: 20, y: -50}}],
                         },
                         {
                             id: 'reactor',
                             position: [0, 1],
+                            targets: [
+                                {id: 'distributor', fromOffset: {y: 50}, toOffset: {y: -40}},
+                                {id: 'reactor-cooling', fromOffset: {x: 50, y: 50}, toOffset: {x: -140, y: -20}}
+                            ],
                         },
                         {
                             id: 'distributor',
                             position: [0, 2],
+                            targets: [
+                                {id: 'reactor-cooling', fromOffset: {y: 40}, toOffset: {x: -140, y: 20}},
+                                {id: 'core', fromOffset: {y: 40}, toOffset: {y: -30}},
+                                {id: 'base', fromOffset: {y: 40}, toOffset: {y: -40}}
+                            ],
                         },
                         {
                             id: 'reactor-cooling',
@@ -93,6 +107,7 @@
                         },
                     ],
                 },
+                arrowsDrawn: false,
             };
         },
         methods: {
@@ -126,6 +141,62 @@
                     this.startSimulation();
                 }
             },
+            drawArrows() {
+                const canvas = document.getElementById('connections-canvas');
+                const canvasBounds = canvas.getBoundingClientRect();
+                const context = canvas.getContext('2d');
+
+                function drawArrow(from, to) {
+                    const head = 24;
+                    const angle = Math.atan2(to.y - from.y, to.x - from.x);
+                    context.moveTo(from.x, from.y);
+                    context.lineTo(to.x, to.y);
+                    context.moveTo(to.x, to.y);
+                    context.lineTo(to.x - head * Math.cos(angle - Math.PI / 6), to.y - head * Math.sin(angle - Math.PI / 6));
+                    context.moveTo(to.x, to.y);
+                    context.lineTo(to.x - head * Math.cos(angle + Math.PI / 6), to.y - head * Math.sin(angle + Math.PI / 6));
+                }
+
+                function center(el) {
+                    const bounds = el.getBoundingClientRect();
+                    return {
+                        x: (bounds.left + (bounds.width / 2)) - canvasBounds.left,
+                        y: (bounds.top + (bounds.height / 2)) - canvasBounds.top
+                    };
+                }
+
+                context.strokeStyle = 'rgba(0, 100, 230, 0.75)';
+                context.lineWidth = 4;
+
+                context.beginPath();
+                this.display.stateMachines.forEach(display => {
+                    if (!display.targets) {
+                        return;
+                    }
+
+                    display.targets.forEach(target => {
+                        const fromEl = document.getElementById(`state-machine-${display.id}`);
+                        const toEl = document.getElementById(`state-machine-${target.id}`);
+
+                        const from = center(fromEl);
+                        const to = center(toEl);
+
+                        if (target.fromOffset) {
+                            from.x += target.fromOffset.x || 0;
+                            from.y += target.fromOffset.y || 0;
+                        }
+                        if (target.toOffset) {
+                            to.x += target.toOffset.x || 0;
+                            to.y += target.toOffset.y || 0;
+                        }
+
+                        drawArrow(from, to);
+                    });
+                });
+                context.stroke();
+
+                this.arrowsDrawn = true;
+            },
         },
         computed: {
             simulationRunning() {
@@ -135,6 +206,11 @@
         mounted() {
             startUpdate();
             this.startSimulation();
+        },
+        beforeUpdate() {
+            if (!this.arrowsDrawn) {
+                this.drawArrows();
+            }
         },
         beforeDestroy() {
             this.stopSimulation();

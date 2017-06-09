@@ -1,5 +1,5 @@
 <template>
-    <div class="state-machine" :style="style">
+    <div class="state-machine" :style="style" :id="`state-machine-${id}`">
         <div><strong>{{ id }}</strong></div>
 
         <ul v-if="stateProperties">
