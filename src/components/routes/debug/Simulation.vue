@@ -80,30 +80,44 @@
                             id: 'reactor',
                             position: [0, 1],
                             targets: [
-                                {id: 'distributor', fromOffset: {y: 50}, toOffset: {y: -40}},
-                                {id: 'reactor-cooling', fromOffset: {x: 50, y: 50}, toOffset: {x: -140, y: -20}}
+                                {id: 'energy-distributor', fromOffset: {y: 60}, toOffset: {y: -90}},
+                                {id: 'reactor-cooling', fromOffset: {x: 130}, toOffset: {x: -140}},
+                            ],
+                        },
+                        {
+                            id: 'energy-distributor',
+                            position: [0, 2],
+                            targets: [
+                                {id: 'energy-converter', fromOffset: {x: 140, y: -45}, toOffset: {x: -140}},
+                                {id: 'core', fromOffset: {y: 90}, toOffset: {y: -30}},
+                            ],
+                        },
+                        {
+                            id: 'energy-converter',
+                            position: [1, 2],
+                            targets: [
+                                {id: 'distributor', fromOffset: {x: 140}, toOffset: {x: -140}},
                             ],
                         },
                         {
                             id: 'distributor',
-                            position: [0, 2],
+                            position: [2, 2],
                             targets: [
-                                {id: 'reactor-cooling', fromOffset: {y: 40}, toOffset: {x: -140, y: 20}},
-                                {id: 'core', fromOffset: {y: 40}, toOffset: {y: -30}},
-                                {id: 'base', fromOffset: {y: 40}, toOffset: {y: -40}}
+                                {id: 'reactor-cooling', fromOffset: {y: -40}, toOffset: {y: 60}},
+                                {id: 'base', fromOffset: {y: 40}, toOffset: {y: -40}},
                             ],
                         },
                         {
                             id: 'reactor-cooling',
-                            position: [2, 2],
+                            position: [2, 1],
                         },
                         {
                             id: 'core',
-                            position: [0, 3],
+                            position: [0, 3.5],
                         },
                         {
                             id: 'base',
-                            position: [1, 3],
+                            position: [2, 3],
                         },
                     ],
                 },

@@ -8,6 +8,8 @@ export default {
                 {from: 4000, to: Infinity, id: 'critical', color: 'red'},
             ],
         },
+        'energy-distributor': {},
+        'energy-converter': {},
         'reactor-cooling': {
             powerConsumed: [],
             powerSatisfaction: [
@@ -49,6 +51,26 @@ export default {
             releasedAntimatterPerTick: {
                 min: 0,
                 max: 500,
+            },
+        },
+        'energy-distributor': {
+            converterWeight: {
+                min: 0,
+                max: 1,
+            },
+            capacitorWeight: {
+                min: 0,
+                max: 1,
+            },
+            coreWeight: {
+                min: 0,
+                max: 1,
+            },
+        },
+        'energy-converter': {
+            energyConversion: {
+                min: 0,
+                max: 100,
             },
         },
         'reactor-cooling': {
