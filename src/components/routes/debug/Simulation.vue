@@ -15,8 +15,7 @@
                 </span>
             </p>
 
-            <canvas id="connections-canvas" width="984" height="768"
-                    style="pointer-events: none; z-index: 100; position: absolute"></canvas>
+            <canvas id="connections-canvas" width="984" height="768"></canvas>
 
             <div class="state-machines">
                 <state-machine v-for="stateMachine in display.stateMachines" :key="stateMachine.id"
@@ -33,6 +32,14 @@
 <style lang="less" scoped>
     .state-machines {
         position: relative;
+    }
+
+    #connections-canvas {
+        position: absolute;
+        z-index: 100;
+
+        pointer-events: none;
+        user-select: none;
     }
 </style>
 
@@ -89,7 +96,8 @@
                             position: [0, 2],
                             targets: [
                                 {id: 'energy-converter', fromOffset: {x: 140, y: -45}, toOffset: {x: -140}},
-                                {id: 'core', fromOffset: {y: 90}, toOffset: {y: -30}},
+                                {id: 'core', fromOffset: {y: 90}, toOffset: {y: -40}},
+                                {id: 'energy-capacitor', fromOffset: {x: 120, y: 90}, toOffset: {y: -40}},
                             ],
                         },
                         {
@@ -110,6 +118,13 @@
                         {
                             id: 'reactor-cooling',
                             position: [2, 1],
+                        },
+                        {
+                            id: 'energy-capacitor',
+                            position: [1, 3.5],
+                            targets: [
+                                {id: 'core', fromOffset: {x: -145}, toOffset: {x: 130}},
+                            ],
                         },
                         {
                             id: 'core',
