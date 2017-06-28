@@ -79,5 +79,14 @@ export default {
                 max: 200,
             },
         },
+        'pump-a': {
+            enabled: {min: 0, max: 1},
+        },
+        'pump-b': {
+            enabled: {min: 0, max: 1},
+        },
+        'pump-c': {
+            enabled: {min: 0, max: 1},
+        },
     },
 };

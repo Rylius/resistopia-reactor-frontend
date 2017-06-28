@@ -15,7 +15,7 @@
                 </span>
             </p>
 
-            <canvas id="connections-canvas" width="984" height="768"></canvas>
+            <canvas id="connections-canvas" width="984" height="1280"></canvas>
 
             <div class="state-machines">
                 <state-machine v-for="stateMachine in display.stateMachines" :key="stateMachine.id"
@@ -64,7 +64,7 @@
     export default {
         name: 'simulation',
         data() {
-            const program = Simulation.Program.Prototype;
+            const program = Simulation.Program.BE13;
 
             return {
                 program,
@@ -96,7 +96,7 @@
                             position: [0, 2],
                             targets: [
                                 {id: 'energy-converter', fromOffset: {x: 140, y: -45}, toOffset: {x: -140}},
-                                {id: 'core', fromOffset: {y: 90}, toOffset: {y: -40}},
+                                {id: 'core', fromOffset: {y: 90}, toOffset: {y: -60}},
                                 {id: 'energy-capacitor', fromOffset: {x: 120, y: 90}, toOffset: {y: -40}},
                             ],
                         },
@@ -104,15 +104,16 @@
                             id: 'energy-converter',
                             position: [1, 2],
                             targets: [
-                                {id: 'distributor', fromOffset: {x: 140}, toOffset: {x: -140}},
+                                {id: 'power-distributor', fromOffset: {x: 140}, toOffset: {x: -140}},
                             ],
                         },
                         {
-                            id: 'distributor',
+                            id: 'power-distributor',
                             position: [2, 2],
                             targets: [
                                 {id: 'reactor-cooling', fromOffset: {y: -40}, toOffset: {y: 60}},
-                                {id: 'base', fromOffset: {y: 40}, toOffset: {y: -40}},
+                                {id: 'base', fromOffset: {y: 60}, toOffset: {y: -40}},
+                                {id: 'water-treatment', fromOffset: {x: -120, y: 60}, toOffset: {x: 80, y: -70}},
                             ],
                         },
                         {
@@ -133,6 +134,42 @@
                         {
                             id: 'base',
                             position: [2, 3],
+                        },
+                        {
+                            id: 'water-tank',
+                            position: [2, 4.5],
+                            targets: [
+                                {id: 'water-treatment', fromOffset: {x: -140, y: 5}, toOffset: {x: 130, y: -50}},
+                                {id: 'reactor-cooling', fromOffset: {x: 120, y: -30}, toOffset: {x: 120, y: 60}},
+                            ],
+                        },
+                        {
+                            id: 'water-treatment',
+                            position: [1, 4.5],
+                            targets: [
+                                {id: 'base', fromOffset: {x: 120, y: -70}, toOffset: {y: 50}},
+                            ],
+                        },
+                        {
+                            id: 'pump-a',
+                            position: [0, 5.75],
+                            targets: [
+                                {id: 'water-tank', fromOffset: {y: -60}, toOffset: {x: -40, y: 40}},
+                            ],
+                        },
+                        {
+                            id: 'pump-b',
+                            position: [1, 5.75],
+                            targets: [
+                                {id: 'water-tank', fromOffset: {y: -60}, toOffset: {y: 40}},
+                            ],
+                        },
+                        {
+                            id: 'pump-c',
+                            position: [2, 5.75],
+                            targets: [
+                                {id: 'water-tank', fromOffset: {y: -60}, toOffset: {x: 20, y: 40}},
+                            ],
                         },
                     ],
                 },
