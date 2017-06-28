@@ -50,12 +50,12 @@
                         text: 'reactor',
                     },
                     {
-                        to: {name: 'engineering/cooling'},
-                        text: 'cooling',
-                    },
-                    {
                         to: {name: 'engineering/power'},
                         text: 'power',
+                    },
+                    {
+                        to: {name: 'engineering/water'},
+                        text: 'water',
                     },
                     {
                         to: {name: 'engineering/storage'},
