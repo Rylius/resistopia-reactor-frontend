@@ -33,7 +33,7 @@
     export default {
         name: 'dashboard',
         data() {
-            const program = Simulation.Program.Prototype;
+            const program = Simulation.Program.BE13;
 
             return {
                 program: program,

@@ -7,9 +7,9 @@
                     <span slot="status" v-if="state.reactor.shutdownRemaining">(offline)</span>
                 </temperature-display>
 
-                <temperature-display :values="values" stateMachine="distributor" property="heat" label="distributor"
+                <temperature-display :values="values" stateMachine="power-distributor" property="heat" label="distributor"
                                      style="width: 100%">
-                    <span slot="status" v-if="state.distributor.shutdownRemaining">(offline)</span>
+                    <span slot="status" v-if="state['power-distributor'].shutdownRemaining">(offline)</span>
                 </temperature-display>
             </div>
 
