@@ -67,11 +67,6 @@
     export default {
         name: 'dashboard',
         mixins: [EngineeringMixin],
-        props: {
-            state: {
-                required: true,
-            },
-        },
         components: {
             PowerConsumptionDisplay,
             SevenSegmentDisplay,
