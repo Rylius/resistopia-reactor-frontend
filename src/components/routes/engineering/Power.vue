@@ -4,12 +4,10 @@
 </template>
 
 <script>
+    import EngineeringMixin from '../../../mixins/engineering';
+
     export default {
         name: 'power',
-        props: {
-            state: {
-                required: true,
-            },
-        },
+        mixins: [EngineeringMixin],
     };
 </script>
