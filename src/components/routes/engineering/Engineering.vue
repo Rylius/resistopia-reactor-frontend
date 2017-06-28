@@ -12,7 +12,9 @@
         </nav>
 
         <section class="content">
-            <router-view :state="state.stateMachines" @changeState="changeState"></router-view>
+            <router-view :state="state.stateMachines"
+                         @changeProperty="changeProperty" @changeState="changeState">
+            </router-view>
         </section>
 
         <div class="warning-strip">&nbsp;</div>
@@ -31,6 +33,13 @@
     import merge from 'deepmerge';
 
     import {createFrontendState} from '../../../simulation';
+
+    import {normalizedToRange} from '../../../util/math';
+
+    function mapNormalizedProperty(state, stateMachine, property, value) {
+        const config = state.stateMachines[stateMachine][property];
+        return normalizedToRange(value, config.min, config.max);
+    }
 
     export default {
         name: 'dashboard',
@@ -69,8 +78,14 @@
             };
         },
         methods: {
+            changeProperty(stateMachine, property, value) {
+                this.changeState({
+                    [stateMachine]: {
+                        [property]: mapNormalizedProperty(this.state, stateMachine, property, value),
+                    },
+                });
+            },
             changeState(changes) {
-                console.log(changes);
                 this.simulation.stateChanges = merge(this.simulation.stateChanges, changes);
             },
         },

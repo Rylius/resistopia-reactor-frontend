@@ -33,13 +33,13 @@
                     matter: {{ Math.round(state['storage-matter'].releasedMatterPerTick.value) }}
                     <slider :vertical="false"
                             :value="state['storage-matter']['releasedMatterPerTick'].normalizedValue"
-                            @update="value => changeState('storage-matter', 'releasedMatterPerTick', value)"></slider>
+                            @update="value => changeProperty('storage-matter', 'releasedMatterPerTick', value)"></slider>
                 </div>
                 <div class="block">
                     antimatter: {{ Math.round(state['storage-antimatter'].releasedAntimatterPerTick.value) }}
                     <slider :vertical="false"
                             :value="state['storage-antimatter']['releasedAntimatterPerTick'].normalizedValue"
-                            @update="value => changeState('storage-antimatter', 'releasedAntimatterPerTick', value)"></slider>
+                            @update="value => changeProperty('storage-antimatter', 'releasedAntimatterPerTick', value)"></slider>
                 </div>
             </div>
 
@@ -48,7 +48,7 @@
                     cooling: {{ Math.round(state['reactor-cooling'].effectiveCooling.value)}}/{{ Math.round(state['reactor-cooling'].cooling.value)}}
                     <slider :vertical="false"
                             :value="state['reactor-cooling']['cooling'].normalizedValue"
-                            @update="value => changeState('reactor-cooling', 'cooling', value)"></slider>
+                            @update="value => changeProperty('reactor-cooling', 'cooling', value)"></slider>
                 </div>
             </div>
         </div>
@@ -56,88 +56,20 @@
 </template>
 
 <script>
+    import EngineeringMixin from '../../../mixins/engineering';
+
     import SevenSegmentDisplay from '../../controls/SevenSegmentDisplay';
     import Lamp from '../../controls/Lamp';
     import Slider from '../../controls/Slider';
-
     import TemperatureDisplay from '../../controls/engineering/TemperatureDisplay';
-
-    import {normalizedToRange, rangeToNormalized} from '../../../util/math';
-
-    import limits from '../../../limits';
     import PowerConsumptionDisplay from "../../controls/engineering/PowerConsumptionDisplay";
 
     export default {
         name: 'dashboard',
+        mixins: [EngineeringMixin],
         props: {
             state: {
                 required: true,
-            },
-        },
-        data() {
-            return {
-                limits,
-            };
-        },
-        computed: {
-            values() {
-                const values = {};
-
-                Object.keys(this.state).forEach(stateMachineId => {
-                    const stateMachine = this.state[stateMachineId];
-                    values[stateMachineId] = {};
-                    Object.keys(stateMachine).forEach(property => {
-                        const value = stateMachine[property];
-                        const range = this.rangeForValue(stateMachineId, property, value);
-                        values[stateMachineId][property] = {
-                            data: value,
-                            type: range.id,
-                            color: range.color,
-                        };
-                    });
-                });
-
-                return values;
-            },
-        },
-        methods: {
-            rangeForValue(stateMachine, property, value) {
-                if (!limits.ranges[stateMachine] || !limits.ranges[stateMachine][property]) {
-                    return {id: 'default', color: 'default'};
-                }
-
-                const range = limits.ranges[stateMachine][property].find(range => {
-                    return value >= range.from && value <= range.to;
-                });
-
-                if (!range) {
-                    return {id: 'default', color: 'default'};
-                }
-
-                return range;
-            },
-            rangeToNormalized,
-            normalizedToRange,
-            mapNormalized(value, limit) {
-                return this.rangeToNormalized(value, limit.min, limit.max);
-            },
-            mapRange(value, limit) {
-                return this.normalizedToRange(value, limit.min, limit.max);
-            },
-            normalizedProperty(stateMachine, property) {
-                return this.mapNormalized(this.state[stateMachine][property], limits.input[stateMachine][property]);
-            },
-            mapProperty(stateMachine, property, value) {
-                const config = this.state[stateMachine][property];
-                return this.normalizedToRange(value, config.min, config.max);
-            },
-            changeState(stateMachine, property, value) {
-                const changes = {
-                    [stateMachine]: {
-                        [property]: this.mapProperty(stateMachine, property, value),
-                    },
-                };
-                this.$emit('changeState', changes);
             },
         },
         components: {
