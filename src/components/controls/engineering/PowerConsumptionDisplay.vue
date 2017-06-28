@@ -5,8 +5,8 @@
         </div>
         <div class="block" style="width: 60%;">
             <seven-segment-display
-                :value="values[stateMachine][consumptionProperty].data"
-                :color="values[stateMachine][satisfactionProperty].color"
+                :value="state[stateMachine][consumptionProperty].value"
+                :color="state[stateMachine][satisfactionProperty].status.color"
                 :digits="4" :decimals="1"></seven-segment-display>
         </div>
         <div class="block" style="width: 10%;">
@@ -27,7 +27,7 @@
     export default {
         name: 'PowerConsumptionDisplay',
         props: {
-            values: {
+            state: {
                 required: true,
             },
             stateMachine: {

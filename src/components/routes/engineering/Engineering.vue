@@ -30,16 +30,20 @@
 
     import merge from 'deepmerge';
 
+    import {createFrontendState} from '../../../simulation';
+
     export default {
         name: 'dashboard',
         data() {
             const program = Simulation.Program.BE13;
 
             return {
-                program: program,
-                state: Simulation.createInitialState(program),
-                stateChanges: {},
-                simulationIntervalId: null,
+                simulation: {
+                    program: program,
+                    state: Simulation.createInitialState(program),
+                    stateChanges: {},
+                    intervalId: null,
+                },
                 navigation: [
                     {
                         to: {name: 'engineering/dashboard'},
@@ -66,25 +70,31 @@
         },
         methods: {
             changeState(changes) {
-                this.stateChanges = merge(this.stateChanges, changes);
+                console.log(changes);
+                this.simulation.stateChanges = merge(this.simulation.stateChanges, changes);
+            },
+        },
+        computed: {
+            state() {
+                return createFrontendState(this.simulation.state);
             },
         },
         mounted() {
             // TODO
-            this.simulationIntervalId = setInterval(() => {
+            this.simulation.intervalId = setInterval(() => {
                 // Copy previous state and apply changes
-                const state = merge({}, this.state);
-                state.stateMachines = merge(state.stateMachines, this.stateChanges);
-                this.stateChanges = {};
+                const state = merge({}, this.simulation.state);
+                state.stateMachines = merge(state.stateMachines, this.simulation.stateChanges);
+                this.simulation.stateChanges = {};
 
-                this.state = Simulation.update(this.program, state);
+                this.simulation.state = Simulation.update(this.simulation.program, state);
             }, 1000);
 
             startUpdate();
         },
         beforeDestroy() {
-            if (this.simulationIntervalId) {
-                clearInterval(this.simulationIntervalId);
+            if (this.simulation.intervalId) {
+                clearInterval(this.simulation.intervalId);
             }
 
             stopUpdate();

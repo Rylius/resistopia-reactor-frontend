@@ -5,17 +5,18 @@
             <slot name="status"></slot>
         </div>
         <div class="block" style="width: 35%;">
-            <seven-segment-display :value="Math.round(values[stateMachine][property].data)"
-                                   :color="values[stateMachine][property].color"
+            <seven-segment-display :value="Math.round(state[stateMachine][property].value)"
+                                   :color="state[stateMachine][property].status.color"
                                    :digits="4" :decimals="0"></seven-segment-display>
         </div>
         <div class="block" style="width: 15%;">
             <seven-segment-display value="°C"
-                                   :color="values[stateMachine][property].color"
+                                   :color="state[stateMachine][property].status.color"
                                    :digits="2" :decimals="0"></seven-segment-display>
         </div>
         <div class="block" style="width: 20%;">
-            <lamp :enabled="values[stateMachine][property].type === 'critical'"
+            <!-- FIXME -->
+            <lamp :enabled="state[stateMachine][property].status.id === 'critical'"
                   color="red" :flash="true"></lamp>
         </div>
     </div>
@@ -34,7 +35,7 @@
     export default {
         name: 'TemperatureDisplay',
         props: {
-            values: {
+            state: {
                 required: true,
             },
             stateMachine: {

@@ -2,25 +2,27 @@
     <section>
         <div class="block-group">
             <div class="block" style="width: 40%;">
-                <temperature-display :values="values" stateMachine="reactor" property="heat" label="reactor"
+                <temperature-display :state="state" stateMachine="reactor" property="heat" label="reactor"
                                      style="width: 100%">
-                    <span slot="status" v-if="state.reactor.shutdownRemaining">(offline)</span>
+                    <span slot="status" v-if="state.reactor.shutdownRemaining.value">(offline)</span>
                 </temperature-display>
 
-                <temperature-display :values="values" stateMachine="power-distributor" property="heat" label="distributor"
+                <temperature-display :state="state" stateMachine="power-distributor" property="heat" label="distributor"
                                      style="width: 100%">
-                    <span slot="status" v-if="state['power-distributor'].shutdownRemaining">(offline)</span>
+                    <span slot="status" v-if="state['power-distributor'].shutdownRemaining.value">(offline)</span>
                 </temperature-display>
             </div>
 
             <div class="block" style="width: 20%;">
-                <power-consumption-display :values="values" stateMachine="reactor-cooling"
+                <power-consumption-display :state="state" stateMachine="reactor-cooling"
                                            label="cooling" style="width: 100%"></power-consumption-display>
 
-                <power-consumption-display :values="values" stateMachine="core"
+                <!-- TODO Remove -->
+                <power-consumption-display :state="state" stateMachine="core" consumptionProperty="energyConsumed"
+                                           satisfactionProperty="energySatisfaction"
                                            label="core" style="width: 100%"></power-consumption-display>
 
-                <power-consumption-display :values="values" stateMachine="base"
+                <power-consumption-display :state="state" stateMachine="base"
                                            label="base" style="width: 100%"></power-consumption-display>
             </div>
         </div>
@@ -28,25 +30,24 @@
         <div class="block-group">
             <div class="block block-group" style="width: 25%;">
                 <div class="block">
-                    matter: {{ Math.round(state['storage-matter'].releasedMatterPerTick) }}
+                    matter: {{ Math.round(state['storage-matter'].releasedMatterPerTick.value) }}
                     <slider :vertical="false"
-                            :value="normalizedProperty('storage-matter', 'releasedMatterPerTick')"
+                            :value="state['storage-matter']['releasedMatterPerTick'].normalizedValue"
                             @update="value => changeState('storage-matter', 'releasedMatterPerTick', value)"></slider>
                 </div>
                 <div class="block">
-                    antimatter: {{ Math.round(state['storage-antimatter'].releasedAntimatterPerTick) }}
+                    antimatter: {{ Math.round(state['storage-antimatter'].releasedAntimatterPerTick.value) }}
                     <slider :vertical="false"
-                            :value="normalizedProperty('storage-antimatter', 'releasedAntimatterPerTick')"
+                            :value="state['storage-antimatter']['releasedAntimatterPerTick'].normalizedValue"
                             @update="value => changeState('storage-antimatter', 'releasedAntimatterPerTick', value)"></slider>
                 </div>
             </div>
 
             <div class="block block-group" style="width: 25%;">
                 <div class="block">
-                    cooling: {{ Math.round(state['reactor-cooling'].effectiveCooling)
-                    }}/{{ Math.round(state['reactor-cooling'].cooling) }}
+                    cooling: {{ Math.round(state['reactor-cooling'].effectiveCooling.value)}}/{{ Math.round(state['reactor-cooling'].cooling.value)}}
                     <slider :vertical="false"
-                            :value="normalizedProperty('reactor-cooling', 'cooling')"
+                            :value="state['reactor-cooling']['cooling'].normalizedValue"
                             @update="value => changeState('reactor-cooling', 'cooling', value)"></slider>
                 </div>
             </div>
@@ -126,10 +127,14 @@
             normalizedProperty(stateMachine, property) {
                 return this.mapNormalized(this.state[stateMachine][property], limits.input[stateMachine][property]);
             },
+            mapProperty(stateMachine, property, value) {
+                const config = this.state[stateMachine][property];
+                return this.normalizedToRange(value, config.min, config.max);
+            },
             changeState(stateMachine, property, value) {
                 const changes = {
                     [stateMachine]: {
-                        [property]: this.mapRange(value, limits.input[stateMachine][property]),
+                        [property]: this.mapProperty(stateMachine, property, value),
                     },
                 };
                 this.$emit('changeState', changes);
