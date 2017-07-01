@@ -7,7 +7,7 @@
 
     @slider-size: 30px;
     @track-size: 6px;
-    @track-margin: 5px;
+    @track-margin: 10px;
     @handle-thickness: 10px;
 
     @track-color: #252525;
