@@ -1,0 +1,13 @@
+{
+    "de": {
+        "reactor": {
+            "name": "Reaktor",
+            "state": {
+                "offline": "offline"
+            }
+        },
+        "cooling": {
+            "name": "Kühlung"
+        }
+    }
+}
