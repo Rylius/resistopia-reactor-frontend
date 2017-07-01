@@ -387,7 +387,5 @@ export function createFrontendState(simulationState) {
         );
     });
 
-    console.log(frontendState);
-
     return frontendState;
 }
