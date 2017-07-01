@@ -22,11 +22,15 @@
         },
         "stateMachine": {
             "reactor-cooling": {
-                "powerConsumption": "Kühlwasserpumpen"
+                "powerConsumption": "Pumpe"
             }
         },
         "temperature": {
             "c": "{temp}°C"
+        },
+        "power": {
+            "actual": "Ist",
+            "target": "Soll"
         }
     }
 }
