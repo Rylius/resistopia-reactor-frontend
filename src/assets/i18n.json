@@ -1,13 +1,32 @@
 {
     "de": {
+        "nav": {
+            "dashboard": "Übersicht",
+            "reactor": "Reaktor",
+            "power": "Strom",
+            "water": "Wasser",
+            "storage": "Lager"
+        },
         "reactor": {
             "name": "Reaktor",
             "state": {
+                "online": "aktiv",
                 "offline": "offline"
+            },
+            "temperature": {
+                "core": "Reaktorkern"
             }
         },
         "cooling": {
             "name": "Kühlung"
+        },
+        "stateMachine": {
+            "reactor-cooling": {
+                "powerConsumption": "Kühlwasserpumpen"
+            }
+        },
+        "temperature": {
+            "c": "{temp}°C"
         }
     }
 }

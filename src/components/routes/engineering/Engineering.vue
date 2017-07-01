@@ -5,7 +5,7 @@
                 <div v-for="route in navigation" :key="route.text"
                      class="block nav-item-wrapper" :style="{width: (100 / navigation.length) + '%'}">
                     <router-link tag="a" :to="route.to" class="nav-item">
-                        {{ route.text }}
+                        {{ $t('nav.' + route.text) }}
                     </router-link>
                 </div>
             </div>
