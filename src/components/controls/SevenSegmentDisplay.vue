@@ -18,12 +18,9 @@
         display: block;
         position: relative;
 
-        width: 100%;
         height: 1em;
 
         box-sizing: border-box;
-
-        background-color: @segment-display-background;
 
         .background {
             position: absolute;
