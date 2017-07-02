@@ -40,6 +40,7 @@ module.exports = {
                         plugins: [
                             {removeXMLNS: true},
                             {removeHiddenElems: false},
+                            {removeUnknownsAndDefaults: {unknownAttrs: false}},
                             {cleanupIDs: false},
                         ],
                     },
