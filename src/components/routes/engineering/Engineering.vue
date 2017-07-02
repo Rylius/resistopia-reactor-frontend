@@ -25,7 +25,7 @@
     </section>
 </template>
 
-<style lang="less" scoped>
+<style lang="less">
     @import "../../../assets/less/engineering";
 
     nav {
