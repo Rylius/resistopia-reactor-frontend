@@ -10,8 +10,8 @@
         "reactor": {
             "name": "Reaktor",
             "state": {
-                "online": "aktiv",
-                "offline": "offline"
+                "online": "Aktiv",
+                "offline": "Notabschaltung"
             },
             "temperature": {
                 "core": "Reaktorkern"
