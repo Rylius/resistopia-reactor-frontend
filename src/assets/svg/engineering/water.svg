@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="994"
+   height="768"
+   viewBox="0 0 994 768"
+   version="1.1"
+   id="graph"
+   inkscape:version="0.92.1 r15371"
+   sodipodi:docname="water.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1"
+     inkscape:cx="524.43949"
+     inkscape:cy="299.84058"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:showpageshadow="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:measure-start="168.999,127.986"
+     inkscape:measure-end="168.999,57.9828"
+     inkscape:guide-bbox="true">
+    <sodipodi:guide
+       position="497,383.5"
+       orientation="1,0"
+       id="guide4589"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect4507"
+       width="134.90833"
+       height="113.54375"
+       x="698.03748"
+       y="219.40417" />
+    <rect
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect4509"
+       width="135.79352"
+       height="84.427139"
+       x="698.63599"
+       y="95.580788" />
+    <text
+       xml:space="preserve"
+       x="119.23033"
+       y="171.49542"
+       id="text4525"><tspan
+         sodipodi:role="line"
+         x="119.23033"
+         y="171.49542"
+         id="tspan4527">reactor-cooling</tspan></text>
+    <text
+       xml:space="preserve"
+       x="749.63898"
+       y="89.664001"
+       id="text4539"><tspan
+         sodipodi:role="line"
+         id="tspan4537"
+         x="749.63898"
+         y="89.664001">base</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 765.39475,225.95877 0.26458,-49.47708"
+       id="path4547"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       x="716.89374"
+       y="213.55206"
+       id="text4533"><tspan
+         sodipodi:role="line"
+         id="tspan4531"
+         x="716.89374"
+         y="213.55206">water-treatment</tspan></text>
+    <text
+       xml:space="preserve"
+       x="111.84375"
+       y="704.70831"
+       id="pump-a-text">pump-a</text>
+    <text
+       xml:space="preserve"
+       x="452.88333"
+       y="700.9729"
+       id="pump-b-text">pump-b</text>
+    <text
+       xml:space="preserve"
+       x="775.93127"
+       y="705.17914"
+       id="pump-c-text">pump-c</text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:20;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 170,730 0,-88 c 0,-16 8,-24 24,-24 h 247 c 16,0 24,-8 24,-24 v -48"
+       id="pump-a-path"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:20;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 497,726 0,-176.9941"
+       id="pump-b-path"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cccccc"
+       inkscape:connector-curvature="0"
+       id="pump-c-path"
+       d="m 830.46151,730 0,-88 c 0,-16 -8,-24 -24,-24 h -251 c -16,0 -24,-8 -24,-24 v -48"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:20;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 483.93503,500.93903 v -42 c 0,-16 -8,-24 -24,-24 h -266.5 c -16,0 -24,-8 -24,-24 l 0,-217"
+       id="path4581"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccc" />
+    <path
+       sodipodi:nodetypes="cccccc"
+       inkscape:connector-curvature="0"
+       id="path4585"
+       d="m 509.8732,500.93903 v -42 c 0,-16 8,-24 24,-24 h 206.5 c 16,0 24,-8 24,-24 l 0,-85"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       sodipodi:nodetypes="cccccc"
+       inkscape:connector-curvature="0"
+       id="pump-a-connection"
+       d="m 170,730 v -88 c 0,-16 8,-24 24,-24 h 247 c 16,0 24,-8 24,-24 v -48"
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       class="pump-connection"
+       :class="{active: state['pump-a'].water.value}" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="pump-b-connection"
+       d="M 497,726 V 549.0059"
+       style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       class="pump-connection"
+       :class="{active: state['pump-b'].water.value}" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 830.46151,730 v -88 c 0,-16 -8,-24 -24,-24 h -251 c -16,0 -24,-8 -24,-24 v -48"
+       id="pump-c-connection"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccc"
+       class="pump-connection"
+       :class="{active: state['pump-c'].water.value}" />
+    <ellipse
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="water-tank"
+       ry="50.542595"
+       rx="103.01555"
+       cy="531.35742"
+       cx="497" />
+  </g>
+</svg>
