@@ -28,8 +28,24 @@ module.exports = {
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader',
-        options: vueLoaderConfig
+        loader: [
+            {
+                loader: 'vue-loader',
+                options: vueLoaderConfig,
+            },
+            {
+                loader: 'markup-inline-loader',
+                options: {
+                    svgo: {
+                        plugins: [
+                            {removeXMLNS: true},
+                            {removeHiddenElems: false},
+                            {cleanupIDs: false},
+                        ],
+                    },
+                },
+            },
+        ],
       },
       {
         test: /\.js$/,
