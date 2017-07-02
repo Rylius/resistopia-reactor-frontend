@@ -18,11 +18,21 @@
             }
         },
         "cooling": {
-            "name": "Kühlung"
+            "name": "Kühlung",
+            "water": "Kühlwasser"
         },
         "stateMachine": {
             "reactor-cooling": {
                 "powerConsumption": "Pumpe"
+            },
+            "pump-a": {
+                "name": "Pumpe A"
+            },
+            "pump-b": {
+                "name": "Pumpe B"
+            },
+            "pump-c": {
+                "name": "Pumpe C"
             }
         },
         "temperature": {

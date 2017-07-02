@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="524.43949"
-     inkscape:cy="299.84058"
+     inkscape:cx="665.43949"
+     inkscape:cy="328.84058"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -184,5 +184,9 @@
        rx="103.01555"
        cy="531.35742"
        cx="497" />
+    <text
+       xml:space="preserve"
+       x="269.5918"
+       y="424.15625">{{ $t('cooling.water') }}</text>
   </g>
 </svg>

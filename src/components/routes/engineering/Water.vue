@@ -4,7 +4,7 @@
             <svg class="water-graph" markup-inline src="../../../assets/svg/engineering/water.svg"></svg>
 
             <div class="graph-overlay" v-for="pump in pumps" :data-target="pump + '-text'">
-                {{ pump }}
+                {{ $t('stateMachine.' + pump + '.name') }}
                 <br>
                 <button v-if="!state[pump].enabled.value" @click="() => changeProperty(pump, 'enabled', 1)">
                     enable
