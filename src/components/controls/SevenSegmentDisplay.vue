@@ -12,20 +12,18 @@
     @segment-inactive-color: lighten(@display-background, 10%);
 
     .segment-display {
-        font-family: Segment7Standard, monospace;
-        font-size: 2.5em;
-
         display: block;
+        box-sizing: border-box;
         position: relative;
 
         height: 1em;
 
-        box-sizing: border-box;
+        font-family: Segment7Standard, monospace;
+        font-size: 2.5em;
 
         .background {
             position: absolute;
             width: 100%;
-            padding: 0 5px;
 
             text-align: right;
 
@@ -39,7 +37,6 @@
         .value {
             position: absolute;
             width: 100%;
-            padding: 0 5px;
 
             text-align: right;
 
