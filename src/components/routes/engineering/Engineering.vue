@@ -7,6 +7,10 @@
                     <router-link tag="a" :to="route.to" class="nav-item">
                         {{ $t('nav.' + route.text) }}
                     </router-link>
+
+                    <div class="status warning">
+                        &nbsp;
+                    </div>
                 </div>
             </div>
         </nav>
@@ -37,10 +41,8 @@
             }
         }
 
-        .nav-item {
+        .nav-item, .status {
             display: block;
-
-            padding: 10px;
 
             border-radius: 6px;
 
@@ -48,15 +50,41 @@
             background-color: @nav-item-background;
 
             text-decoration: none;
-            text-align: center;
 
             &, &:focus {
                 outline: none;
             }
+        }
+
+        .nav-item {
+            padding: 10px;
+
+            text-align: center;
 
             &.router-link-exact-active {
                 color: @nav-item-active-color;
                 background-color: @nav-item-active-background;
+            }
+        }
+
+        .status {
+            margin-top: 4px;
+            border: 2px solid @nav-item-active-background;
+            padding: 4px;
+
+            font-size: 0.8em;
+
+            &.critical {
+                border-color: @signal-red-disabled;
+                background-color: @signal-red-highlight;
+            }
+            &.warning {
+                border-color: @signal-orange-disabled;
+                background-color: @signal-orange;
+            }
+            &.normal {
+                border-color: @signal-green-disabled;
+                background-color: @signal-green;
             }
         }
     }
