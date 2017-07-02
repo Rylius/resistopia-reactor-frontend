@@ -21,8 +21,45 @@
     </section>
 </template>
 
-<style lang="less">
+<style lang="less" scoped>
     @import "../../../assets/less/engineering";
+
+    nav {
+        padding: 5px;
+
+        .warning-strip;
+
+        .nav-item-wrapper {
+            padding: 2px;
+
+            &, &:focus {
+                outline: none;
+            }
+        }
+
+        .nav-item {
+            display: block;
+
+            padding: 10px;
+
+            border-radius: 6px;
+
+            color: @nav-item-color;
+            background-color: @nav-item-background;
+
+            text-decoration: none;
+            text-align: center;
+
+            &, &:focus {
+                outline: none;
+            }
+
+            &.router-link-exact-active {
+                color: @nav-item-active-color;
+                background-color: @nav-item-active-background;
+            }
+        }
+    }
 </style>
 
 <script>
