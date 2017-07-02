@@ -1,30 +1,35 @@
 <template>
-    <div class="block-group temperature-display">
-        <div class="block" style="width: 30%;">
-            {{ label }}
-            <slot name="status"></slot>
-        </div>
-        <div class="block" style="width: 35%;">
-            <seven-segment-display :value="Math.round(state[stateMachine][property].value)"
-                                   :color="state[stateMachine][property].status.color"
-                                   :digits="4" :decimals="0"></seven-segment-display>
-        </div>
-        <div class="block" style="width: 15%;">
-            <seven-segment-display value="°C"
-                                   :color="state[stateMachine][property].status.color"
-                                   :digits="2" :decimals="0"></seven-segment-display>
-        </div>
-        <div class="block" style="width: 20%;">
-            <!-- FIXME -->
-            <lamp :enabled="state[stateMachine][property].status.id === 'critical'"
-                  color="red" :flash="true"></lamp>
-        </div>
+    <div class="temperature-display">
+        <span class="label text">{{ label }}</span>
+        <lamp :enabled="state[stateMachine][property].status.id === 'critical'"
+              color="red" :flash="true"></lamp>
+        <seven-segment-display :value="Math.round(state[stateMachine][property].value)"
+                               :color="state[stateMachine][property].status.color"
+                               :digits="4" :decimals="0"></seven-segment-display>
+        <span class="label unit">°C</span>
     </div>
 </template>
 
 <style lang="less" scoped>
     .temperature-display {
-        display: inline-block;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        padding: 0 10px;
+
+        .label.text {
+            max-width: 50%;
+        }
+        .lamp {
+            margin-right: -3px;
+        }
+        .segment-display {
+            width: 95px;
+        }
+        .label.unit {
+            margin-left: 8px;
+        }
     }
 </style>
 
