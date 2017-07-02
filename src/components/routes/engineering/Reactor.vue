@@ -4,7 +4,12 @@
             <div class="block" style="width: 50%;">
                 <div class="block-group">
                     <div class="block" style="width: 100%;">
-                        <h1>{{ $t('reactor.name') }}</h1>
+                        <h1>
+                            {{ $t('reactor.name') }}
+                            <span class="secondary critical" v-if="state.reactor.shutdownRemaining.value">
+                                {{ $t('reactor.state.offline')}}
+                            </span>
+                        </h1>
                     </div>
 
                     <div class="block block-group" style="width: 100%;">
@@ -22,13 +27,13 @@
                         </div>
                     </div>
 
-                    <div class="block" style="width: 100%;">
+                    <div class="block" style="width: 70%;">
                         <temperature-display :state="state" stateMachine="reactor" property="heat"
                                              :label="$t('reactor.temperature.core')"
-                                             style="width: 100%">
-                            <span slot="status"
-                                  v-if="state.reactor.shutdownRemaining.value">({{ $t('reactor.state.offline')}})</span>
-                        </temperature-display>
+                                             style="width: 100%"></temperature-display>
+                    </div>
+
+                    <div class="block" style="width: 30%;">
                     </div>
                 </div>
             </div>

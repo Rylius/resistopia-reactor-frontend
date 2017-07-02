@@ -27,6 +27,20 @@ html {
 
 h1 {
     margin: 0 0 0.25em;
+
+    .secondary {
+        font-size: 0.5em;
+
+        &.critical {
+            color: @signal-red-highlight;
+        }
+        &.warning {
+            color: @signal-orange-highlight;
+        }
+        &.normal {
+            color: @signal-green-highlight;
+        }
+    }
 }
 
 .label {
