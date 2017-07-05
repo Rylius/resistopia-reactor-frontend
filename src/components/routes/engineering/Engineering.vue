@@ -8,8 +8,9 @@
                         {{ $t('nav.' + route.text) }}
                     </router-link>
 
-                    <div class="status warning">
-                        &nbsp;
+                    <div class="status" :class="alertLevelFor(route.text).id">
+                        <!-- TODO -->
+                        {{ activeAlertsFor(route.text).length }}
                     </div>
                 </div>
             </div>
@@ -98,12 +99,25 @@
     import merge from 'deepmerge';
 
     import {createFrontendState} from '../../../simulation';
+    import createAlerts, {AlertTab, AlertType} from '../../../alerts';
 
     import {normalizedToRange} from '../../../util/math';
 
     function mapNormalizedProperty(state, stateMachine, property, value) {
         const config = state.stateMachines[stateMachine][property];
         return normalizedToRange(value, config.min, config.max);
+    }
+
+    function alertLevel(a, b) {
+        if (a.order === b.order) {
+            return 0;
+        }
+        return a.order > b.order ? -1 : 1;
+    }
+
+    function tabAlertLevel(alerts, state) {
+        const activeAlerts = alerts.sort(alertLevel);
+        return activeAlerts.length > 0 ? activeAlerts[0].type : AlertType.None;
     }
 
     export default {
@@ -118,6 +132,7 @@
                     stateChanges: {},
                     intervalId: null,
                 },
+                alerts: createAlerts(),
                 navigation: [
                     {
                         to: {name: 'engineering/dashboard'},
@@ -125,19 +140,19 @@
                     },
                     {
                         to: {name: 'engineering/reactor'},
-                        text: 'reactor',
+                        text: AlertTab.Reactor,
                     },
                     {
                         to: {name: 'engineering/power'},
-                        text: 'power',
+                        text: AlertTab.Power,
                     },
                     {
                         to: {name: 'engineering/water'},
-                        text: 'water',
+                        text: AlertTab.Water,
                     },
                     {
                         to: {name: 'engineering/storage'},
-                        text: 'storage',
+                        text: AlertTab.Storage,
                     },
                 ],
             };
@@ -153,10 +168,72 @@
             changeState(changes) {
                 this.simulation.stateChanges = merge(this.simulation.stateChanges, changes);
             },
+            activeAlertsFor(tab) {
+                switch (tab) {
+                    case 'dashboard':
+                        return [...this.reactorAlerts, ...this.powerAlerts, ...this.waterAlerts, ...this.storageAlerts];
+                    case AlertTab.Reactor:
+                        return this.reactorAlerts;
+                    case AlertTab.Power:
+                        return this.powerAlerts;
+                    case AlertTab.Water:
+                        return this.waterAlerts;
+                    case AlertTab.Storage:
+                        return this.storageAlerts;
+                    default:
+                        return [];
+                }
+            },
+            alertLevelFor(tab) {
+                switch (tab) {
+                    case 'dashboard':
+                        return this.highestAlertLevel;
+                    case AlertTab.Reactor:
+                        return this.reactorAlertLevel;
+                    case AlertTab.Power:
+                        return this.powerAlertLevel;
+                    case AlertTab.Water:
+                        return this.waterAlertLevel;
+                    case AlertTab.Storage:
+                        return this.storageAlertLevel;
+                    default:
+                        return null;
+                }
+            },
         },
         computed: {
             state() {
                 return createFrontendState(this.simulation.state);
+            },
+            highestAlertLevel() {
+                return [this.reactorAlertLevel, this.powerAlertLevel, this.waterAlertLevel, this.storageAlertLevel, AlertType.None].sort(alertLevel)[0];
+            },
+            activeAlerts() {
+                return this.alerts.filter(alert => alert.active(this.state.stateMachines));
+            },
+            reactorAlerts() {
+                return this.activeAlerts.filter(alert => alert.tab === AlertTab.Reactor);
+            },
+            reactorAlertLevel() {
+                return tabAlertLevel(this.reactorAlerts, this.state);
+            },
+            powerAlerts() {
+                return this.activeAlerts.filter(alert => alert.tab === AlertTab.Power);
+            },
+            powerAlertLevel() {
+                return tabAlertLevel(this.powerAlerts, this.state);
+            },
+            waterAlerts() {
+                return this.activeAlerts.filter(alert => alert.tab === AlertTab.Water);
+            },
+            waterAlertLevel() {
+                return tabAlertLevel(this.waterAlerts, this.state);
+            },
+            storageAlerts() {
+                return this.activeAlerts.filter(alert => alert.tab === AlertTab.Storage);
+            },
+            storageAlertLevel() {
+                return tabAlertLevel(this.storageAlerts, this.state);
             },
         },
         mounted() {
