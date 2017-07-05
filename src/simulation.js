@@ -246,7 +246,7 @@ const config = {
             min: 0,
             max: 1,
             statusRanges: [
-                {from: -Infinity, to: 0.5, id: StatusType.Warning, color: 'red'},
+                {from: -Infinity, to: 0.5, id: StatusType.Critical, color: 'red'},
                 {from: 0.5, to: 0.9, id: StatusType.Warning, color: 'orange'},
                 {from: 0.9, to: Infinity, id: StatusType.Normal, color: 'green'},
             ],
