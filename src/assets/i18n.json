@@ -29,6 +29,9 @@
             "water-tank": {
                 "name": "Zisterne"
             },
+            "water-treatment": {
+                "name": "Wasseraufbereitung"
+            },
             "pump-a": {
                 "name": "Pumpe A"
             },
@@ -43,6 +46,7 @@
             "c": "{temp}°C"
         },
         "power": {
+            "kilowattHours": "{power} kWh",
             "actual": "Ist",
             "target": "Soll"
         },

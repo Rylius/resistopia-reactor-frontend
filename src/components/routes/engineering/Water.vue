@@ -5,8 +5,17 @@
 
             <div class="graph-overlay" data-target="reactor-cooling-text">
                 <h3>{{ $t('stateMachine.reactor-cooling.name') }}</h3>
-                {{ $t('water.litersPerSecond', {amount: Math.round(state['reactor-cooling'].waterRequired.value * 10) / 10})}}
-                ({{ $t('water.litersPerHour', {amount: Math.round(state['reactor-cooling'].waterRequired.value * 3600)})}})
+                {{ $t('water.litersPerHour', {amount: Math.round(state['reactor-cooling'].waterRequired.value * 3600)})}}
+                ({{ Math.round(state['reactor-cooling'].waterSatisfaction.value * 100) }}%)
+            </div>
+
+            <div class="graph-overlay" data-target="water-treatment-text">
+                <h3>{{ $t('stateMachine.water-treatment.name') }}</h3>
+                {{ $t('power.kilowattHours', {power: Math.round((state['water-treatment'].requiredPower.value * state['water-treatment'].powerSatisfaction.value) * 10) / 10}) }}
+                <br>
+                {{ $t('water.litersPerHour', {amount: Math.round(state['water-treatment'].requiredWater.value * 3600)})}}
+                <br>
+                {{ $t('water.drinking') }}: {{ Math.round(state['water-treatment'].drinkingWater.value / 100) / 10 }} m³
             </div>
 
             <div class="graph-overlay" data-target="water-tank-text">
