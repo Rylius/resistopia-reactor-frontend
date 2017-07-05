@@ -1,10 +1,11 @@
 @import "variables";
 
 @text-color: #ebebeb;
+@text-unused-color: darken(@text-color, 50%);
 
 @label-color: @text-color;
 @label-background: darken(@display-background, 5%);
-@label-secondary-color: darken(@text-color, 50%);
+@label-secondary-color: @text-unused-color;
 @label-secondary-background: darken(@display-background, 4%);
 
 @nav-item-color: @text-color;
