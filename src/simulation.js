@@ -201,8 +201,8 @@ const config = {
             max: 1,
             statusRanges: [
                 {from: -Infinity, to: 0.75, id: StatusType.Critical, color: 'red'},
-                {from: 0.75, to: 0.95, id: StatusType.Warning, color: 'orange'},
-                {from: 0.95, to: Infinity, id: StatusType.Normal, color: 'green'},
+                {from: 0.75, to: 0.9, id: StatusType.Warning, color: 'orange'},
+                {from: 0.9, to: Infinity, id: StatusType.Normal, color: 'green'},
             ],
         },
         waterSatisfaction: {
@@ -210,8 +210,8 @@ const config = {
             max: 1,
             statusRanges: [
                 {from: -Infinity, to: 0.75, id: StatusType.Critical, color: 'red'},
-                {from: 0.75, to: 0.95, id: StatusType.Warning, color: 'orange'},
-                {from: 0.95, to: Infinity, id: StatusType.Normal, color: 'green'},
+                {from: 0.75, to: 0.9, id: StatusType.Warning, color: 'orange'},
+                {from: 0.9, to: Infinity, id: StatusType.Normal, color: 'green'},
             ],
         },
     },
