@@ -22,6 +22,8 @@
                     </div>
 
                     <div class="block" style="width: 20%;">
+                        <gauge type="linear" :options="waterTankGaugeOptions"
+                               :value="state['water-tank'].water.value / state['water-tank'].capacity.value"></gauge>
                     </div>
                 </div>
             </div>
@@ -112,6 +114,7 @@
     import EngineeringMixin from '../../../mixins/engineering';
 
     import SevenSegmentDisplay from '../../controls/SevenSegmentDisplay';
+    import Gauge from '../../controls/Gauge';
 
     export default {
         name: 'water',
@@ -119,6 +122,36 @@
         data() {
             return {
                 pumps: ['pump-a', 'pump-b', 'pump-c'],
+                waterTankGaugeOptions: {
+                    minValue: 0,
+                    maxValue: 1,
+                    majorTicks: [0, 0.25, 0.5, 0.75, 1],
+                    minorTicks: 1,
+                    strokeTicks: true,
+                    numbersMargin: 0,
+                    barWidth: 50,
+                    height: 100,
+                    animation: false,
+                    units: false,
+                    title: false,
+                    animationRule: 'linear',
+                    colorPlate: 'transparent',
+                    colorMajorTicks: '#ebebeb', // @text-color
+                    colorNeedle: '#ff4629', // @signal-red-highlight
+                    colorNeedleEnd: false,
+                    colorBar: '#6f6f6f', // @signal-blue-disabled
+                    colorBarProgress: '#8ea7ff', // @signal-blue-highlight
+                    colorNumbers: 'transparent',
+                    needle: false,
+                    borders: false,
+                    valueBox: false,
+                    tickSide: 'left',
+                    ticksWidth: 15,
+                    ticksPadding: 15,
+                    numberSide: 'left',
+                    barBeginCircle: false,
+                    barLength: 100,
+                },
             };
         },
         mounted() {
@@ -149,7 +182,8 @@
             },
         },
         components: {
-            SevenSegmentDisplay
+            SevenSegmentDisplay,
+            Gauge,
         },
     };
 </script>

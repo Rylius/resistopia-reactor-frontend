@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="473.03271"
-     inkscape:cy="367.18554"
+     inkscape:cx="423.51166"
+     inkscape:cy="343.74654"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -145,7 +145,7 @@
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:20;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:20;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 483.93503,500.93903 v -42 c 0,-16 -8,-24 -24,-24 h -266.5 c -16,0 -24,-8 -24,-24 v -308"
+       d="m 483.93503,500.93903 0,-82 c -0.0569,-16.04266 -8.33661,-24.25246 -24,-24 h -266.5 c -15.95821,0.0313 -24,-8 -24,-24 l 0,-268"
        id="reactor-cooling-path"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccc" />
@@ -153,7 +153,7 @@
        sodipodi:nodetypes="cccccc"
        inkscape:connector-curvature="0"
        id="path4585"
-       d="m 509.8732,500.93903 v -42 c 0,-16 8,-24 24,-24 h 206.5 c 16,0 24,-8 24,-24 l 0,-85"
+       d="m 509.8732,500.93903 0,-82 c -0.0614,-16.04601 8.3161,-23.76293 24,-24 h 206.5 c 15.9574,-0.0319 24,-8 24,-24 l 0,-45"
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <path
        sodipodi:nodetypes="cccccc"
@@ -182,18 +182,18 @@
     <text
        xml:space="preserve"
        x="280"
-       y="420"
+       y="380"
        id="text4510">{{ $t('cooling.water') }}</text>
     <text
        xml:space="preserve"
        x="397"
-       y="478"
+       y="448"
        id="water-tank-text">water-tank</text>
     <path
        sodipodi:nodetypes="cccccc"
        inkscape:connector-curvature="0"
        id="reactor-cooling-connection"
-       d="m 483.93503,500.93903 v -42 c 0,-16 -8,-24 -24,-24 h -266.5 c -16,0 -24,-8 -24,-24 v -308"
+       d="m 483.93503,500.93903 0,-82 c 0,-16 -8,-24 -24,-24 h -266.5 c -16,0 -24,-8 -24,-24 l 0,-268"
        style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        class="tank-connection"
        :class="{active: state['reactor-cooling'].waterSatisfaction.value &gt; 0 &amp;&amp; state['reactor-cooling'].waterRequired.value &gt; 0}" />
@@ -201,7 +201,7 @@
        :class="{visible: state['reactor-cooling'].waterSatisfaction.value &gt; 0 &amp;&amp; state['reactor-cooling'].waterRequired.value &gt; 0}"
        class="connection-flow"
        style="fill:none;stroke:#d3d3d3;stroke-width:10;stroke-dasharray:15, 15;stroke-dashoffset:0;stroke-opacity:1"
-       d="m 483.93503,500.93903 v -42 c 0,-16 -8,-24 -24,-24 h -266.5 c -16,0 -24,-8 -24,-24 v -308"
+       d="m 483.93503,500.93903 0,-82 c -0.0569,-16.04266 -8.33661,-24.25246 -24,-24 h -266.5 c -15.95821,0.0313 -24,-8 -24,-24 l 0,-268"
        id="path4541"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccc" />
