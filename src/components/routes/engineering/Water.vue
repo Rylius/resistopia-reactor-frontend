@@ -3,21 +3,30 @@
         <div class="graph-container">
             <svg class="water-graph" markup-inline src="../../../assets/svg/engineering/water.svg"></svg>
 
+            <div class="graph-overlay" data-target="reactor-cooling-text">
+                <h3>{{ $t('stateMachine.reactor-cooling.name') }}</h3>
+                {{ $t('water.litersPerSecond', {amount: Math.round(state['reactor-cooling'].waterRequired.value * 10) / 10})
+                }}
+                ({{ $t('water.litersPerHour', {amount: Math.round(state['reactor-cooling'].waterRequired.value * 3600)})
+                }})
+            </div>
+
+            <div class="graph-overlay" data-target="water-tank-text">
+                <h3>{{ $t('stateMachine.water-tank.name') }} <span class="small">{{ $t('water.industrial') }}</span>
+                </h3>
+                {{ Math.round(state['water-tank'].water.value / 100) / 10 }} m³
+                /
+                {{ Math.round(state['water-tank'].capacity.value / 100) / 10 }} m³
+            </div>
+
             <div class="graph-overlay" v-for="pump in pumps" :data-target="pump + '-text'">
-                {{ $t('stateMachine.' + pump + '.name') }}
-                <br>
+                <h3>{{ $t('stateMachine.' + pump + '.name') }}</h3>
                 <button v-if="!state[pump].enabled.value" @click="() => changeProperty(pump, 'enabled', 1)">
                     enable
                 </button>
                 <button v-else @click="() => changeProperty(pump, 'enabled', 0)">disable</button>
                 <br>
                 filter: {{ Math.round((state[pump].filterHealth.value / state[pump].filterMaxHealth.value) * 100) }}%
-            </div>
-
-            <div class="graph-overlay" data-target="water-tank">
-                {{ Math.round(state['water-tank'].water.value / 100) / 10 }}m³
-                /
-                {{ Math.round(state['water-tank'].capacity.value / 100) / 10 }}m³
             </div>
         </div>
     </section>
@@ -33,6 +42,12 @@
         height: 768px;
     }
 
+    @keyframes connection-flow {
+        to {
+            stroke-dashoffset: -30;
+        }
+    }
+
     .water-graph {
         position: absolute;
 
@@ -40,12 +55,27 @@
             fill: @text-color;
         }
 
-        .pump-connection {
-            transition: 0.5s stroke;
-
+        .pump-connection, .tank-connection {
             stroke: @signal-blue-disabled;
+            transition: stroke 0.5s;
+
             &.active {
                 stroke: @signal-blue;
+            }
+        }
+
+        .connection-flow {
+            /* Animate dashes */
+            stroke-dasharray: 15;
+            animation: connection-flow 1s linear;
+            animation-iteration-count: infinite;
+
+            stroke: @signal-blue-disabled;
+            transition: stroke 0.5s;
+
+            &.visible {
+                stroke: @signal-blue-highlight;
+                transition: stroke 1s;
             }
         }
     }
@@ -55,7 +85,18 @@
 
         position: absolute;
 
+        width: 200px;
+
         background-color: @label-background;
+
+        h1, h2, h3, h4, h5, h6 {
+            margin: 0 0 0.5em;
+
+            .small {
+                font-size: 0.75em;
+                color: @text-unused-color;
+            }
+        }
     }
 </style>
 
@@ -87,6 +128,8 @@
 
                 element.style.left = box.x + 'px';
                 element.style.top = box.y + 'px';
+
+                target.textContent = '';
             });
         },
         components: {

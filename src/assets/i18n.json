@@ -23,7 +23,11 @@
         },
         "stateMachine": {
             "reactor-cooling": {
+                "name": "Reaktorkühlung",
                 "powerConsumption": "Pumpe"
+            },
+            "water-tank": {
+                "name": "Zisterne"
             },
             "pump-a": {
                 "name": "Pumpe A"
@@ -41,6 +45,12 @@
         "power": {
             "actual": "Ist",
             "target": "Soll"
+        },
+        "water": {
+            "drinking": "Trinkwasser",
+            "industrial": "Nutzwasser",
+            "litersPerSecond": "{amount} L/s",
+            "litersPerHour": "{amount} L/h"
         }
     }
 }
