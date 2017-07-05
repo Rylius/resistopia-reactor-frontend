@@ -11,10 +11,13 @@
             <div class="graph-overlay" data-target="water-treatment-text">
                 <h3>{{ $t('stateMachine.water-treatment.name') }}</h3>
                 {{ $t('power.kilowattHours', {power: Math.round((state['water-treatment'].requiredPower.value * state['water-treatment'].powerSatisfaction.value) * 10) / 10})}}
+                /
+                {{ $t('power.kilowattHours', {power: Math.round(state['water-treatment'].requiredPower.value * 10) / 10})
+                }}
                 <br>
                 {{ $t('water.litersPerHour', {amount: Math.round(state['water-treatment'].requiredWater.value * 3600)})}}
                 <br>
-                {{ $t('water.drinking') }}: {{ Math.round(state['water-treatment'].drinkingWater.value / 100) / 10 }} m³
+                {{ $t('water.drinking') }}: {{ Math.round(state['water-treatment'].drinkingWater.value) }} L
                 <br>
                 <br>
                 cleaner: {{ state['water-treatment'].resourceCleaner.status.id }}
@@ -22,6 +25,13 @@
                 chlorine: {{ state['water-treatment'].resourceChlorine.status.id }}
                 <br>
                 minerals: {{ state['water-treatment'].resourceMinerals.status.id }}
+            </div>
+
+            <div class="graph-overlay" data-target="base-text">
+                <h3>{{ $t('stateMachine.base.name') }}</h3>
+                power: {{ Math.round(state['base'].powerSatisfaction.value * 100) }}%
+                <br>
+                water: {{ Math.round(state['base'].drinkingWaterSatisfaction.value * 100) }}%
             </div>
 
             <div class="graph-overlay" data-target="water-tank-text">
@@ -72,6 +82,12 @@
         }
     }
 
+    @keyframes connection-flow-reverse {
+        to {
+            stroke-dashoffset: 30;
+        }
+    }
+
     .water-graph {
         position: absolute;
 
@@ -93,6 +109,10 @@
             stroke-dasharray: 15;
             animation: connection-flow 1s linear;
             animation-iteration-count: infinite;
+            &.reverse {
+                animation: connection-flow-reverse 1s linear;
+                animation-iteration-count: infinite;
+            }
 
             stroke: @signal-blue-disabled;
             transition: stroke 0.5s;

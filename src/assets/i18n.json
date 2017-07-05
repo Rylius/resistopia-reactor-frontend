@@ -26,6 +26,9 @@
                 "name": "Reaktorkühlung",
                 "powerConsumption": "Pumpe"
             },
+            "base": {
+                "name": "Basis"
+            },
             "water-tank": {
                 "name": "Zisterne"
             },
