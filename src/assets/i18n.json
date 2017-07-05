@@ -49,6 +49,7 @@
             "c": "{temp}°C"
         },
         "power": {
+            "name": "Strom",
             "kilowattHours": "{power} kWh",
             "actual": "Ist",
             "target": "Soll"

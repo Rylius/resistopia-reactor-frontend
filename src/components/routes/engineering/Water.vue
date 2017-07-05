@@ -37,9 +37,13 @@
 
             <div class="graph-overlay" data-target="base-text">
                 <h3>{{ $t('stateMachine.base.name') }}</h3>
-                power: {{ Math.round(state['base'].powerSatisfaction.value * 100) }}%
+                {{ $t('power.name') }}:
+                {{ Math.round(state['base'].powerSatisfaction.value * 100) }}%
+                ({{ $t('power.kilowattHours', {power: Math.round(state['base'].powerRequired.value * state['base'].powerSatisfaction.value)})}})
                 <br>
-                water: {{ Math.round(state['base'].drinkingWaterSatisfaction.value * 100) }}%
+                {{ $t('water.drinking') }}:
+                {{ Math.round(state['base'].drinkingWaterSatisfaction.value * 100) }}%
+                ({{ $t('water.litersPerHour', {amount: Math.round((state['base'].drinkingWaterRequired.value * state['base'].drinkingWaterSatisfaction.value) * 3600)})}})
             </div>
 
             <div class="graph-overlay wide" data-target="water-tank-text">
