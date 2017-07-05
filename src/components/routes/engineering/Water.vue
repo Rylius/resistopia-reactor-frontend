@@ -8,23 +8,31 @@
                 {{ $t('water.litersPerHour', {amount: Math.round(state['reactor-cooling'].waterRequired.value * 3600)})}}
             </div>
 
-            <div class="graph-overlay" data-target="water-treatment-text">
+            <div class="graph-overlay wide" data-target="water-treatment-text">
                 <h3>{{ $t('stateMachine.water-treatment.name') }}</h3>
-                {{ $t('power.kilowattHours', {power: Math.round((state['water-treatment'].requiredPower.value * state['water-treatment'].powerSatisfaction.value) * 10) / 10})}}
-                /
-                {{ $t('power.kilowattHours', {power: Math.round(state['water-treatment'].requiredPower.value * 10) / 10})
-                }}
-                <br>
-                {{ $t('water.litersPerHour', {amount: Math.round(state['water-treatment'].requiredWater.value * 3600)})}}
-                <br>
-                {{ $t('water.drinking') }}: {{ Math.round(state['water-treatment'].drinkingWater.value) }} L
-                <br>
-                <br>
-                cleaner: {{ state['water-treatment'].resourceCleaner.status.id }}
-                <br>
-                chlorine: {{ state['water-treatment'].resourceChlorine.status.id }}
-                <br>
-                minerals: {{ state['water-treatment'].resourceMinerals.status.id }}
+                <div class="block-group">
+                    <div class="block" style="width: 80%;">
+                        {{ $t('power.kilowattHours', {power: Math.round((state['water-treatment'].requiredPower.value * state['water-treatment'].powerSatisfaction.value) * 10) / 10})}}
+                        /
+                        {{ $t('power.kilowattHours', {power: Math.round(state['water-treatment'].requiredPower.value * 10) / 10})}}
+                        <br>
+                        {{ $t('water.litersPerHour', {amount: Math.round(state['water-treatment'].requiredWater.value * 3600)})}}
+                        <br>
+                        {{ $t('water.drinking') }}: {{ Math.round(state['water-treatment'].drinkingWater.value) }} L
+                        <br>
+                        <br>
+                        cleaner: {{ state['water-treatment'].resourceCleaner.status.id }}
+                        <br>
+                        chlorine: {{ state['water-treatment'].resourceChlorine.status.id }}
+                        <br>
+                        minerals: {{ state['water-treatment'].resourceMinerals.status.id }}
+                    </div>
+
+                    <div class="block" style="width: 20%;">
+                        <gauge type="linear" :options="waterTankGaugeOptions"
+                               :value="state['water-treatment'].drinkingWater.value / 1000"></gauge>
+                    </div>
+                </div>
             </div>
 
             <div class="graph-overlay" data-target="base-text">
@@ -34,7 +42,7 @@
                 water: {{ Math.round(state['base'].drinkingWaterSatisfaction.value * 100) }}%
             </div>
 
-            <div class="graph-overlay" data-target="water-tank-text">
+            <div class="graph-overlay wide" data-target="water-tank-text">
                 <h3>{{ $t('stateMachine.water-tank.name') }} <span class="small">{{ $t('water.industrial') }}</span>
                 </h3>
                 <div class="block-group">
@@ -133,6 +141,10 @@
         overflow: hidden;
 
         background-color: @label-background;
+
+        &.wide {
+            width: 250px;
+        }
 
         h1, h2, h3, h4, h5, h6 {
             margin: 0 0 0.5em;

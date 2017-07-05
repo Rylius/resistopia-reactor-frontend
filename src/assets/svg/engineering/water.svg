@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="484.98145"
-     inkscape:cy="339.2958"
+     inkscape:cx="467.98145"
+     inkscape:cy="377.2958"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -148,7 +148,7 @@
        id="text4510">{{ $t('cooling.water') }}</text>
     <text
        xml:space="preserve"
-       x="397"
+       x="372"
        y="448"
        id="water-tank-text">water-tank</text>
     <g
@@ -241,7 +241,7 @@
     <path
        class="connection-flow reverse"
        :class="{visible: state['base'].drinkingWaterSatisfaction.value &gt; 0}"
-       style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;stroke:#d3d3d3;stroke-width:10;stroke-dasharray:15, 15;stroke-dashoffset:0;stroke-opacity:1"
        d="m 865,331.93903 v -179 c -0.0569,-16.04266 -8.33661,-24.25246 -24,-24 H 665"
        id="base-flow"
        inkscape:connector-curvature="0"
