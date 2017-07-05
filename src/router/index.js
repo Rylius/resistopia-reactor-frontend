@@ -9,6 +9,7 @@ import EngineeringWater from '../components/routes/engineering/Water.vue';
 import EngineeringStorage from '../components/routes/engineering/Storage.vue';
 
 import TestEverything from '../components/routes/test/TestEverything.vue';
+import TestAudio from '../components/routes/test/TestAudio.vue';
 
 import DebugSimulation from '../components/routes/debug/Simulation.vue';
 
@@ -50,6 +51,10 @@ export default new Router({
         {
             path: '/test/everything',
             component: TestEverything,
+        },
+        {
+            path: '/test/audio',
+            component: TestAudio,
         },
         {
             path: '/debug/simulation',
