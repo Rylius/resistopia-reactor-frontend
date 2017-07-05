@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="472.03271"
-     inkscape:cy="258.18554"
+     inkscape:cx="473.03271"
+     inkscape:cy="367.18554"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -112,17 +112,17 @@
          y="213.55206">water-treatment</tspan></text>
     <text
        xml:space="preserve"
-       x="86"
+       x="70"
        y="680"
        id="pump-a-text">pump-a</text>
     <text
        xml:space="preserve"
-       x="413"
+       x="397"
        y="680"
        id="pump-b-text">pump-b</text>
     <text
        xml:space="preserve"
-       x="746"
+       x="730"
        y="680"
        id="pump-c-text">pump-c</text>
     <path

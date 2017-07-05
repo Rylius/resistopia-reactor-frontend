@@ -5,18 +5,25 @@
 
             <div class="graph-overlay" data-target="reactor-cooling-text">
                 <h3>{{ $t('stateMachine.reactor-cooling.name') }}</h3>
-                {{ $t('water.litersPerSecond', {amount: Math.round(state['reactor-cooling'].waterRequired.value * 10) / 10})
-                }}
-                ({{ $t('water.litersPerHour', {amount: Math.round(state['reactor-cooling'].waterRequired.value * 3600)})
-                }})
+                {{ $t('water.litersPerSecond', {amount: Math.round(state['reactor-cooling'].waterRequired.value * 10) / 10})}}
+                ({{ $t('water.litersPerHour', {amount: Math.round(state['reactor-cooling'].waterRequired.value * 3600)})}})
             </div>
 
             <div class="graph-overlay" data-target="water-tank-text">
                 <h3>{{ $t('stateMachine.water-tank.name') }} <span class="small">{{ $t('water.industrial') }}</span>
                 </h3>
-                {{ Math.round(state['water-tank'].water.value / 100) / 10 }} m³
-                /
-                {{ Math.round(state['water-tank'].capacity.value / 100) / 10 }} m³
+                <div class="block-group">
+                    <div class="block" style="width: 80%;">
+                        {{ Math.round(state['water-tank'].water.value / 100) / 10 }} m³
+                        /
+                        {{ Math.round(state['water-tank'].capacity.value / 100) / 10 }} m³
+                        <br>
+                        {{ $t('water.litersPerHour', {amount: Math.round((totalWaterProduction - totalWaterConsumption) * 3600)})}}
+                    </div>
+
+                    <div class="block" style="width: 20%;">
+                    </div>
+                </div>
             </div>
 
             <div class="graph-overlay" v-for="pump in pumps" :data-target="pump + '-text'">
@@ -86,6 +93,7 @@
         position: absolute;
 
         width: 200px;
+        overflow: hidden;
 
         background-color: @label-background;
 
@@ -131,6 +139,14 @@
 
                 target.textContent = '';
             });
+        },
+        computed: {
+            totalWaterConsumption() {
+                return this.state['reactor-cooling'].waterRequired.value + this.state['water-treatment'].requiredWater.value;
+            },
+            totalWaterProduction() {
+                return this.pumps.map(pump => this.state[pump].water.value).reduce((total, value) => total + value, 0);
+            },
         },
         components: {
             SevenSegmentDisplay
