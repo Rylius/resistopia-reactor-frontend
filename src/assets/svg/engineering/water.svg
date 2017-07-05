@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="467.98145"
-     inkscape:cy="377.2958"
+     inkscape:zoom="2"
+     inkscape:cx="651.5298"
+     inkscape:cy="500.5891"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -194,7 +194,7 @@
        style="fill:none;stroke:#d3d3d3;stroke-width:10;stroke-dasharray:15, 15;stroke-dashoffset:0;stroke-opacity:1" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:20;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 865,331.93903 v -179 c -0.0569,-16.04266 -8.33661,-24.25246 -24,-24 H 665"
+       d="m 865,331.93903 v -149 c -0.0569,-16.04266 -8.33661,-24.25246 -24,-24 H 665"
        id="base-path"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccc" />
@@ -202,11 +202,11 @@
        sodipodi:nodetypes="cccc"
        inkscape:connector-curvature="0"
        id="water-treatment-path"
-       d="m 514.68503,500.93903 v -348 c 0.0569,-16.04266 8.33661,-24.25246 24,-24 h 59.5"
+       d="m 514.68503,500.93903 v -318 c 0.0569,-16.04266 8.33661,-24.25246 24,-24 h 59.5"
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:20;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 514.68503,500.93903 v -348 c 0.0569,-16.04266 8.33661,-24.25246 24,-24 h 59.5"
+       d="m 514.68503,500.93903 v -318 c 0.0569,-16.04266 8.33661,-24.25246 24,-24 h 59.5"
        id="water-treatment-connection"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccc"
@@ -216,7 +216,7 @@
        sodipodi:nodetypes="cccc"
        inkscape:connector-curvature="0"
        id="water-treatment-flow"
-       d="m 514.68503,500.93903 v -348 c 0.0569,-16.04266 8.33661,-24.25246 24,-24 h 59.5"
+       d="m 514.68503,500.93903 v -318 c 0.0569,-16.04266 8.33661,-24.25246 24,-24 h 59.5"
        style="fill:none;stroke:#d3d3d3;stroke-width:10;stroke-dasharray:15, 15;stroke-dashoffset:0;stroke-opacity:1"
        class="connection-flow"
        :class="{visible: state['water-treatment'].requiredWater.value &gt; 0}" />
@@ -234,7 +234,7 @@
        sodipodi:nodetypes="cccc"
        inkscape:connector-curvature="0"
        id="base-connection"
-       d="m 865,331.93903 v -179 c -0.0569,-16.04266 -8.33661,-24.25246 -24,-24 H 665"
+       d="m 865,331.93903 v -149 c -0.0569,-16.04266 -8.33661,-24.25246 -24,-24 H 665"
        style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        :class="{active: state['base'].drinkingWaterSatisfaction.value &gt; 0}"
        class="tank-connection" />
@@ -242,7 +242,7 @@
        class="connection-flow reverse"
        :class="{visible: state['base'].drinkingWaterSatisfaction.value &gt; 0}"
        style="fill:none;stroke:#d3d3d3;stroke-width:10;stroke-dasharray:15, 15;stroke-dashoffset:0;stroke-opacity:1"
-       d="m 865,331.93903 v -179 c -0.0569,-16.04266 -8.33661,-24.25246 -24,-24 H 665"
+       d="m 865,331.93903 v -149 c -0.0569,-16.04266 -8.33661,-24.25246 -24,-24 H 665"
        id="base-flow"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccc" />
