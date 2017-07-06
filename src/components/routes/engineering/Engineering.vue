@@ -18,10 +18,12 @@
                             <div class="alerts" :class="{visible: shownAlertsTab === route.text}">
                                 <ul v-if="activeAlertsFor(route.text).length">
                                     <li v-for="alert in activeAlertsFor(route.text)">
+                                        <i class="icon" :class="[alert.type.id]"></i>
                                         {{ alert.type.id }}: {{ alert.id }}
                                     </li>
                                 </ul>
                                 <span v-else>
+                                    <i class="icon check"></i>
                                     no alerts
                                 </span>
                             </div>
@@ -140,6 +142,10 @@
             padding: 0;
 
             list-style: none;
+
+            li + li {
+                margin-top: 0.5em;
+            }
         }
     }
 </style>

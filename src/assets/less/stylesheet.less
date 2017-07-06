@@ -37,3 +37,27 @@ html {
 .danger-strip {
     .warning-strip-gradient(@danger-strip-light-color, @danger-strip-dark-color, @warning-strip-width);
 }
+
+i.icon {
+    display: inline-block;
+
+    width: 1em;
+    height: 1em;
+
+    position: relative;
+    top: 0.2em;
+    margin-right: 0.2em;
+
+    background-size: contain;
+    background-position: center;
+
+    &.check, &.normal {
+        background-image: url('../svg/icons/check.svg');
+    }
+    &.exclamation-orange, &.warning {
+        background-image: url('../svg/icons/exclamation_orange.svg');
+    }
+    &.exclamation-red, &.critical {
+        background-image: url('../svg/icons/exclamation_red.svg');
+    }
+}
