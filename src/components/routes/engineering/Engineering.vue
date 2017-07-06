@@ -8,9 +8,24 @@
                         {{ $t('nav.' + route.text) }}
                     </router-link>
 
-                    <div class="status" :class="alertLevelFor(route.text).id">
+                    <div class="status" :class="alertLevelFor(route.text).id"
+                         @mouseover.capture="showAlerts(route.text)" @mouseleave.self="hideAlerts(route.text)"
+                         @focus.capture="showAlerts(route.text)" @blur.self="hideAlerts(route.text)">
                         <!-- TODO -->
                         {{ activeAlertsFor(route.text).length }}
+
+                        <div class="alerts-wrapper">
+                            <div class="alerts" :class="{visible: shownAlertsTab === route.text}">
+                                <ul v-if="activeAlertsFor(route.text).length">
+                                    <li v-for="alert in activeAlertsFor(route.text)">
+                                        {{ alert.type.id }}: {{ alert.id }}
+                                    </li>
+                                </ul>
+                                <span v-else>
+                                    no alerts
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -28,6 +43,10 @@
 
 <style lang="less">
     @import "../../../assets/less/engineering";
+
+    @status-border-size: 2px;
+    @status-padding: 4px;
+    @alerts-border-color: @nav-item-background;
 
     nav {
         padding: 5px;
@@ -70,8 +89,8 @@
 
         .status {
             margin-top: 4px;
-            border: 2px solid @nav-item-active-background;
-            padding: 4px;
+            border: @status-border-size solid @nav-item-active-background;
+            padding: @status-padding;
 
             font-size: 0.8em;
 
@@ -87,6 +106,40 @@
                 border-color: @signal-green-disabled;
                 background-color: @signal-green;
             }
+        }
+    }
+
+    /* If we didn't use this wrapper and instead used margin-top on .alerts, there'd be a gap between
+     .status and .alerts, closing the popup if moving the pointer down into it */
+    .alerts-wrapper {
+        position: absolute;
+
+        z-index: @alerts-z-index;
+
+        padding-top: @status-padding * 2;
+        margin-left: -(@status-padding + @status-border-size);
+    }
+
+    .alerts {
+        border: @status-border-size solid @alerts-border-color;
+        padding: 10px;
+
+        border-radius: 6px;
+
+        box-shadow: 0 0 10px 2px fade(@alerts-border-color, 75%);
+
+        background-color: @display-background;
+
+        display: none;
+        &.visible {
+            display: block;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+
+            list-style: none;
         }
     }
 </style>
@@ -133,6 +186,7 @@
                     intervalId: null,
                 },
                 alerts: createAlerts(),
+                shownAlertsTab: null,
                 navigation: [
                     {
                         to: {name: 'engineering/dashboard'},
@@ -199,6 +253,12 @@
                     default:
                         return null;
                 }
+            },
+            showAlerts(tab) {
+                this.shownAlertsTab = tab;
+            },
+            hideAlerts(tab) {
+                this.shownAlertsTab = null;
             },
         },
         computed: {

@@ -200,10 +200,19 @@ export default function createAlerts() {
         },
         {
             tab: AlertTab.Water,
+            id: 'water-treatment-no-stored-drinking-water',
+            type: AlertType.Critical,
+            active(state) {
+                return state['water-treatment'].drinkingWater.status.id === StatusType.Critical;
+            },
+        },
+        {
+            tab: AlertTab.Water,
             id: 'water-treatment-little-stored-drinking-water',
             type: AlertType.Warning,
             active(state) {
-                return state['water-treatment'].drinkingWater.status.id !== StatusType.Normal;
+                // Disable this warning if the unit is operating normally
+                return state['water-treatment'].drinkingWater.status.id === StatusType.Warning && (state['water-treatment'].powerSatisfaction.status === StatusType.Critical || state['water-treatment'].waterSatisfaction.status === StatusType.Critical);
             },
         },
         {
