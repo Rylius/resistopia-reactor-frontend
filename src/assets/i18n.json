@@ -59,6 +59,10 @@
             "industrial": "Nutzwasser",
             "litersPerSecond": "{amount} L/s",
             "litersPerHour": "{amount} L/h"
+        },
+        "alerts": {
+            "count": "Eine Meldung | {count} Meldungen",
+            "none": "Keine Meldungen"
         }
     }
 }

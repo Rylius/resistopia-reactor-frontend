@@ -11,8 +11,13 @@
                     <div class="status" :class="alertLevelFor(route.text).id"
                          @mouseover.capture="showAlerts(route.text)" @mouseleave.self="hideAlerts(route.text)"
                          @focus.capture="showAlerts(route.text)" @blur.self="hideAlerts(route.text)">
-                        <!-- TODO -->
-                        {{ activeAlertsFor(route.text).length }}
+
+                        <div v-if="activeAlertsFor(route.text).length">
+                            {{ $tc('alerts.count', activeAlertsFor(route.text).length, {count: activeAlertsFor(route.text).length})}}
+                        </div>
+                        <div v-else>
+                            &nbsp;
+                        </div>
 
                         <div class="alerts-wrapper">
                             <div class="alerts" :class="{visible: shownAlertsTab === route.text}">
@@ -24,7 +29,7 @@
                                 </ul>
                                 <span v-else>
                                     <i class="icon check"></i>
-                                    no alerts
+                                    {{ $t('alerts.none') }}
                                 </span>
                             </div>
                         </div>
