@@ -62,7 +62,42 @@
         },
         "alerts": {
             "count": "Eine Meldung | {count} Meldungen",
-            "none": "Keine Meldungen"
+            "none": "Keine Meldungen",
+            "message": "{type}: {alert}",
+            "type": {
+                "normal": "Info",
+                "warning": "Warnung",
+                "critical": "Kritisch"
+            }
+        },
+        "alert": {
+            "reactor-temperature-low": "Reaktortemperatur zu niedrig",
+            "reactor-temperature-high": "Reaktortemperatur zu hoch",
+            "reactor-temperature-critical": "Reaktortemperatur kritisch",
+            "reactor-shutdown": "Notabschaltung Reaktor",
+            "reactor-cooling-disabled": "Reaktorkühlung ist deaktiviert",
+            "reactor-cooling-missing-power": "Reaktorkühlung benötigt mehr Strom",
+            "reactor-cooling-missing-water": "Reaktorkühlung benötigt mehr Kühlwasser",
+            "power-distributor-wasting-power": "Reaktor generiert mehr Strom als benötigt",
+            "power-distributor-temperature-high": "Transformatoren laufen heiß",
+            "power-distributor-temperature-critical": "Transformatoren überhitzen",
+            "power-distributor-shutdown": "Transformatoren überhitzt",
+            "base-missing-power": "Basis benötigt mehr Strom",
+            "base-no-power": "Basis ohne Strom",
+            "base-missing-drinking-water": "Basis benötigt mehr Trinkwasser",
+            "base-no-drinking-water": "Basis ohne Trinkwasser",
+            "water-tank-warning": "Füllstand Zisterne niedrig",
+            "water-tank-critical": "Zisterne leer",
+            "water-treatment-missing-power": "Wasseraufbereitung benötigt mehr Strom",
+            "water-treatment-no-power": "Wasseraufbereitung ohne Strom",
+            "water-treatment-no-stored-drinking-water": "Trinkwasservorrat unzureichend",
+            "water-treatment-little-stored-drinking-water": "Niedriger Trinkwasservorrat",
+            "water-treatment-resource-cleaner-low": "Wasseraufbereitung: Wenig Antifes",
+            "water-treatment-resource-cleaner-empty": "Wasseraufbereitung: Kein Antifes",
+            "water-treatment-resource-chlorine-low": "Wasseraufbereitung: Wenig Chlor",
+            "water-treatment-resource-chlorine-empty": "Wasseraufbereitung: Kein Chlor",
+            "water-treatment-resource-minerals-low": "Wasseraufbereitung: Wenig Mineralien",
+            "water-treatment-resource-minerals-empty": "Wasseraufbereitung: Keine Mineralien"
         }
     }
 }

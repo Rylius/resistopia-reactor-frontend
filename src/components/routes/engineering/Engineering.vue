@@ -24,7 +24,12 @@
                                 <ul v-if="activeAlertsFor(route.text).length">
                                     <li v-for="alert in activeAlertsFor(route.text)">
                                         <i class="icon" :class="[alert.type.id]"></i>
-                                        {{ alert.type.id }}: {{ alert.id }}
+                                        {{
+                                        $t('alerts.message', {
+                                            type: $t('alerts.type.' + alert.type.id),
+                                            alert: $t('alert.' + alert.id)
+                                        })
+                                        }}
                                     </li>
                                 </ul>
                                 <span v-else>
@@ -136,6 +141,8 @@
         box-shadow: 0 0 10px 2px fade(@alerts-border-color, 75%);
 
         background-color: @display-background;
+
+        font-size: 0.9rem;
 
         display: none;
         &.visible {
