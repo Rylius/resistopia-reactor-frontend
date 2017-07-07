@@ -51,7 +51,7 @@
                                 @update="value => changeProperty('reactor-cooling', 'cooling', value)"></slider>
                     </div>
 
-                    <div class="block" style="width: 100%;">
+                    <div class="block" style="width: 70%;">
                         <power-consumption-display :state="state" stateMachine="reactor-cooling"
                                                    :label="$t('stateMachine.reactor-cooling.powerConsumption')">
                         </power-consumption-display>
