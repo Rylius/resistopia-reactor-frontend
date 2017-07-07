@@ -203,6 +203,7 @@
                     stateChanges: {},
                     intervalId: null,
                 },
+                websocket: null,
                 alerts: createAlerts(),
                 shownAlertsTab: null,
                 navigation: [
@@ -239,6 +240,19 @@
             },
             changeState(changes) {
                 this.simulation.stateChanges = merge(this.simulation.stateChanges, changes);
+
+                // TODO Debounce
+
+                if (!this.websocket || this.websocket.readyState !== WebSocket.OPEN) {
+                    return;
+                }
+
+                this.websocket.send(JSON.stringify({
+                    type: 'change-state',
+                    data: this.simulation.stateChanges,
+                }));
+
+                this.simulation.stateChanges = {};
             },
             activeAlertsFor(tab) {
                 switch (tab) {
@@ -277,6 +291,23 @@
             },
             hideAlerts(tab) {
                 this.shownAlertsTab = null;
+            },
+            onServerError() {
+                console.log('websocket connection error:', arguments);
+            },
+            onServerMessage(message) {
+                // TODO
+                const data = JSON.parse(message.data);
+                console.log(data);
+
+                switch (data.type) {
+                    case 'state':
+                        this.simulation.state.stateMachines = data.data;
+                        break;
+                    default:
+                        console.error(`Unknown websocket message type "${data.type}"`);
+                        return;
+                }
             },
         },
         computed: {
@@ -318,14 +349,21 @@
             // TODO
             this.simulation.intervalId = setInterval(() => {
                 // Copy previous state and apply changes
-                const state = merge({}, this.simulation.state);
-                state.stateMachines = merge(state.stateMachines, this.simulation.stateChanges);
-                this.simulation.stateChanges = {};
+//                const state = merge({}, this.simulation.state);
+//                state.stateMachines = merge(state.stateMachines, this.simulation.stateChanges);
+//                this.simulation.stateChanges = {};
 
-                this.simulation.state = Simulation.update(this.simulation.program, state);
+//                this.simulation.state = Simulation.update(this.simulation.program, state);
             }, 1000);
 
             startUpdate();
+
+            // TODO Read URL from config/env variable
+            this.websocket = new WebSocket('ws://localhost:8081/ws/frontend', 'json');
+            this.websocket.onerror = this.onServerError;
+            this.websocket.onmessage = this.onServerMessage;
+            // TODO
+            this.websocket.onclose = () => this.websocket = null;
         },
         beforeDestroy() {
             if (this.simulation.intervalId) {
@@ -333,6 +371,11 @@
             }
 
             stopUpdate();
+
+            if (this.websocket) {
+                this.websocket.close();
+                this.websocket = null;
+            }
         },
     };
 </script>
