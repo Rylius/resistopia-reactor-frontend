@@ -358,8 +358,7 @@
 
             startUpdate();
 
-            // TODO Read URL from config/env variable
-            this.websocket = new WebSocket('ws://localhost:8081/ws/frontend', 'json');
+            this.websocket = new WebSocket(process.env.RESISTOPIA_BACKEND_WS, 'json');
             this.websocket.onerror = this.onServerError;
             this.websocket.onmessage = this.onServerMessage;
             // TODO

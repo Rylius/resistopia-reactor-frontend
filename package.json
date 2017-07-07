@@ -11,7 +11,7 @@
     "build": "node build/build.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit",
-    "gh-pages-deploy": "cross-env NODE_ENV=production NODE_DEPLOY_GITHUB_PAGES=/resistopia-reactor-frontend/ npm run build && cd dist && git add --all && git commit -m \"gh-pages deploy\" && git push"
+    "gh-pages-deploy": "cross-env NODE_ENV=production TARGET_ENV=github npm run build && cd dist && git add --all && git commit -m \"gh-pages deploy\" && git push"
   },
   "dependencies": {
     "vue": "^2.2.6",
