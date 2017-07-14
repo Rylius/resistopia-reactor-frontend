@@ -247,7 +247,7 @@
 
                 // TODO Debounce
 
-                if (!this.websocket || this.websocket.readyState !== WebSocket.OPEN) {
+                if (!this.websocketOpen()) {
                     return;
                 }
 
@@ -342,6 +342,8 @@
 
 //                this.simulation.state = Simulation.update(this.simulation.program, state);
 //            }, 1000);
+
+            this.registerBackendWebsocketListener('state', data => this.simulation.state.stateMachines = data);
 
             startUpdate();
         },
