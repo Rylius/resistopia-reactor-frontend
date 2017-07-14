@@ -50,6 +50,15 @@
         </section>
 
         <div class="warning-strip">&nbsp;</div>
+
+        <section class="offline-popup" v-if="!websocketOpen()">
+            <div class="popup-content">
+                <h1>{{ $t('backend.websocket.closed.title') }}</h1>
+                <p>
+                    <strong>{{ $t('backend.websocket.closed.message') }}</strong>
+                </p>
+            </div>
+        </section>
     </section>
 </template>
 
@@ -157,6 +166,76 @@
 
             li + li {
                 margin-top: 0.5em;
+            }
+        }
+    }
+
+    @popup-hide-distance: 3.25em;
+    @popup-hide-speed: 0.25s;
+
+    @keyframes offline-popup-glow {
+        0% {
+            opacity: 0.5;
+        }
+        90% {
+            opacity: 1;
+        }
+    }
+
+    .offline-popup {
+        /* Stick to viewport bottom */
+        position: fixed;
+        bottom: 0;
+
+        /* Stretch to full page width */
+        left: 0;
+        right: 0;
+
+        z-index: 100;
+
+        opacity: 1;
+        transition: opacity @popup-hide-speed, bottom @popup-hide-speed;
+
+        .popup-content {
+            position: relative;
+
+            pointer-events: auto;
+
+            background-color: @signal-red;
+            color: @text-color;
+
+            /* Limit to page width and center */
+            width: 1024px;
+            margin: 0 auto;
+
+            padding: 0.5em;
+        }
+
+        /* We're only animating the opacity of this pseudo element because animating box-shadow is slow */
+        .popup-content::before {
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            z-index: 90;
+
+            content: '';
+
+            box-shadow: 0 0 15px 4px fade(@signal-red-highlight, 75%);
+            animation: 0.5s infinite alternate offline-popup-glow;
+        }
+
+        &:hover {
+            opacity: 0.25;
+            bottom: -@popup-hide-distance;
+            padding-top: @popup-hide-distance;
+
+            .popup-content {
+                pointer-events: none;
             }
         }
     }

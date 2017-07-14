@@ -98,6 +98,14 @@
             "water-treatment-resource-chlorine-empty": "Wasseraufbereitung: Kein Chlor",
             "water-treatment-resource-minerals-low": "Wasseraufbereitung: Wenig Mineralien",
             "water-treatment-resource-minerals-empty": "Wasseraufbereitung: Keine Mineralien"
+        },
+        "backend": {
+            "websocket": {
+                "closed": {
+                    "title": "Mainframe-Verbindung verloren",
+                    "message": "Verständigen Sie umgehend das CIC, um die Sicherheit der Basis zu gewährleisten."
+                }
+            }
         }
     }
 }
