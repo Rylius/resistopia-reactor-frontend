@@ -413,14 +413,14 @@
         },
         mounted() {
             // TODO
-//            this.simulation.intervalId = setInterval(() => {
-            // Copy previous state and apply changes
-//                const state = merge({}, this.simulation.state);
-//                state.stateMachines = merge(state.stateMachines, this.simulation.stateChanges);
-//                this.simulation.stateChanges = {};
+            this.simulation.intervalId = setInterval(() => {
+                // Copy previous state and apply changes
+                const state = merge({}, this.simulation.state);
+                state.stateMachines = merge(state.stateMachines, this.simulation.stateChanges);
+                this.simulation.stateChanges = {};
 
-//                this.simulation.state = Simulation.update(this.simulation.program, state);
-//            }, 1000);
+                this.simulation.state = Simulation.update(this.simulation.program, state);
+            }, 1000);
 
             this.registerBackendWebsocketListener('state', data => this.simulation.state.stateMachines = data);
 
