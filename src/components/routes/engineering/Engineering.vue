@@ -174,6 +174,8 @@
 
     import {normalizedToRange} from '../../../util/math';
 
+    import BackendWebsocketMixin from '../../../mixins/backend_websocket';
+
     function mapNormalizedProperty(state, stateMachine, property, value) {
         const config = state.stateMachines[stateMachine][property];
         return normalizedToRange(value, config.min, config.max);
@@ -193,6 +195,9 @@
 
     export default {
         name: 'dashboard',
+        mixins: [
+            BackendWebsocketMixin,
+        ],
         data() {
             const program = Simulation.Program.BE13;
 
@@ -203,7 +208,6 @@
                     stateChanges: {},
                     intervalId: null,
                 },
-                websocket: null,
                 alerts: createAlerts(),
                 shownAlertsTab: null,
                 navigation: [
@@ -292,23 +296,6 @@
             hideAlerts(tab) {
                 this.shownAlertsTab = null;
             },
-            onServerError() {
-                console.log('websocket connection error:', arguments);
-            },
-            onServerMessage(message) {
-                // TODO
-                const data = JSON.parse(message.data);
-                console.log(data);
-
-                switch (data.type) {
-                    case 'state':
-                        this.simulation.state.stateMachines = data.data;
-                        break;
-                    default:
-                        console.error(`Unknown websocket message type "${data.type}"`);
-                        return;
-                }
-            },
         },
         computed: {
             state() {
@@ -347,22 +334,16 @@
         },
         mounted() {
             // TODO
-            this.simulation.intervalId = setInterval(() => {
-                // Copy previous state and apply changes
+//            this.simulation.intervalId = setInterval(() => {
+            // Copy previous state and apply changes
 //                const state = merge({}, this.simulation.state);
 //                state.stateMachines = merge(state.stateMachines, this.simulation.stateChanges);
 //                this.simulation.stateChanges = {};
 
 //                this.simulation.state = Simulation.update(this.simulation.program, state);
-            }, 1000);
+//            }, 1000);
 
             startUpdate();
-
-            this.websocket = new WebSocket(process.env.RESISTOPIA_BACKEND_WS, 'json');
-            this.websocket.onerror = this.onServerError;
-            this.websocket.onmessage = this.onServerMessage;
-            // TODO
-            this.websocket.onclose = () => this.websocket = null;
         },
         beforeDestroy() {
             if (this.simulation.intervalId) {
@@ -370,11 +351,6 @@
             }
 
             stopUpdate();
-
-            if (this.websocket) {
-                this.websocket.close();
-                this.websocket = null;
-            }
         },
     };
 </script>
