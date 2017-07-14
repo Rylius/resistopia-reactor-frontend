@@ -31,6 +31,10 @@ export default {
         onBackendWebsocketClose(event) {
             console.log(`Backend websocket closed (clean: ${event.wasClean})`);
 
+            if (!event.wasClean) {
+                setTimeout(() => this.openBackendWebsocket(), RETRY_DELAY_MS);
+            }
+
             this.websocket = null;
         },
         closeBackendWebsocket() {
