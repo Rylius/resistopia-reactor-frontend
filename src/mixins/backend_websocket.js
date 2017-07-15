@@ -1,4 +1,4 @@
-const RETRY_DELAY_MS = 10000;
+const RETRY_DELAY_MS = 1000;
 
 export default {
     data() {
