@@ -1,8 +1,13 @@
 <template>
-    <div></div>
+    <div class="range-slider" :class="[vertical ? 'range-slider-vertical' : 'range-slider-horizontal']">
+        <div class="range-slider-track">
+            <span class="dragger"
+                  :style="{left: vertical ? '0' : handlePosition, top: vertical ? handlePosition : '0'}"></span>
+        </div>
+    </div>
 </template>
 
-<style lang="less">
+<style lang="less" scoped>
     @import "../../assets/less/variables";
 
     @slider-size: 30px;
@@ -73,10 +78,18 @@
 </style>
 
 <script>
-    import createRangeSlider from '../../controls/range-slider';
+    import {clamp} from '../../util/math';
 
     export default {
         name: 'slider',
+        data() {
+            return {
+                trackLength: 0,
+                trackOffset: 0,
+                handleLength: 0,
+                dragging: false,
+            };
+        },
         props: {
             value: {
                 type: Number,
@@ -87,17 +100,62 @@
                 default: true,
             },
         },
+        computed: {
+            handlePosition() {
+                return ((this.value * this.trackLength) - (this.handleLength / 2)) + 'px';
+            },
+        },
         methods: {
-            sliderValueChanged(value) {
+            offset(el) {
+                const offsetProp = this.vertical ? 'offsetTop' : 'offsetLeft';
+                let offset = el[offsetProp];
+                while (el = el.offsetParent) {
+                    offset += el[offsetProp];
+                }
+                return offset;
+            },
+            beginDrag() {
+                this.dragging = true;
+
+                this.updateDrag();
+
+                document.addEventListener('touchmove', this.updateDrag);
+                document.addEventListener('mousemove', this.updateDrag);
+            },
+            updateDrag() {
+                const e = window.event;
+                const positionProp = this.vertical ? 'pageY' : 'pageX';
+                const pos = e.touches ? e.touches[0][positionProp] : e[positionProp];
+
+                const value = clamp(((pos - this.trackOffset) / this.trackLength), 0, 1);
                 this.$emit('update', value);
+            },
+            endDrag() {
+                document.removeEventListener('touchmove', this.updateDrag);
+                document.removeEventListener('mousemove', this.updateDrag);
+
+                this.dragging = false;
             },
         },
         mounted() {
-            this.slider = createRangeSlider(this.$el, {
-                value: this.value,
-                vertical: this.vertical,
-                drag: this.sliderValueChanged,
-            });
+            const track = this.$el.getElementsByClassName('range-slider-track')[0];
+            this.trackLength = (this.vertical ? track.offsetHeight : track.offsetWidth);
+            this.trackOffset = this.offset(track);
+
+            const handle = this.$el.getElementsByClassName('dragger')[0];
+            this.handleLength = (this.vertical ? handle.offsetHeight : handle.offsetWidth);
+
+            track.addEventListener('touchstart', this.beginDrag);
+            track.addEventListener('mousedown', this.beginDrag);
+
+            document.addEventListener('touchend', this.endDrag);
+            document.addEventListener('mouseup', this.endDrag);
+        },
+        beforeDestroy() {
+            document.removeEventListener('touchend', this.endDrag);
+            document.removeEventListener('mouseup', this.endDrag);
+            document.removeEventListener('touchmove', this.updateDrag);
+            document.removeEventListener('mousemove', this.updateDrag);
         },
     };
 </script>
