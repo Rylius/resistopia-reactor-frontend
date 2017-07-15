@@ -212,7 +212,7 @@ export default function createAlerts() {
             type: AlertType.Warning,
             active(state) {
                 // Disable this warning if the unit is operating normally
-                return state['water-treatment'].drinkingWater.status.id === StatusType.Warning && (state['water-treatment'].powerSatisfaction.status === StatusType.Critical || state['water-treatment'].waterSatisfaction.status === StatusType.Critical);
+                return state['water-treatment'].drinkingWater.status.id === StatusType.Warning && state['water-treatment'].powerSatisfaction.status === StatusType.Critical;
             },
         },
         {
