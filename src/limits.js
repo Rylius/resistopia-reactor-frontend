@@ -76,7 +76,7 @@ export default {
         'reactor-cooling': {
             cooling: {
                 min: 0,
-                max: 200,
+                max: 2,
             },
         },
         'pump-a': {
