@@ -324,11 +324,15 @@
             changeState(changes) {
                 this.simulation.stateChanges = merge(this.simulation.stateChanges, changes);
 
-                // TODO Debounce
+                // Instantly apply changes to local simulation
+                this.simulation.state.stateMachines = merge(this.simulation.state.stateMachines, changes);
 
                 if (!this.websocketOpen()) {
+                    // Save changes for when connection has been restored
                     return;
                 }
+
+                // TODO Debounce
 
                 this.websocket.send(JSON.stringify({
                     type: 'change-state',
