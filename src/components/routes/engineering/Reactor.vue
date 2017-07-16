@@ -45,7 +45,11 @@
                     </div>
 
                     <div class="block" style="width: 100%;">
-                        cooling: {{ Math.round(state['reactor-cooling'].effectiveCooling.value)}}/{{ Math.round(state['reactor-cooling'].cooling.value)}}
+                        <!-- TODO -->
+                        cooling:
+                        {{ Math.round((state['reactor-cooling'].effectiveCooling.value / 2) * 100) }}%
+                        requested:
+                        {{ Math.round((state['reactor-cooling'].cooling.value / 2) * 100) }}%
                         <slider :vertical="false"
                                 :value="state['reactor-cooling']['cooling'].normalizedValue"
                                 @update="value => changeProperty('reactor-cooling', 'cooling', value)"></slider>
