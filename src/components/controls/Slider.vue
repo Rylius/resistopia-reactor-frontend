@@ -102,7 +102,7 @@
         },
         computed: {
             handlePosition() {
-                return ((this.value * this.trackLength) - (this.handleLength / 2)) + 'px';
+                return ((clamp(this.value, 0, 1) * this.trackLength) - (this.handleLength / 2)) + 'px';
             },
         },
         methods: {
