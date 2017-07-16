@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section class="engineering">
         <nav>
             <div class="block-group">
                 <div v-for="route in navigation" :key="route.text"
@@ -69,173 +69,182 @@
     @status-padding: 4px;
     @alerts-border-color: @nav-item-background;
 
-    nav {
-        padding: 5px;
+    .engineering {
+        /* Disable text selection ('cause it looks bad) */
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
 
-        .warning-strip;
+        nav {
+            padding: 5px;
 
-        .nav-item-wrapper {
-            padding: 2px;
+            .warning-strip;
 
-            &, &:focus {
-                outline: none;
+            .nav-item-wrapper {
+                padding: 2px;
+
+                &, &:focus {
+                    outline: none;
+                }
+            }
+
+            .nav-item, .status {
+                display: block;
+
+                border-radius: 6px;
+
+                color: @nav-item-color;
+                background-color: @nav-item-background;
+
+                text-decoration: none;
+
+                &, &:focus {
+                    outline: none;
+                }
+            }
+
+            .nav-item {
+                padding: 10px;
+
+                text-align: center;
+
+                &.router-link-exact-active {
+                    color: @nav-item-active-color;
+                    background-color: @nav-item-active-background;
+                }
+            }
+
+            .status {
+                margin-top: 4px;
+                border: @status-border-size solid @nav-item-active-background;
+                padding: @status-padding;
+
+                font-size: 0.8em;
+
+                &.critical {
+                    border-color: @signal-red-disabled;
+                    background-color: @signal-red-highlight;
+                }
+                &.warning {
+                    border-color: @signal-orange-disabled;
+                    background-color: @signal-orange;
+                }
+                &.normal {
+                    border-color: @signal-green-disabled;
+                    background-color: @signal-green;
+                }
             }
         }
 
-        .nav-item, .status {
-            display: block;
+        /* If we didn't use this wrapper and instead used margin-top on .alerts, there'd be a gap between
+         .status and .alerts, closing the popup if moving the pointer down into it */
+        .alerts-wrapper {
+            position: absolute;
+
+            z-index: @alerts-z-index;
+
+            padding-top: @status-padding * 2;
+            margin-left: -(@status-padding + @status-border-size);
+        }
+
+        .alerts {
+            border: @status-border-size solid @alerts-border-color;
+            padding: 10px;
 
             border-radius: 6px;
 
-            color: @nav-item-color;
-            background-color: @nav-item-background;
+            box-shadow: 0 0 10px 2px fade(@alerts-border-color, 75%);
 
-            text-decoration: none;
+            background-color: @display-background;
 
-            &, &:focus {
-                outline: none;
+            font-size: 0.9rem;
+
+            display: none;
+            &.visible {
+                display: block;
+            }
+
+            ul {
+                margin: 0;
+                padding: 0;
+
+                list-style: none;
+
+                li + li {
+                    margin-top: 0.5em;
+                }
             }
         }
 
-        .nav-item {
-            padding: 10px;
+        @popup-hide-distance: 3.25em;
+        @popup-hide-speed: 0.25s;
 
-            text-align: center;
-
-            &.router-link-exact-active {
-                color: @nav-item-active-color;
-                background-color: @nav-item-active-background;
+        @keyframes offline-popup-glow {
+            0% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 1;
             }
         }
 
-        .status {
-            margin-top: 4px;
-            border: @status-border-size solid @nav-item-active-background;
-            padding: @status-padding;
+        .offline-popup {
+            /* Stick to viewport bottom */
+            position: fixed;
+            bottom: 0;
 
-            font-size: 0.8em;
-
-            &.critical {
-                border-color: @signal-red-disabled;
-                background-color: @signal-red-highlight;
-            }
-            &.warning {
-                border-color: @signal-orange-disabled;
-                background-color: @signal-orange;
-            }
-            &.normal {
-                border-color: @signal-green-disabled;
-                background-color: @signal-green;
-            }
-        }
-    }
-
-    /* If we didn't use this wrapper and instead used margin-top on .alerts, there'd be a gap between
-     .status and .alerts, closing the popup if moving the pointer down into it */
-    .alerts-wrapper {
-        position: absolute;
-
-        z-index: @alerts-z-index;
-
-        padding-top: @status-padding * 2;
-        margin-left: -(@status-padding + @status-border-size);
-    }
-
-    .alerts {
-        border: @status-border-size solid @alerts-border-color;
-        padding: 10px;
-
-        border-radius: 6px;
-
-        box-shadow: 0 0 10px 2px fade(@alerts-border-color, 75%);
-
-        background-color: @display-background;
-
-        font-size: 0.9rem;
-
-        display: none;
-        &.visible {
-            display: block;
-        }
-
-        ul {
-            margin: 0;
-            padding: 0;
-
-            list-style: none;
-
-            li + li {
-                margin-top: 0.5em;
-            }
-        }
-    }
-
-    @popup-hide-distance: 3.25em;
-    @popup-hide-speed: 0.25s;
-
-    @keyframes offline-popup-glow {
-        0% {
-            opacity: 0.5;
-        }
-        90% {
-            opacity: 1;
-        }
-    }
-
-    .offline-popup {
-        /* Stick to viewport bottom */
-        position: fixed;
-        bottom: 0;
-
-        /* Stretch to full page width */
-        left: 0;
-        right: 0;
-
-        z-index: 100;
-
-        opacity: 1;
-        transition: opacity @popup-hide-speed, bottom @popup-hide-speed;
-
-        .popup-content {
-            position: relative;
-
-            pointer-events: auto;
-
-            background-color: @signal-red;
-            color: @text-color;
-
-            /* Limit to page width and center */
-            width: 1024px;
-            margin: 0 auto;
-
-            padding: 0.5em;
-        }
-
-        /* We're only animating the opacity of this pseudo element because animating box-shadow is slow */
-        .popup-content::before {
-            position: absolute;
-
-            top: 0;
+            /* Stretch to full page width */
             left: 0;
+            right: 0;
 
-            width: 100%;
-            height: 100%;
+            z-index: 100;
 
-            z-index: 90;
-
-            content: '';
-
-            box-shadow: 0 0 15px 4px fade(@signal-red-highlight, 75%);
-            animation: 0.5s infinite alternate offline-popup-glow;
-        }
-
-        &:hover {
-            opacity: 0.25;
-            bottom: -@popup-hide-distance;
-            padding-top: @popup-hide-distance;
+            opacity: 1;
+            transition: opacity @popup-hide-speed, bottom @popup-hide-speed;
 
             .popup-content {
-                pointer-events: none;
+                position: relative;
+
+                pointer-events: auto;
+
+                background-color: @signal-red;
+                color: @text-color;
+
+                /* Limit to page width and center */
+                width: 1024px;
+                margin: 0 auto;
+
+                padding: 0.5em;
+            }
+
+            /* We're only animating the opacity of this pseudo element because animating box-shadow is slow */
+            .popup-content::before {
+                position: absolute;
+
+                top: 0;
+                left: 0;
+
+                width: 100%;
+                height: 100%;
+
+                z-index: 90;
+
+                content: '';
+
+                box-shadow: 0 0 15px 4px fade(@signal-red-highlight, 75%);
+                animation: 0.5s infinite alternate offline-popup-glow;
+            }
+
+            &:hover {
+                opacity: 0.25;
+                bottom: -@popup-hide-distance;
+                padding-top: @popup-hide-distance;
+
+                .popup-content {
+                    pointer-events: none;
+                }
             }
         }
     }
