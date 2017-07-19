@@ -62,7 +62,8 @@
             "pump": {
                 "enable": "Einschalten",
                 "disable": "Ausschalten",
-                "filterHealth": "Filterzustand: {health}%"
+                "filterHealth": "Filterzustand: {health}%",
+                "production": "Zulauf: @:water.litersPerHour"
             }
         },
         "alerts": {

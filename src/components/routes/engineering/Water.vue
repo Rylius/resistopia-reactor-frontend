@@ -80,6 +80,8 @@
                     </button>
                 </p>
                 <p>
+                    {{ $t('water.pump.production', {amount: Math.round(state[pump].water.value * 3600)}) }}
+                    <br>
                     {{ $t('water.pump.filterHealth', {health: Math.round((state[pump].filterHealth.value / state[pump].filterMaxHealth.value) * 100)})}}
                 </p>
             </div>
