@@ -9,7 +9,11 @@
             </div>
 
             <div class="graph-overlay wide" data-target="water-treatment-text">
-                <h3>{{ $t('stateMachine.water-treatment.name') }}</h3>
+                <h3>
+                    {{ $t('stateMachine.water-treatment.name') }}
+                    <span class="status-indicator"
+                          :class="[state['water-treatment'].powerSatisfaction.value > 0 ? 'active' : 'disabled']"></span>
+                </h3>
                 <div class="block-group">
                     <div class="block" style="width: 80%;">
                         {{ $t('power.kilowattHours', {power: Math.round((state['water-treatment'].requiredPower.value * state['water-treatment'].powerSatisfaction.value) * 10) / 10})}}
@@ -68,7 +72,7 @@
             <div class="graph-overlay" v-for="pump in pumps" :data-target="pump + '-text'">
                 <h3>
                     {{ $t('stateMachine.' + pump + '.name') }}
-                    <span class="pump-status-indicator"
+                    <span class="status-indicator"
                           :class="[state[pump].water.value > 0 ? 'active' : 'disabled']"></span>
                 </h3>
                 <p>
@@ -171,7 +175,7 @@
         }
     }
 
-    .pump-status-indicator {
+    .status-indicator {
         display: inline-block;
         float: right;
 
