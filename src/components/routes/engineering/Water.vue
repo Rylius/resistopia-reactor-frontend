@@ -20,20 +20,22 @@
                 </h3>
                 <div class="block-group">
                     <div class="block" style="width: 80%;">
-                        {{ $t('power.kilowattHours', {power: Math.round((state['water-treatment'].requiredPower.value * state['water-treatment'].powerSatisfaction.value) * 10) / 10})}}
-                        /
-                        {{ $t('power.kilowattHours', {power: Math.round(state['water-treatment'].requiredPower.value * 10) / 10})}}
-                        <br>
-                        {{ $t('water.litersPerHour', {amount: Math.round(state['water-treatment'].requiredWater.value * 3600)})}}
-                        <br>
-                        {{ $t('water.drinking') }}: {{ Math.round(state['water-treatment'].drinkingWater.value) }} L
-                        <br>
-                        <br>
-                        cleaner: {{ state['water-treatment'].resourceCleaner.status.id }}
-                        <br>
-                        chlorine: {{ state['water-treatment'].resourceChlorine.status.id }}
-                        <br>
-                        minerals: {{ state['water-treatment'].resourceMinerals.status.id }}
+                        <p>
+                            {{ $t('power.kilowattHours', {power: Math.round((state['water-treatment'].requiredPower.value * state['water-treatment'].powerSatisfaction.value) * 10) / 10})}}
+                            /
+                            {{ $t('power.kilowattHours', {power: Math.round(state['water-treatment'].requiredPower.value * 10) / 10})}}
+                            <br>
+                            {{ $t('water.litersPerHour', {amount: Math.round(state['water-treatment'].requiredWater.value * 3600)})}}
+                            <br>
+                            {{ $t('water.drinking') }}: {{ Math.round(state['water-treatment'].drinkingWater.value) }} L
+                        </p>
+                        <p>
+                            cleaner: {{ state['water-treatment'].resourceCleaner.status.id }}
+                            <br>
+                            chlorine: {{ state['water-treatment'].resourceChlorine.status.id }}
+                            <br>
+                            minerals: {{ state['water-treatment'].resourceMinerals.status.id }}
+                        </p>
                     </div>
 
                     <div class="block" style="width: 20%;">
@@ -167,6 +169,13 @@
 
         &.wide {
             width: 250px;
+        }
+
+        p {
+            margin: 0;
+        }
+        p + p {
+            margin-top: 0.75em;
         }
 
         h1, h2, h3, h4, h5, h6 {
