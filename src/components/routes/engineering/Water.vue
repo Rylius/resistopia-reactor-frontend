@@ -61,11 +61,19 @@
                 </h3>
                 <div class="block-group">
                     <div class="block" style="width: 80%;">
-                        {{ Math.round(state['water-tank'].water.value / 100) / 10 }} m³
-                        /
-                        {{ Math.round(state['water-tank'].capacity.value / 100) / 10 }} m³
-                        <br>
-                        {{ $t('water.litersPerHour', {amount: Math.round((totalWaterProduction - totalWaterConsumption) * 3600)})}}
+                        <p>
+                            {{ $t('water.cubicMeters', {amount: Math.round(state['water-tank'].water.value / 100) / 10})}}
+                            /
+                            {{ $t('water.cubicMeters', {amount: Math.round(state['water-tank'].capacity.value / 100) / 10})}}
+                        </p>
+                        <p>
+                            {{ $t('water.tank.input', {amount: Math.round(totalWaterProduction * 3600)}) }}
+                            <br>
+                            {{ $t('water.tank.output', {amount: Math.round(totalWaterConsumption * 3600)}) }}
+                        </p>
+                        <p>
+                            {{ $t('water.tank.difference', {amount: ((totalWaterProduction - totalWaterConsumption) > 0 ? '+' : '') + Math.round((totalWaterProduction - totalWaterConsumption) * 3600)})}}
+                        </p>
                     </div>
 
                     <div class="block" style="width: 20%;">

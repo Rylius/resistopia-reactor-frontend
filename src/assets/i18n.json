@@ -59,11 +59,17 @@
             "industrial": "Nutzwasser",
             "litersPerSecond": "{amount} L/s",
             "litersPerHour": "{amount} L/h",
+            "cubicMeters": "{amount} m³",
             "pump": {
                 "enable": "Einschalten",
                 "disable": "Ausschalten",
                 "filterHealth": "Filterzustand: {health}%",
                 "production": "Zulauf: @:water.litersPerHour"
+            },
+            "tank": {
+                "input": "Zulauf: @:water.litersPerHour",
+                "output": "Verbrauch: @:water.litersPerHour",
+                "difference": "Differenz: @:water.litersPerHour"
             }
         },
         "alerts": {
