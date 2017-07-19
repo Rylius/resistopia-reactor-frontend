@@ -105,6 +105,13 @@
                     <br>
                     {{ $t('water.pump.filterHealth', {health: Math.round((state[pump].filterHealth.value / state[pump].filterMaxHealth.value) * 100)})}}
                 </p>
+                <p>
+                    <!-- TODO Open confirm dialog -->
+                    <button :disabled="state[pump].filterHealth.value > state[pump].filterMaxHealth.value * 0.8"
+                            @click="() => changeProperty(pump, 'filterHealth', state[pump].filterMaxHealth.value)">
+                        {{ $t('water.pump.swapFilter') }}
+                    </button>
+                </p>
             </div>
         </div>
     </section>
