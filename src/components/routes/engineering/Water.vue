@@ -66,13 +66,22 @@
             </div>
 
             <div class="graph-overlay" v-for="pump in pumps" :data-target="pump + '-text'">
-                <h3>{{ $t('stateMachine.' + pump + '.name') }}</h3>
-                <button v-if="!state[pump].enabled.value" @click="() => changeProperty(pump, 'enabled', 1)">
-                    enable
-                </button>
-                <button v-else @click="() => changeProperty(pump, 'enabled', 0)">disable</button>
-                <br>
-                filter: {{ Math.round((state[pump].filterHealth.value / state[pump].filterMaxHealth.value) * 100) }}%
+                <h3>
+                    {{ $t('stateMachine.' + pump + '.name') }}
+                    <span class="pump-status-indicator"
+                          :class="[state[pump].water.value > 0 ? 'active' : 'disabled']"></span>
+                </h3>
+                <p>
+                    <button v-if="!state[pump].enabled.value" @click="() => changeProperty(pump, 'enabled', 1)">
+                        {{ $t('water.pump.enable') }}
+                    </button>
+                    <button v-else @click="() => changeProperty(pump, 'enabled', 0)">
+                        {{ $t('water.pump.disable') }}
+                    </button>
+                </p>
+                <p>
+                    {{ $t('water.pump.filterHealth', {health: Math.round((state[pump].filterHealth.value / state[pump].filterMaxHealth.value) * 100)})}}
+                </p>
             </div>
         </div>
     </section>
@@ -157,6 +166,28 @@
                 font-size: 0.75em;
                 color: @text-unused-color;
             }
+        }
+    }
+
+    .pump-status-indicator {
+        display: inline-block;
+        float: right;
+
+        margin-top: 0.15em;
+
+        width: 1.5em;
+        height: 0.75em;
+
+        border-radius: 0.25em;
+
+        background-color: @label-background;
+        transition: 0.5s background-color;
+
+        &.active {
+            background-color: @signal-green;
+        }
+        &.disabled {
+            background-color: @signal-red;
         }
     }
 </style>

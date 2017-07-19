@@ -58,7 +58,12 @@
             "drinking": "Trinkwasser",
             "industrial": "Nutzwasser",
             "litersPerSecond": "{amount} L/s",
-            "litersPerHour": "{amount} L/h"
+            "litersPerHour": "{amount} L/h",
+            "pump": {
+                "enable": "Einschalten",
+                "disable": "Ausschalten",
+                "filterHealth": "Filterzustand: {health}%"
+            }
         },
         "alerts": {
             "count": "Eine Meldung | {count} Meldungen",
