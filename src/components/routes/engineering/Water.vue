@@ -4,7 +4,11 @@
             <svg class="water-graph" markup-inline src="../../../assets/svg/engineering/water.svg"></svg>
 
             <div class="graph-overlay" data-target="reactor-cooling-text">
-                <h3>{{ $t('stateMachine.reactor-cooling.name') }}</h3>
+                <h3>
+                    {{ $t('stateMachine.reactor-cooling.name') }}
+                    <span class="status-indicator"
+                          :class="[state['reactor-cooling'].cooling.value > 0 ? 'active' : 'disabled']"></span>
+                </h3>
                 {{ $t('water.litersPerHour', {amount: Math.round(state['reactor-cooling'].waterRequired.value * 3600)})}}
             </div>
 
