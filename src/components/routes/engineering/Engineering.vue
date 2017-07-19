@@ -266,7 +266,11 @@
 
     function mapNormalizedProperty(state, stateMachine, property, value) {
         const config = state.stateMachines[stateMachine][property];
-        return normalizedToRange(value, config.min, config.max);
+        if (typeof config.min === 'number' && typeof config.max === 'number') {
+            return normalizedToRange(value, config.min, config.max);
+        } else {
+            return value;
+        }
     }
 
     function alertLevel(a, b) {
