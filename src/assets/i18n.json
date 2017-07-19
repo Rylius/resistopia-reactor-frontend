@@ -70,6 +70,16 @@
                 "input": "Zulauf: @:water.litersPerHour",
                 "output": "Verbrauch: @:water.litersPerHour",
                 "difference": "Differenz: @:water.litersPerHour"
+            },
+            "treatment": {
+                "cleaner": "Antifes",
+                "chlorine": "Chlor",
+                "minerals": "Mineralien",
+                "resource": {
+                    "normal": "Vorrätig",
+                    "warning": "Wenig",
+                    "critical": "Leer"
+                }
             }
         },
         "alerts": {

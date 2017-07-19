@@ -30,11 +30,14 @@
                             {{ $t('water.drinking') }}: {{ Math.round(state['water-treatment'].drinkingWater.value) }} L
                         </p>
                         <p>
-                            cleaner: {{ state['water-treatment'].resourceCleaner.status.id }}
+                            {{ $t('water.treatment.cleaner') }}:
+                            {{ $t('water.treatment.resource.' + state['water-treatment'].resourceCleaner.status.id) }}
                             <br>
-                            chlorine: {{ state['water-treatment'].resourceChlorine.status.id }}
+                            {{ $t('water.treatment.chlorine') }}:
+                            {{ $t('water.treatment.resource.' + state['water-treatment'].resourceChlorine.status.id) }}
                             <br>
-                            minerals: {{ state['water-treatment'].resourceMinerals.status.id }}
+                            {{ $t('water.treatment.minerals') }}:
+                            {{ $t('water.treatment.resource.' + state['water-treatment'].resourceMinerals.status.id) }}
                         </p>
                     </div>
 
