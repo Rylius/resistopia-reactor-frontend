@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section class="debug-simulation">
         <section class="content">
             <p>
                 <span style="display: inline-block; width: 100px;">
@@ -30,8 +30,23 @@
 </template>
 
 <style lang="less" scoped>
+    @import "../../../assets/less/engineering_variables";
+
+    .debug-simulation {
+        width: 1024px;
+        margin: 0 auto;
+    }
+
     .state-machines {
         position: relative;
+    }
+
+    .content {
+        padding: 15px;
+
+        background: @display-background;
+
+        color: @text-color;
     }
 
     #connections-canvas {
