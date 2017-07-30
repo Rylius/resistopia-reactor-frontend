@@ -8,6 +8,8 @@ import EngineeringPower from '../components/routes/engineering/Power.vue';
 import EngineeringWater from '../components/routes/engineering/Water.vue';
 import EngineeringStorage from '../components/routes/engineering/Storage.vue';
 
+import Alien from '../components/routes/alien/Alien.vue';
+
 import TestEverything from '../components/routes/test/TestEverything.vue';
 import TestAudio from '../components/routes/test/TestAudio.vue';
 
@@ -47,6 +49,10 @@ export default new Router({
                     component: EngineeringStorage,
                 },
             ],
+        },
+        {
+            path: '/alien',
+            component: Alien,
         },
         {
             path: '/test/everything',
