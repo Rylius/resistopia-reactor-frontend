@@ -5,48 +5,53 @@ html {
     background: @page-background;
 }
 
-.content {
-    padding: 15px;
+.engineering {
+    width: 1024px;
+    margin: 0 auto;
 
-    background: @display-background;
+    .content {
+        padding: 15px;
 
-    color: @text-color;
-}
+        background: @display-background;
 
-h1 {
-    margin: 0 0 0.25em;
+        color: @text-color;
+    }
 
-    .secondary {
-        font-size: 0.5em;
+    h1 {
+        margin: 0 0 0.25em;
 
-        &.critical {
-            color: @signal-red-highlight;
-        }
-        &.warning {
-            color: @signal-orange-highlight;
-        }
-        &.normal {
-            color: @signal-green-highlight;
+        .secondary {
+            font-size: 0.5em;
+
+            &.critical {
+                color: @signal-red-highlight;
+            }
+            &.warning {
+                color: @signal-orange-highlight;
+            }
+            &.normal {
+                color: @signal-green-highlight;
+            }
         }
     }
-}
 
-.label {
-    padding: 6px 10px;
+    .label {
+        padding: 6px 10px;
 
-    border-radius: 4px;
+        border-radius: 4px;
 
-    display: inline-block;
-    text-align: center;
+        display: inline-block;
+        text-align: center;
 
-    font-family: monospace;
-    font-size: 1.25em;
+        font-family: monospace;
+        font-size: 1.25em;
 
-    color: @label-color;
-    background-color: @label-background;
+        color: @label-color;
+        background-color: @label-background;
 
-    &.secondary {
-        color: @label-secondary-color;
-        background-color: @label-secondary-background;
+        &.secondary {
+            color: @label-secondary-color;
+            background-color: @label-secondary-background;
+        }
     }
 }
