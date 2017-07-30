@@ -1,24 +1,62 @@
 <template>
-    <section class="alien">
-        <section class="content">
-            <!-- TODO -->
+    <section class="alien" :class="{'hide-cursor': production}">
+        <bokeh-lights style="position: absolute; top: 0; left: 0;" :enabled="effects.lights"></bokeh-lights>
+
+        <section class="energy-distributor">
+            <h1 v-if="!production">energy-distributor</h1>
+        </section>
+
+        <section class="energy-converter">
+            <h1 v-if="!production">energy-converter</h1>
+        </section>
+
+        <section class="energy-capacitor">
+            <energy-bar :elements="17"
+                        :value="stateMachines['energy-capacitor'].energy.value / stateMachines['energy-capacitor'].capacity.value">
+            </energy-bar>
+        </section>
+
+        <section class="core">
+            <svg markup-inline src="../../../assets/svg/alien/core.svg"></svg>
         </section>
 
         <section class="offline-popup" v-if="!websocketOpen()">
             <!-- TODO -->
         </section>
+
+        <white-noise style="position: absolute; top: 0; left: 0;" :enabled="effects.whiteNoise"></white-noise>
     </section>
 </template>
 
-<style lang="less">
-    @alien-color: #e5ffef;
+<style lang="less" scoped>
+    @alien-background: #cdeeb8;
+    @alien-background2: #c9dec4;
+
+    @keyframes core-animation {
+        0% {
+            transform: rotate(0deg);
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.5;
+        }
+        100% {
+            transform: rotate(360deg);
+            opacity: 1;
+        }
+    }
 
     .alien {
         width: 1440px;
         height: 900px;
-        margin: 0 auto;
+        margin: auto;
 
-        background-color: @alien-color;
+        overflow: hidden;
+
+        position: relative;
+
+        /*background: @alien-background2 linear-gradient(to bottom, @alien-background2, @alien-background, @alien-background2);*/
+        background-image: url("../../../../static/img/alien_background.png");
 
         /* Disable text selection ('cause it looks bad) */
         -webkit-touch-callout: none;
@@ -26,6 +64,45 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+
+        h1 {
+            margin: 0;
+        }
+
+        .energy-capacitor {
+            position: absolute;
+
+            right: 60px;
+            top: 60px;
+        }
+
+        @core-size: 256px;
+        .core {
+            position: absolute;
+
+            width: @core-size;
+            height: @core-size;
+
+            right: 140px;
+            bottom: 135px;
+
+            transform-origin: 50% 50%;
+            opacity: 1;
+
+            animation: 2s linear core-animation infinite;
+            transition: 10s opacity;
+            &.online {
+                animation-play-state: running;
+            }
+            &.offline {
+                animation-play-state: paused;
+                opacity: 0.25;
+            }
+        }
+    }
+
+    .hide-cursor {
+        cursor: none;
     }
 </style>
 
@@ -42,6 +119,10 @@
     import {normalizedToRange} from '../../../util/math';
 
     import BackendWebsocketMixin from '../../../mixins/backend_websocket';
+
+    import EnergyBar from './components/EnergyBar.vue';
+    import WhiteNoise from './components/WhiteNoise.vue';
+    import BokehLights from './components/BokehLights.vue';
 
     function mapNormalizedProperty(state, stateMachine, property, value) {
         const config = state.stateMachines[stateMachine][property];
@@ -66,6 +147,10 @@
                     state: Simulation.createInitialState(program),
                     stateChanges: {},
                     intervalId: null,
+                },
+                effects: {
+                    whiteNoise: false,
+                    lights: true,
                 },
             };
         },
@@ -102,6 +187,12 @@
             state() {
                 return createFrontendState(this.simulation.state);
             },
+            stateMachines() {
+                return this.state.stateMachines;
+            },
+            production() {
+                return process.env.NODE_ENV !== 'development';
+            },
         },
         mounted() {
             // TODO
@@ -124,6 +215,11 @@
             }
 
             stopUpdate();
+        },
+        components: {
+            EnergyBar,
+            WhiteNoise,
+            BokehLights,
         },
     };
 </script>
