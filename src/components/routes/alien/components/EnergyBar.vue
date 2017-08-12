@@ -9,8 +9,8 @@
 <style lang="less" scoped>
     @element-color: #029e00;
     @element-color-highlight: darken(@element-color, 17.5%);
-    @element-active-color: #9c00c6;
-    @element-active-color-highlight: lighten(@element-active-color, 20%);
+    @element-active-color: #9eff00;
+    @element-active-color-highlight: @element-color;
 
     @element-height: 0.75em;
     @element-margin: @element-height;
