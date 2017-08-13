@@ -63,6 +63,23 @@
                 </div>
             </div>
         </div>
+
+        <div class="block-group">
+            <div class="block" style="width: 33%;">
+                <camera :title="$t('camera.cooling')" type="cooling"
+                        :offline="['warning', 'critical'].includes(state['reactor']['heat'].status.id)"></camera>
+            </div>
+
+            <div class="block" style="width: 33%;">
+                <camera :title="$t('camera.reactor')" type="engine"
+                        :offline="['critical'].includes(state['reactor']['heat'].status.id)"></camera>
+            </div>
+
+            <div class="block" style="width: 33%;">
+                <camera :title="$t('camera.pump')" type="pump"
+                        :offline="['warning', 'critical'].includes(state['reactor']['heat'].status.id)"></camera>
+            </div>
+        </div>
     </section>
 </template>
 
@@ -71,12 +88,14 @@
 
     import TemperatureDisplay from '../../controls/engineering/TemperatureDisplay';
     import PowerConsumptionDisplay from '../../controls/engineering/PowerConsumptionDisplay';
+    import Camera from './components/Camera.vue';
     import Slider from '../../controls/Slider';
 
     export default {
         name: 'reactor',
         mixins: [EngineeringMixin],
         components: {
+            Camera,
             TemperatureDisplay,
             PowerConsumptionDisplay,
             Slider,

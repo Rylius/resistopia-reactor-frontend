@@ -83,6 +83,11 @@
                 }
             }
         },
+        "camera": {
+            "cooling": "CAM-03-KHL",
+            "reactor": "CAM-08-REA",
+            "pump": "CAM-06-PMP"
+        },
         "alerts": {
             "count": "Eine Meldung | {count} Meldungen",
             "none": "Keine Meldungen",
