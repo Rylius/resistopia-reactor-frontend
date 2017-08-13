@@ -1,6 +1,7 @@
 <template>
     <div class="camera">
         <div class="screen" :class="[type]"></div>
+        <div class="param-effects" :class="[type, {offline}]" :style="paramStyles"></div>
         <div class="effects" :class="[type, {offline}]"></div>
 
         <span class="title label">{{ title }}</span>
@@ -46,6 +47,46 @@
 
         margin: 0 auto;
 
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background-size: 100%;
+
+            &.cooling {
+                background-image: url("../../../../../static/img/cooling.jpg");
+            }
+            &.engine {
+                background-image: url("../../../../../static/img/engine.jpg");
+            }
+            &.pump {
+                background-image: url("../../../../../static/img/pump.jpg");
+            }
+        }
+
+        .param-effects {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            display: none;
+
+            &.engine {
+                display: block;
+                background-size: 100%;
+                background-image: url("../../../../../static/img/engine_glow.png");
+                mix-blend-mode: overlay;
+                transition: opacity 1s;
+            }
+        }
+
         .effects {
             position: relative;
 
@@ -82,27 +123,6 @@
                 &.pump {
                     animation-duration: 0.31s;
                 }
-            }
-        }
-
-        .screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-
-            width: 100%;
-            height: 100%;
-
-            background-size: 100%;
-
-            &.cooling {
-                background-image: url("../../../../../static/img/cooling.jpg");
-            }
-            &.engine {
-                background-image: url("../../../../../static/img/engine.jpg");
-            }
-            &.pump {
-                background-image: url("../../../../../static/img/pump.jpg");
             }
         }
 
@@ -151,6 +171,21 @@
             },
             offline: {
                 type: Boolean,
+            },
+            param: {
+                type: Number,
+                default: 0,
+            },
+        },
+        computed: {
+            paramStyles() {
+                if (this.type === 'engine') {
+                    return {
+                        opacity: this.param,
+                    };
+                }
+
+                return {};
             },
         },
     };

@@ -85,6 +85,7 @@
 
             <div class="block" style="width: 33%;">
                 <camera :title="$t('camera.reactor')" type="engine"
+                        :param="Math.min(Math.max(state['reactor']['heat'].value - 1200, 0) / 2400, 1)"
                         :offline="['critical'].includes(state['reactor']['heat'].status.id) || state['base']['powerSatisfaction'].value < 0.1"></camera>
             </div>
 
