@@ -67,17 +67,17 @@
         <div class="block-group">
             <div class="block" style="width: 33%;">
                 <camera :title="$t('camera.cooling')" type="cooling"
-                        :offline="['warning', 'critical'].includes(state['reactor']['heat'].status.id)"></camera>
+                        :offline="['warning', 'critical'].includes(state['reactor']['heat'].status.id) || state['base']['powerSatisfaction'].value < 0.1"></camera>
             </div>
 
             <div class="block" style="width: 33%;">
                 <camera :title="$t('camera.reactor')" type="engine"
-                        :offline="['critical'].includes(state['reactor']['heat'].status.id)"></camera>
+                        :offline="['critical'].includes(state['reactor']['heat'].status.id) || state['base']['powerSatisfaction'].value < 0.1"></camera>
             </div>
 
             <div class="block" style="width: 33%;">
                 <camera :title="$t('camera.pump')" type="pump"
-                        :offline="['warning', 'critical'].includes(state['reactor']['heat'].status.id)"></camera>
+                        :offline="['warning', 'critical'].includes(state['reactor']['heat'].status.id) || state['base']['powerSatisfaction'].value < 0.1"></camera>
             </div>
         </div>
     </section>
