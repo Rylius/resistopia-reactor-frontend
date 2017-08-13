@@ -15,11 +15,17 @@
             },
             "temperature": {
                 "core": "Reaktorkern"
+            },
+            "input": {
+                "matter": "Materie: {amount}%",
+                "antimatter": "Antimaterie: {amount}%"
             }
         },
         "cooling": {
             "name": "Kühlung",
-            "water": "Kühlwasser"
+            "water": "Kühlwasser",
+            "provided": "Ist: {amount}%",
+            "requested": "Soll: {amount}%"
         },
         "stateMachine": {
             "reactor-cooling": {
