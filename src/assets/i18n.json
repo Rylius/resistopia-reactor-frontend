@@ -14,7 +14,9 @@
                 "offline": "Notabschaltung"
             },
             "temperature": {
-                "core": "Reaktorkern"
+                "core1": "Fusionskammer",
+                "core2": "Reaktorkern",
+                "core3": "Wärmetauscher"
             },
             "input": {
                 "matter": "Materie: {amount}%",

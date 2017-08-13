@@ -3,7 +3,7 @@
         <span class="label text">{{ label }}</span>
         <lamp :enabled="state[stateMachine][property].status.id === 'critical'"
               color="red" :flash="true"></lamp>
-        <seven-segment-display :value="Math.round(state[stateMachine][property].value)"
+        <seven-segment-display :value="Math.round(state[stateMachine][property].value) + offset"
                                :color="state[stateMachine][property].status.color"
                                :digits="4" :decimals="0"></seven-segment-display>
         <span class="label unit">°C</span>
@@ -50,6 +50,10 @@
             property: {
                 required: true,
                 type: String,
+            },
+            offset: {
+                type: Number,
+                default: 0,
             },
             label: {
                 required: true,

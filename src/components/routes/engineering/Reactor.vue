@@ -29,16 +29,24 @@
                         </div>
                     </div>
 
-                    <div class="block" style="width: 70%;">
+                    <div class="block" style="width: 80%;">
                         <temperature-display :state="state" stateMachine="reactor" property="heat"
-                                             :label="$t('reactor.temperature.core')"
+                                             :label="$t('reactor.temperature.core1')" :offset="9 + Math.random() * 2"
+                                             style="width: 100%"></temperature-display>
+                        <temperature-display :state="state" stateMachine="reactor" property="heat"
+                                             :label="$t('reactor.temperature.core2')" :offset="Math.random()"
+                                             style="width: 100%"></temperature-display>
+                        <temperature-display :state="state" stateMachine="reactor" property="heat"
+                                             :label="$t('reactor.temperature.core3')"
+                                             :offset="-10 - (Math.random() * -3)"
                                              style="width: 100%"></temperature-display>
                     </div>
 
-                    <div class="block" style="width: 30%;">
+                    <div class="block" style="width: 20%;">
                     </div>
                 </div>
             </div>
+
 
             <div class="block" style="width: 50%;">
                 <div class="block-group">
@@ -66,6 +74,8 @@
                 </div>
             </div>
         </div>
+
+        <br>
 
         <div class="block-group">
             <div class="block" style="width: 33%;">
