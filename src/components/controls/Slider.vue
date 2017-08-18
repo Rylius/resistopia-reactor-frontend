@@ -114,16 +114,16 @@
                 }
                 return offset;
             },
-            beginDrag() {
+            beginDrag(event) {
                 this.dragging = true;
 
-                this.updateDrag();
+                this.updateDrag(event);
 
                 document.addEventListener('touchmove', this.updateDrag);
                 document.addEventListener('mousemove', this.updateDrag);
             },
-            updateDrag() {
-                const e = window.event;
+            updateDrag(event) {
+                const e = event || window.event;
                 const positionProp = this.vertical ? 'pageY' : 'pageX';
                 const pos = e.touches ? e.touches[0][positionProp] : e[positionProp];
 
