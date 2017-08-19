@@ -102,28 +102,20 @@
                             id: 'reactor',
                             position: [0, 1],
                             targets: [
-                                {id: 'energy-distributor', fromOffset: {y: 60}, toOffset: {y: -90}},
+                                {id: 'core', fromOffset: {y: 60}, toOffset: {y: -90}},
+                                {id: 'energy-converter', fromOffset: {x: 120, y: 60}, toOffset: {y: -60}},
                                 {id: 'reactor-cooling', fromOffset: {x: 130}, toOffset: {x: -140}},
-                            ],
-                        },
-                        {
-                            id: 'energy-distributor',
-                            position: [0, 2],
-                            targets: [
-                                {id: 'energy-converter', fromOffset: {x: 140, y: -45}, toOffset: {x: -140}},
-                                {id: 'core', fromOffset: {y: 90}, toOffset: {y: -60}},
-                                {id: 'energy-capacitor', fromOffset: {x: 120, y: 90}, toOffset: {y: -40}},
                             ],
                         },
                         {
                             id: 'energy-converter',
                             position: [1, 2],
                             targets: [
-                                {id: 'power-distributor', fromOffset: {x: 140}, toOffset: {x: -140}},
+                                {id: 'power-capacitor', fromOffset: {x: 140}, toOffset: {x: -140}},
                             ],
                         },
                         {
-                            id: 'power-distributor',
+                            id: 'power-capacitor',
                             position: [2, 2],
                             targets: [
                                 {id: 'reactor-cooling', fromOffset: {y: -40}, toOffset: {y: 60}},

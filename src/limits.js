@@ -44,13 +44,13 @@ export default {
         'storage-matter': {
             releasedMatterPerTick: {
                 min: 0,
-                max: 500,
+                max: 300,
             },
         },
         'storage-antimatter': {
             releasedAntimatterPerTick: {
                 min: 0,
-                max: 500,
+                max: 300,
             },
         },
         'energy-distributor': {
@@ -76,7 +76,7 @@ export default {
         'reactor-cooling': {
             cooling: {
                 min: 0,
-                max: 2,
+                max: 1,
             },
         },
         'pump-a': {
