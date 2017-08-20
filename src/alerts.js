@@ -93,7 +93,7 @@ export default function createAlerts() {
             type: AlertType.Warning,
             active(state) {
                 // Give a little bit of wiggle room
-                return state['power-distributor'].wastedPower.value > 5;
+                return state['power-distributor'].wastedPower.value > 20;
             },
         },
         {
