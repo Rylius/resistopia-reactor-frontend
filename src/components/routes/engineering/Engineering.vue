@@ -273,11 +273,18 @@
         }
     }
 
-    function alertLevel(a, b) {
+    function alertTypeLevel(a, b) {
         if (a.order === b.order) {
             return 0;
         }
         return a.order > b.order ? -1 : 1;
+    }
+
+    function alertLevel(a, b) {
+        if (a.type.order === b.type.order) {
+            return 0;
+        }
+        return a.type.order > b.type.order ? -1 : 1;
     }
 
     function tabAlertLevel(alerts, state) {
@@ -398,7 +405,7 @@
                 return createFrontendState(this.simulation.state);
             },
             highestAlertLevel() {
-                return [this.reactorAlertLevel, this.powerAlertLevel, this.waterAlertLevel, this.storageAlertLevel, AlertType.None].sort(alertLevel)[0];
+                return [this.reactorAlertLevel, this.powerAlertLevel, this.waterAlertLevel, this.storageAlertLevel, AlertType.None].sort(alertTypeLevel)[0];
             },
             activeAlerts() {
                 return this.alerts.filter(alert => alert.active(this.state.stateMachines));
