@@ -61,8 +61,8 @@
                                     @update="value => changeProperty('reactor-cooling', 'cooling', value)"></slider>
                         </div>
                         <div class="block" style="width: 25%; text-align: right;">
-                            {{ $t('cooling.provided', {amount: Math.round((state['reactor-cooling'].effectiveCooling.value / 1) * 100)})}}<br>
-                            {{ $t('cooling.requested', {amount: Math.round((state['reactor-cooling'].cooling.value / 1) * 100)})}}
+                            {{ $t('cooling.provided', {amount: Math.round((state['reactor-cooling'].effectiveCooling.value / 1.25) * 100)})}}<br>
+                            {{ $t('cooling.requested', {amount: Math.round((state['reactor-cooling'].cooling.value / 1.25) * 100)})}}
                         </div>
                     </div>
 

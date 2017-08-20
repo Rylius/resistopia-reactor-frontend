@@ -193,7 +193,7 @@ const config = {
         cooling: {
             editable: true,
             min: 0,
-            max: 1.5,
+            max: 1.25,
         },
         powerConsumed: {
             value: (config, state) => state['reactor-cooling']['powerRequired'] * state['reactor-cooling']['powerSatisfaction'],
