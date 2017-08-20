@@ -53,34 +53,65 @@
             <div class="block" style="width: 25%;">
                 <h2>{{ $t('power.name') }}</h2>
 
-                charge: {{ Math.round((state['power-capacitor'].power.value / state['power-capacitor'].capacity.value) * 100)}}%
+                {{ $t('power.totalProduction') }}:
+                {{ $t('power.kilowattHours', {power: Math.round(state['power-distributor'].power.value)}) }}
                 <br>
-                charge diff: {{ Math.round(state['power-capacitor'].difference.value) }} kWh
-                <br>
-                generator: {{ globalState.generatorRunning }}
+                {{ $t('stateMachine.power-capacitor.name') }}:
+                {{ Math.round((state['power-capacitor'].power.value / state['power-capacitor'].capacity.value) * 100)}}%
+                <span v-if="state['power-capacitor'].difference.value > 0">
+                    <br>
+                    {{ $t('stateMachine.power-capacitor.charging', {amount: $t('power.kilowattHours', {power: Math.round(state['power-capacitor'].difference.value)})})}}
+                </span>
+                <span v-if="globalState.generatorRunning">
+                    <br>
+                    <br>
+                    <strong>{{ $t('base.generator.running') }}</strong>
+                </span>
             </div>
 
             <div class="block" style="width: 25%;">
                 <h2>{{ $t('stateMachine.base.name') }}</h2>
 
-                required: {{ Math.round(state['base'].powerRequired.value) }} kWh
+                {{ $t('base.currentPowerRequired') }}:
+                {{ $t('power.kilowattHours', {power: Math.round(state['base'].powerRequired.value)}) }}
                 <br>
-                power: {{ Math.round(state['base'].powerSatisfaction.value * 100) }}%
+                {{ $t('base.powerSatisfaction') }}:
+                {{ Math.round(state['base'].powerSatisfaction.value * 100) }}%
                 <br>
-                water: {{ Math.round(state['base'].drinkingWaterSatisfaction.value * 100) }}%
+                {{ $t('base.currentDrinkingWaterRequired') }}:
+                {{ $t('water.litersPerHour', {amount: Math.round(state['base'].drinkingWaterRequired.value * 3600)}) }}
+                <br>
+                {{ $t('base.drinkingWaterSatisfaction') }}:
+                {{ Math.round(state['base'].drinkingWaterSatisfaction.value * 100) }}%
             </div>
 
             <div class="block" style="width: 25%;">
                 <h2>{{ $t('reactor.name') }}</h2>
 
+                {{ $t('reactor.temperature.average') }}:
                 {{ $t('temperature.c', {temp: Math.round(state.reactor.heat.value)}) }}
+                <br>
+                {{ $t('cooling.name') }}:
+                {{ Math.round((state['reactor-cooling'].effectiveCooling.value / 1.25) * 100) }}%
             </div>
 
             <div class="block" style="width: 25%;">
                 <h2>{{ $t('water.industrial') }}</h2>
 
-                water: {{ Math.round(state['water-tank'].water.value) }} L
+                {{ $t('stateMachine.water-tank.name') }}:
+                {{ $t('water.cubicMeters', {amount: Math.round(state['water-tank'].water.value / 100) / 10}) }}
                 ({{ Math.round((state['water-tank'].water.value / state['water-tank'].capacity.value) * 100) }}%)
+                <br>
+                <span v-for="pump in ['pump-a', 'pump-b', 'pump-c']">
+                    {{ $t('stateMachine.' + pump + '.name') }}:
+                    <span v-if="state[pump].enabled.value >0 && state[pump].powerSatisfaction.value > 0">
+                        {{ $t('water.pump.active') }}
+                    </span>
+                    <span v-else>
+                        {{ $t('water.pump.inactive') }}
+                    </span>
+                    <br>
+                </span>
             </div>
         </div>
 

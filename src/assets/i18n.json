@@ -14,6 +14,7 @@
                 "offline": "Notabschaltung"
             },
             "temperature": {
+                "average": "Durchschnitt",
                 "core1": "Fusionskammer",
                 "core2": "Reaktorkern",
                 "core3": "Wärmetauscher"
@@ -33,6 +34,13 @@
             "mode": {
                 "lockdown": "Lockdown",
                 "silentRunning": "Silent Law"
+            },
+            "currentPowerRequired": "Stromverbrauch",
+            "currentDrinkingWaterRequired": "Trinkwasserbedarf",
+            "powerSatisfaction": "Davon geliefert",
+            "drinkingWaterSatisfaction": "Davon geliefert",
+            "generator": {
+                "running": "Notstromaggregat läuft"
             }
         },
         "stateMachine": {
@@ -45,6 +53,10 @@
             },
             "base": {
                 "name": "Basis"
+            },
+            "power-capacitor": {
+                "name": "Batterien",
+                "charging": "Laden mit {amount}"
             },
             "water-tank": {
                 "name": "Zisterne"
@@ -67,6 +79,7 @@
         },
         "power": {
             "name": "Strom",
+            "totalProduction": "Produktion",
             "kilowattHours": "{power} kWh",
             "actual": "Ist",
             "target": "Soll"
@@ -78,6 +91,8 @@
             "litersPerHour": "{amount} L/h",
             "cubicMeters": "{amount} m³",
             "pump": {
+                "active": "Aktiv",
+                "inactive": "Inaktiv",
                 "enable": "Einschalten",
                 "disable": "Ausschalten",
                 "swapFilter": "Filter wechseln",
