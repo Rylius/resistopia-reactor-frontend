@@ -188,6 +188,14 @@ const config = {
         },
     },
     'power-capacitor': {
+        power: {
+            statusRanges: [
+                {from: 0, to: 90000, id: StatusType.Critical, color: 'red'},
+                {from: 90000, to: 270000, id: StatusType.Warning, color: 'orange'},
+                {from: 270000, to: 360000, id: StatusType.Normal, color: 'green'},
+            ],
+        },
+        difference: {},
     },
     'reactor-cooling': {
         cooling: {

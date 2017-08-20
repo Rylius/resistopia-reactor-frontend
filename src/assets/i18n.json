@@ -104,6 +104,11 @@
                 "normal": "Info",
                 "warning": "Warnung",
                 "critical": "Kritisch"
+            },
+            "title": {
+                "normal": "Infos",
+                "warning": "Warnungen",
+                "critical": "Kritische Meldungen"
             }
         },
         "alert": {
@@ -118,6 +123,8 @@
             "power-distributor-temperature-high": "Transformatoren laufen heiß",
             "power-distributor-temperature-critical": "Transformatoren überhitzen",
             "power-distributor-shutdown": "Transformatoren überhitzt",
+            "power-capacitor-discharging": "Notstrombetrieb",
+            "power-generator-running": "Dieselaggregate laufen",
             "base-missing-power": "Basis benötigt mehr Strom",
             "base-no-power": "Basis ohne Strom",
             "base-missing-drinking-water": "Basis benötigt mehr Trinkwasser",
