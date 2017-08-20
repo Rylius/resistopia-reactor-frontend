@@ -29,10 +29,19 @@
             "provided": "Ist: {amount}%",
             "requested": "Soll: {amount}%"
         },
+        "base": {
+            "mode": {
+                "lockdown": "Lockdown",
+                "silentRunning": "Silent Law"
+            }
+        },
         "stateMachine": {
             "reactor-cooling": {
                 "name": "Reaktorkühlung",
                 "powerConsumption": "Pumpe"
+            },
+            "core": {
+                "name": "Tarnkern"
             },
             "base": {
                 "name": "Basis"
