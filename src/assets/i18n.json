@@ -133,6 +133,8 @@
             "power-distributor-temperature-critical": "Transformatoren überhitzen",
             "power-distributor-shutdown": "Transformatoren überhitzt",
             "power-capacitor-discharging": "Notstrombetrieb",
+            "power-capacitor-low": "Batterien fast leer",
+            "power-capacitor-empty": "Batterien leer",
             "power-generator-running": "Dieselaggregate laufen",
             "base-missing-power": "Basis benötigt mehr Strom",
             "base-no-power": "Basis ohne Strom",

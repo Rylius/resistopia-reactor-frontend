@@ -129,6 +129,22 @@ export default function createAlerts() {
                 return state['power-capacitor'].difference.value < 0;
             },
         },
+        {
+            tab: AlertTab.Power,
+            id: 'power-capacitor-low',
+            type: AlertType.Warning,
+            active(state) {
+                return state['power-capacitor'].power.status.id === StatusType.Warning;
+            },
+        },
+        {
+            tab: AlertTab.Power,
+            id: 'power-capacitor-empty',
+            type: AlertType.Critical,
+            active(state) {
+                return state['power-capacitor'].power.status.id === StatusType.Critical;
+            },
+        },
 
         {
             tab: AlertTab.Power,
