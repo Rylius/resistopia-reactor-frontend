@@ -3,6 +3,9 @@ export default {
         state: {
             required: true,
         },
+        globalState: {
+            required: true,
+        },
     },
     methods: {
         changeProperty(stateMachine, property, value) {

@@ -123,6 +123,24 @@ export default function createAlerts() {
 
         {
             tab: AlertTab.Power,
+            id: 'power-capacitor-discharging',
+            type: AlertType.Critical,
+            active(state) {
+                return state['power-capacitor'].difference.value < 0;
+            },
+        },
+
+        {
+            tab: AlertTab.Power,
+            id: 'power-generator-running',
+            type: AlertType.Critical,
+            active(state, globals) {
+                return globals.generatorRunning > 0;
+            },
+        },
+
+        {
+            tab: AlertTab.Power,
             id: 'base-missing-power',
             type: AlertType.Warning,
             active(state) {

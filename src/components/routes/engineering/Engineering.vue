@@ -44,7 +44,7 @@
         </nav>
 
         <section class="content">
-            <router-view :state="state.stateMachines"
+            <router-view :state="state.stateMachines" :globalState="state.globals" :alerts="activeAlerts"
                          @changeProperty="changeProperty" @changeState="changeState">
             </router-view>
         </section>
@@ -408,7 +408,7 @@
                 return [this.reactorAlertLevel, this.powerAlertLevel, this.waterAlertLevel, this.storageAlertLevel, AlertType.None].sort(alertTypeLevel)[0];
             },
             activeAlerts() {
-                return this.alerts.filter(alert => alert.active(this.state.stateMachines));
+                return this.alerts.filter(alert => alert.active(this.state.stateMachines, this.state.globals));
             },
             reactorAlerts() {
                 return this.activeAlerts.filter(alert => alert.tab === AlertTab.Reactor);
