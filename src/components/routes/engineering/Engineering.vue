@@ -44,7 +44,8 @@
         </nav>
 
         <section class="content">
-            <router-view :state="state.stateMachines" :globalState="state.globals" :alerts="activeAlerts"
+            <router-view :state="state.stateMachines" :globalState="state.globals"
+                         :statistics="statistics" :alerts="activeAlerts"
                          @changeProperty="changeProperty" @changeState="changeState">
             </router-view>
         </section>
@@ -292,6 +293,46 @@
         return activeAlerts.length > 0 ? activeAlerts[0].type : AlertType.None;
     }
 
+    const LOCAL_STORAGE_STATISTICS_KEY = 'resistopia-engineering-statistics';
+
+    function saveStatistics(statistics) {
+        localStorage.setItem(LOCAL_STORAGE_STATISTICS_KEY, JSON.stringify(statistics));
+    }
+
+    function loadStatistics() {
+        return JSON.parse(localStorage.getItem(LOCAL_STORAGE_STATISTICS_KEY));
+    }
+
+    function updateStatistic(statistic, value) {
+        const maxValues = 60;
+
+        statistic.labels.push(Date.now());
+        statistic.values.push(value);
+
+        if (statistic.values.length > maxValues) {
+            statistic.values.splice(0, statistic.values.length - maxValues);
+        }
+        if (statistic.labels.length > maxValues) {
+            statistic.labels.splice(0, statistic.labels.length - maxValues);
+        }
+    }
+
+    function updateStatisticsPerSecond(statistics, state) {
+        updateStatistic(statistics.reactorTemperature.lastMinute, state['reactor'].heat.value);
+        updateStatistic(statistics.power.lastMinute, state['power-distributor'].power.value);
+
+        saveStatistics(statistics);
+    }
+
+    function updateStatisticsPerMinute(statistics, state) {
+        updateStatistic(statistics.reactorTemperature.lastHour, state['reactor'].heat.value);
+        updateStatistic(statistics.power.lastHour, state['power-distributor'].power.value);
+        updateStatistic(statistics.batteries.lastHour, state['power-capacitor'].power.value);
+        updateStatistic(statistics.waterTank.lastHour, state['water-tank'].water.value);
+
+        saveStatistics(statistics);
+    }
+
     export default {
         name: 'dashboard',
         mixins: [
@@ -306,6 +347,40 @@
                     state: Simulation.createInitialState(program),
                     stateChanges: {},
                     intervalId: null,
+                },
+                statistics: {
+                    reactorTemperature: {
+                        lastMinute: {
+                            labels: [],
+                            values: [],
+                        },
+                        lastHour: {
+                            labels: [],
+                            values: [],
+                        },
+                    },
+                    power: {
+                        lastMinute: {
+                            labels: [],
+                            values: [],
+                        },
+                        lastHour: {
+                            labels: [],
+                            values: [],
+                        },
+                    },
+                    batteries: {
+                        lastHour: {
+                            labels: [],
+                            values: [],
+                        },
+                    },
+                    waterTank: {
+                        lastHour: {
+                            labels: [],
+                            values: [],
+                        },
+                    },
                 },
                 alerts: createAlerts(),
                 shownAlertsTab: null,
@@ -444,7 +519,31 @@
                 this.simulation.stateChanges = {};
 
                 this.simulation.state = Simulation.update(this.simulation.program, state);
+
+                updateStatisticsPerSecond(this.statistics, this.state.stateMachines);
+                if (this.simulation.state.tick % 60 === 0) {
+                    updateStatisticsPerMinute(this.statistics, this.state.stateMachines);
+                }
             }, 1000);
+
+            try {
+                const statistics = loadStatistics();
+                Object.keys(this.statistics).forEach(key => {
+                    if (!statistics[key]) {
+                        return;
+                    }
+
+                    Object.keys(this.statistics[key]).forEach(type => {
+                        if (!statistics[key][type]) {
+                            return;
+                        }
+
+                        this.statistics[key][type].values.push(...statistics[key][type].values);
+                        this.statistics[key][type].labels.push(...statistics[key][type].labels);
+                    });
+                });
+            } catch (ignored) {
+            }
 
             this.registerBackendWebsocketListener('state', data => this.simulation.state.stateMachines = data);
 
