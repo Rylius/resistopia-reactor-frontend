@@ -115,6 +115,24 @@
             </div>
         </div>
 
+        <div class="block-group">
+            <div class="block" style="width: 25%;">
+                <p></p>
+            </div>
+
+            <div class="block" style="width: 25%;">
+                <p></p>
+            </div>
+
+            <div class="block" style="width: 25%;">
+                <reactor-temperature-chart :data="statistics.reactorTemperature.lastHour"></reactor-temperature-chart>
+            </div>
+
+            <div class="block" style="width: 25%;">
+                <water-tank-chart :data="statistics.waterTank.lastHour"></water-tank-chart>
+            </div>
+        </div>
+
         <div class="warning-strip">&nbsp;</div>
 
         <div class="block-group">
@@ -188,13 +206,15 @@
     import Slider from '../../controls/Slider';
     import TemperatureDisplay from '../../controls/engineering/TemperatureDisplay';
     import PowerConsumptionDisplay from '../../controls/engineering/PowerConsumptionDisplay';
+    import ReactorTemperatureChart from './components/ReactorTemperatureChart.vue';
+    import WaterTankChart from './components/WaterTankChart.vue';
 
     import {AlertType} from '../../../alerts';
 
     export default {
         name: 'dashboard',
         mixins: [EngineeringMixin],
-        props: ['alerts'],
+        props: ['statistics', 'alerts'],
         computed: {
             criticalAlerts() {
                 return this.alerts.filter(alert => alert.type === AlertType.Critical);
@@ -212,6 +232,8 @@
             Lamp,
             Slider,
             TemperatureDisplay,
+            ReactorTemperatureChart,
+            WaterTankChart,
         },
     };
 </script>

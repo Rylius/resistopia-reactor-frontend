@@ -75,6 +75,7 @@
             }
         },
         "temperature": {
+            "name": "Temperatur",
             "c": "{temp}°C"
         },
         "power": {
