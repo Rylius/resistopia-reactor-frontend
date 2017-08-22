@@ -10,6 +10,11 @@
             data: {
                 required: true,
             },
+            options: {
+                default: () => {
+                    return {};
+                },
+            },
         },
         data() {
             return {};
@@ -86,7 +91,7 @@
                         },
                     },
                 },
-            });
+            }, this.options);
 
             this.renderChart(data, options);
         },

@@ -5,7 +5,7 @@
     import chartDefaults from './chart';
 
     export default Line.extend({
-        name: 'water-tank-chart',
+        name: 'power-chart',
         props: {
             data: {
                 required: true,
@@ -34,12 +34,20 @@
                 labels: this.data.labels,
                 datasets: [
                     {
-                        label: this.$t('water.industrial'),
+                        label: this.$t('power.totalProduction'),
                         data: this.data.values,
-                        borderColor: '#5f74b1', // @signal-blue-highlight
-                        borderWidth: 4,
-                        backgroundColor: '#464b5b',
+                        borderColor: '#f7b233', // @signal-orange-highlight
+                        backgroundColor: '#f7b233', // @signal-orange-highlight
                         pointRadius: 0,
+                        spanGaps: true,
+                    },
+                    {
+                        label: this.$t('power.fromBatteries'),
+                        data: this.data.values,
+                        borderColor: '#ff4629', // @signal-red-highlight
+                        backgroundColor: '#ff4629', // @signal-red-highlight
+                        pointRadius: 0,
+                        spanGaps: true,
                     },
                 ],
             };
@@ -47,7 +55,7 @@
             const options = chartDefaults({
                 title: {
                     display: true,
-                    text: this.$t('stateMachine.water-tank.name'),
+                    text: `${this.$t('power.name')}`,
                 },
                 scales: {
                     xAxes: [
@@ -71,20 +79,14 @@
                         {
                             ticks: {
                                 min: 0,
-                                max: 35000,
-                                stepSize: 5000,
+                                stepSize: 50,
                                 fontColor: '#eee',
                                 callback(value) {
-                                    return vm.$t('water.cubicMeters', {amount: Math.round(value / 100) / 10});
+                                    return vm.$t('power.kilowattHours', {power: Math.round(value)});
                                 },
                             },
                         },
                     ],
-                },
-                elements: {
-                    line: {
-                        fill: true,
-                    },
                 },
                 tooltips: {
                     callbacks: {
@@ -93,7 +95,7 @@
                         },
                         label(item, data) {
                             const value = data.datasets[item.datasetIndex].data[item.index];
-                            return `${vm.$t('water.industrial')}: ${vm.$t('water.cubicMeters', {amount: Math.round(value / 100) / 10})}`;
+                            return `${vm.$t('power.totalProduction')}: ${vm.$t('power.kilowattHours', {power: Math.round(value)})}`;
                         },
                     },
                 },

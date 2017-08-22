@@ -303,9 +303,7 @@
         return JSON.parse(localStorage.getItem(LOCAL_STORAGE_STATISTICS_KEY));
     }
 
-    function updateStatistic(statistic, value) {
-        const maxValues = 60;
-
+    function updateStatistic(statistic, value, maxValues = 60) {
         statistic.labels.push(Date.now());
         statistic.values.push(value);
 
@@ -318,7 +316,7 @@
     }
 
     function updateStatisticsPerSecond(statistics, state) {
-        updateStatistic(statistics.reactorTemperature.lastMinute, state['reactor'].heat.value);
+        updateStatistic(statistics.reactorTemperature.lastTenMinutes, state['reactor'].heat.value, 600);
         updateStatistic(statistics.power.lastMinute, state['power-distributor'].power.value);
 
         saveStatistics(statistics);
@@ -350,7 +348,7 @@
                 },
                 statistics: {
                     reactorTemperature: {
-                        lastMinute: {
+                        lastTenMinutes: {
                             labels: [],
                             values: [],
                         },

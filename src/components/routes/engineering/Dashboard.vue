@@ -121,7 +121,9 @@
             </div>
 
             <div class="block" style="width: 25%;">
-                <p></p>
+                <lazy>
+                    <power-chart :data="statistics.power.lastHour"></power-chart>
+                </lazy>
             </div>
 
             <div class="block" style="width: 25%;">
@@ -213,6 +215,7 @@
     import Slider from '../../controls/Slider';
     import TemperatureDisplay from '../../controls/engineering/TemperatureDisplay';
     import PowerConsumptionDisplay from '../../controls/engineering/PowerConsumptionDisplay';
+    import PowerChart from './components/PowerChart.vue';
     import ReactorTemperatureChart from './components/ReactorTemperatureChart.vue';
     import WaterTankChart from './components/WaterTankChart.vue';
 
@@ -240,6 +243,7 @@
             Lamp,
             Slider,
             TemperatureDisplay,
+            PowerChart,
             ReactorTemperatureChart,
             WaterTankChart,
         },

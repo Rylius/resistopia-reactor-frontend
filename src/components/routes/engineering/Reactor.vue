@@ -45,6 +45,17 @@
                     <div class="block" style="width: 20%;">
                     </div>
                 </div>
+
+                <div class="block-group" style="height: 300px;">
+                    <div class="block" style="width: 50%;">
+                        <lazy>
+                            <reactor-temperature-chart :data="statistics.reactorTemperature.lastTenMinutes"
+                                                       :options="{responsive: false, maintainAspectRatio: false}"
+                                                       :width="497" :height="300">
+                            </reactor-temperature-chart>
+                        </lazy>
+                    </div>
+                </div>
             </div>
 
 
@@ -100,18 +111,23 @@
 <script>
     import EngineeringMixin from '../../../mixins/engineering';
 
+    import Lazy from '../../Lazy';
     import TemperatureDisplay from '../../controls/engineering/TemperatureDisplay';
     import PowerConsumptionDisplay from '../../controls/engineering/PowerConsumptionDisplay';
+    import ReactorTemperatureChart from './components/ReactorTemperatureChart';
     import Camera from './components/Camera.vue';
     import Slider from '../../controls/Slider';
 
     export default {
         name: 'reactor',
         mixins: [EngineeringMixin],
+        props: ['statistics'],
         components: {
-            Camera,
+            Lazy,
             TemperatureDisplay,
             PowerConsumptionDisplay,
+            ReactorTemperatureChart,
+            Camera,
             Slider,
         },
     };

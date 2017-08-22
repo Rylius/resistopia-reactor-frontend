@@ -1,9 +1,12 @@
 import merge from 'deepmerge';
 
-export default function (options = {}) {
-    return merge({
+export default function (options = {}, additionalOptions = {}) {
+    return merge(merge({
         responsive: true,
         maintainAspectRatio: true,
+        animation: {
+            duration: 0,
+        },
         title: {
             fontColor: '#eee',
         },
@@ -19,5 +22,5 @@ export default function (options = {}) {
             intersect: false,
             mode: 'nearest',
         },
-    }, options);
+    }, options), additionalOptions);
 };
