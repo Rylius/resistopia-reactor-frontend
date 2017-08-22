@@ -78,6 +78,10 @@
                                     return vm.$t('water.cubicMeters', {amount: Math.round(value / 100) / 10});
                                 },
                             },
+                            gridLines: {
+                                display: true,
+                                color: 'rgba(255, 255, 255, 0.25)',
+                            },
                         },
                     ],
                 },

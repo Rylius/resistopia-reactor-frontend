@@ -77,6 +77,10 @@
                                     return vm.$t('temperature.c', {temp: Math.round(value)});
                                 },
                             },
+                            gridLines: {
+                                display: true,
+                                color: 'rgba(255, 255, 255, 0.25)',
+                            },
                         },
                     ],
                 },

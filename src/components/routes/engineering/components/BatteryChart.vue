@@ -78,6 +78,10 @@
                                     return vm.$t('power.charge', {charge: Math.round(value * 100)});
                                 },
                             },
+                            gridLines: {
+                                display: true,
+                                color: 'rgba(255, 255, 255, 0.25)',
+                            },
                         },
                     ],
                 },
