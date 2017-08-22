@@ -73,16 +73,16 @@
                 <h2>{{ $t('stateMachine.base.name') }}</h2>
 
                 {{ $t('base.currentPowerRequired') }}:
-                {{ $t('power.kilowattHours', {power: Math.round(state['base'].powerRequired.value)}) }}
-                <br>
-                {{ $t('base.powerSatisfaction') }}:
-                {{ Math.round(state['base'].powerSatisfaction.value * 100) }}%
+                {{ $t('power.kilowattHours', {power: Math.round(state['base'].totalPowerRequired.value)})}}
+                <!--<br>-->
+                <!--{{ $t('base.powerSatisfaction') }}:-->
+                <!--{{ Math.round(state['base'].powerSatisfaction.value * 100) }}%-->
                 <br>
                 {{ $t('base.currentDrinkingWaterRequired') }}:
                 {{ $t('water.litersPerHour', {amount: Math.round(state['base'].drinkingWaterRequired.value * 3600)}) }}
-                <br>
-                {{ $t('base.drinkingWaterSatisfaction') }}:
-                {{ Math.round(state['base'].drinkingWaterSatisfaction.value * 100) }}%
+                <!--<br>-->
+                <!--{{ $t('base.drinkingWaterSatisfaction') }}:-->
+                <!--{{ Math.round(state['base'].drinkingWaterSatisfaction.value * 100) }}%-->
             </div>
 
             <div class="block" style="width: 25%;">

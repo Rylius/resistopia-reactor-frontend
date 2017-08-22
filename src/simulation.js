@@ -240,6 +240,14 @@ const config = {
         powerConsumed: {
             value: (config, state) => state['base']['powerRequired'] * state['base']['powerSatisfaction'],
         },
+        totalPowerRequired: {
+            value: (config, state) => state['base']['powerRequired']
+                + state['reactor-cooling']['powerRequired']
+                + state['water-treatment']['requiredPower']
+                + state['pump-a']['powerRequired']
+                + state['pump-b']['powerRequired']
+                + state['pump-c']['powerRequired'],
+        },
         powerSatisfaction: {
             min: 0,
             max: 1,
