@@ -115,7 +115,7 @@
             </div>
         </div>
 
-        <div class="block-group">
+        <div class="block-group" style="min-height: 16em;">
             <div class="block" style="width: 25%;">
                 <p></p>
             </div>
@@ -125,11 +125,16 @@
             </div>
 
             <div class="block" style="width: 25%;">
-                <reactor-temperature-chart :data="statistics.reactorTemperature.lastHour"></reactor-temperature-chart>
+                <lazy>
+                    <reactor-temperature-chart :data="statistics.reactorTemperature.lastHour">
+                    </reactor-temperature-chart>
+                </lazy>
             </div>
 
             <div class="block" style="width: 25%;">
-                <water-tank-chart :data="statistics.waterTank.lastHour"></water-tank-chart>
+                <lazy>
+                    <water-tank-chart :data="statistics.waterTank.lastHour"></water-tank-chart>
+                </lazy>
             </div>
         </div>
 
@@ -201,6 +206,8 @@
 <script>
     import EngineeringMixin from '../../../mixins/engineering';
 
+    import Lazy from '../../Lazy.vue';
+
     import SevenSegmentDisplay from '../../controls/SevenSegmentDisplay';
     import Lamp from '../../controls/Lamp';
     import Slider from '../../controls/Slider';
@@ -227,6 +234,7 @@
             },
         },
         components: {
+            Lazy,
             PowerConsumptionDisplay,
             SevenSegmentDisplay,
             Lamp,
