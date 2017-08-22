@@ -2,6 +2,8 @@
     import {Line} from 'vue-chartjs';
     import moment from 'moment';
 
+    import chartDefaults from './chart';
+
     export default Line.extend({
         name: 'water-tank-chart',
         props: {
@@ -30,21 +32,17 @@
                         label: this.$t('water.industrial'),
                         data: this.data.values,
                         borderColor: '#5f74b1', // @signal-blue-highlight
-                        backgroundColor: '#636981',
+                        borderWidth: 4,
+                        backgroundColor: '#464b5b',
                         pointRadius: 0,
                     },
                 ],
             };
 
-            const options = {
-                responsive: true,
-                maintainAspectRatio: true,
+            const options = chartDefaults({
                 title: {
                     display: true,
                     text: this.$t('stateMachine.water-tank.name'),
-                },
-                legend: {
-                    display: false,
                 },
                 scales: {
                     xAxes: [
@@ -60,6 +58,7 @@
                                 autoSkip: true,
                                 autoSkipPadding: 100,
                                 maxRotation: 0,
+                                fontColor: '#eee',
                             },
                         },
                     ],
@@ -69,6 +68,7 @@
                                 min: 0,
                                 max: 35000,
                                 stepSize: 5000,
+                                fontColor: '#eee',
                                 callback(value) {
                                     return vm.$t('water.cubicMeters', {amount: Math.round(value / 100) / 10});
                                 },
@@ -76,9 +76,12 @@
                         },
                     ],
                 },
+                elements: {
+                    line: {
+                        fill: true,
+                    },
+                },
                 tooltips: {
-                    intersect: false,
-                    mode: 'nearest',
                     callbacks: {
                         title(items, data) {
                             return moment(data.labels[items[0].index]).format('H:mm');
@@ -89,7 +92,7 @@
                         },
                     },
                 },
-            };
+            });
 
             this.renderChart(data, options);
         },

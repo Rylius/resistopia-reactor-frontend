@@ -2,6 +2,8 @@
     import {Line} from 'vue-chartjs';
     import moment from 'moment';
 
+    import chartDefaults from './chart';
+
     export default Line.extend({
         name: 'reactor-temperature-chart',
         props: {
@@ -36,15 +38,10 @@
                 ],
             };
 
-            const options = {
-                responsive: true,
-                maintainAspectRatio: true,
+            const options = chartDefaults({
                 title: {
                     display: true,
-                    text: this.$t('reactor.name'),
-                },
-                legend: {
-                    display: false,
+                    text: `${this.$t('reactor.name')} (${this.$t('temperature.name')})`,
                 },
                 scales: {
                     xAxes: [
@@ -60,6 +57,7 @@
                                 autoSkip: true,
                                 autoSkipPadding: 100,
                                 maxRotation: 0,
+                                fontColor: '#eee',
                             },
                         },
                     ],
@@ -69,6 +67,7 @@
                                 min: 0,
                                 max: 3000,
                                 stepSize: 500,
+                                fontColor: '#eee',
                                 callback(value) {
                                     return vm.$t('temperature.c', {temp: Math.round(value)});
                                 },
@@ -76,14 +75,7 @@
                         },
                     ],
                 },
-                elements: {
-                    line: {
-                        fill: false,
-                    },
-                },
                 tooltips: {
-                    intersect: false,
-                    mode: 'nearest',
                     callbacks: {
                         title(items, data) {
                             return moment(data.labels[items[0].index]).format('H:mm');
@@ -94,7 +86,7 @@
                         },
                     },
                 },
-            };
+            });
 
             this.renderChart(data, options);
         },
