@@ -84,7 +84,8 @@
             "fromBatteries": "Notstrom",
             "kilowattHours": "{power} kWh",
             "actual": "Ist",
-            "target": "Soll"
+            "target": "Soll",
+            "charge": "{charge}%"
         },
         "water": {
             "drinking": "Trinkwasser",

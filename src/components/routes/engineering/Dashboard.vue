@@ -117,7 +117,9 @@
 
         <div class="block-group" style="min-height: 16em;">
             <div class="block" style="width: 25%;">
-                <p></p>
+                <lazy>
+                    <battery-chart :data="statistics.batteries.lastHour"></battery-chart>
+                </lazy>
             </div>
 
             <div class="block" style="width: 25%;">
@@ -215,6 +217,7 @@
     import Slider from '../../controls/Slider';
     import TemperatureDisplay from '../../controls/engineering/TemperatureDisplay';
     import PowerConsumptionDisplay from '../../controls/engineering/PowerConsumptionDisplay';
+    import BatteryChart from './components/BatteryChart.vue';
     import PowerChart from './components/PowerChart.vue';
     import ReactorTemperatureChart from './components/ReactorTemperatureChart.vue';
     import WaterTankChart from './components/WaterTankChart.vue';
@@ -243,6 +246,7 @@
             Lamp,
             Slider,
             TemperatureDisplay,
+            BatteryChart,
             PowerChart,
             ReactorTemperatureChart,
             WaterTankChart,

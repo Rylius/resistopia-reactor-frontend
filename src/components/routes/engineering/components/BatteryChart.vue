@@ -5,7 +5,7 @@
     import chartDefaults from './chart';
 
     export default Line.extend({
-        name: 'power-chart',
+        name: 'battery-chart',
         props: {
             data: {
                 required: true,
@@ -47,7 +47,7 @@
             const options = chartDefaults({
                 title: {
                     display: true,
-                    text: `${this.$t('power.name')}`,
+                    text: `${this.$t('stateMachine.power-capacitor.name')}`,
                 },
                 scales: {
                     xAxes: [
@@ -71,10 +71,11 @@
                         {
                             ticks: {
                                 min: 0,
-                                stepSize: 50,
+                                max: 1,
+                                stepSize: 0.25,
                                 fontColor: '#eee',
                                 callback(value) {
-                                    return vm.$t('power.kilowattHours', {power: Math.round(value)});
+                                    return vm.$t('power.charge', {charge: Math.round(value * 100)});
                                 },
                             },
                         },
@@ -87,7 +88,7 @@
                         },
                         label(item, data) {
                             const value = data.datasets[item.datasetIndex].data[item.index];
-                            return `${vm.$t('power.totalProduction')}: ${vm.$t('power.kilowattHours', {power: Math.round(value)})}`;
+                            return vm.$t('power.charge', {charge: Math.round(value * 100)});
                         },
                     },
                 },

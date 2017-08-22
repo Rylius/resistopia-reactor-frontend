@@ -325,8 +325,9 @@
     function updateStatisticsPerMinute(statistics, state) {
         updateStatistic(statistics.reactorTemperature.lastHour, state['reactor'].heat.value);
         updateStatistic(statistics.power.lastHour, state['power-distributor'].power.value);
-        updateStatistic(statistics.batteries.lastHour, state['power-capacitor'].power.value);
+        updateStatistic(statistics.batteries.lastHour, state['power-capacitor'].power.value / state['power-capacitor'].capacity.value);
         updateStatistic(statistics.waterTank.lastHour, state['water-tank'].water.value);
+        updateStatistic(statistics.basePowerRequired.lastHour, state['base'].powerRequired.value);
 
         saveStatistics(statistics);
     }
@@ -374,6 +375,12 @@
                         },
                     },
                     waterTank: {
+                        lastHour: {
+                            labels: [],
+                            values: [],
+                        },
+                    },
+                    basePowerRequired: {
                         lastHour: {
                             labels: [],
                             values: [],
