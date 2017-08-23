@@ -1,5 +1,6 @@
 <script>
     import {Line} from 'vue-chartjs';
+    import AnnotationPlugin from 'chartjs-plugin-annotation';
     import moment from 'moment';
 
     import chartDefaults from './chart';
@@ -39,11 +40,13 @@
                         borderColor: '#f7b233', // @signal-orange-highlight
                         backgroundColor: '#f7b233', // @signal-orange-highlight
                         pointRadius: 0,
+                        lineTension: 0,
                     },
                 ],
             };
 
             const options = chartDefaults({
+                plugins: [AnnotationPlugin],
                 title: {
                     display: true,
                     text: `${this.$t('reactor.name')} (${this.$t('temperature.name')})`,
@@ -51,6 +54,7 @@
                 scales: {
                     xAxes: [
                         {
+                            id: 'time',
                             type: 'time',
                             time: {
                                 unit: 'second',
@@ -68,6 +72,7 @@
                     ],
                     yAxes: [
                         {
+                            id: 'value',
                             ticks: {
                                 min: 0,
                                 max: 3000,
@@ -94,6 +99,41 @@
                             return `${vm.$t('temperature.name')}: ${vm.$t('temperature.c', {temp: Math.round(value)})}`;
                         },
                     },
+                },
+                annotation: {
+                    drawTime: 'beforeDatasetsDraw',
+                    annotations: [
+                        {
+                            type: 'box',
+                            xScaleID: 'time',
+                            yScaleID: 'value',
+                            xMin: 0,
+                            xMax: Date.now() * 2,
+                            yMin: 0,
+                            yMax: 1000,
+                            backgroundColor: 'rgba(145, 171, 255, 0.125)', // @signal-blue-highlight
+                        },
+                        {
+                            type: 'box',
+                            xScaleID: 'time',
+                            yScaleID: 'value',
+                            xMin: 0,
+                            xMax: Date.now() * 2,
+                            yMin: 1000,
+                            yMax: 2000,
+                            backgroundColor: 'rgba(55, 238, 55, 0.125)', // @signal-green-highlight
+                        },
+                        {
+                            type: 'box',
+                            xScaleID: 'time',
+                            yScaleID: 'value',
+                            xMin: 0,
+                            xMax: Date.now() * 2,
+                            yMin: 2000,
+                            yMax: 3000,
+                            backgroundColor: 'rgba(255, 70, 41, 0.125)', // @signal-red-highlight
+                        },
+                    ],
                 },
             }, this.options);
 

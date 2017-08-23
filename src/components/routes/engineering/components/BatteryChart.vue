@@ -40,6 +40,7 @@
                         backgroundColor: '#f7b233', // @signal-orange-highlight
                         pointRadius: 0,
                         spanGaps: true,
+                        lineTension: 0,
                     },
                 ],
             };
