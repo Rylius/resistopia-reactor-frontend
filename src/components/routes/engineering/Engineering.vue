@@ -46,7 +46,7 @@
         <section class="content">
             <router-view :state="state.stateMachines" :globalState="state.globals"
                          :statistics="statistics" :alerts="activeAlerts"
-                         @changeProperty="changeProperty" @changeState="changeState">
+                         @changeProperty="changeProperty" @changeState="changeState" @changeGlobal="changeGlobal">
             </router-view>
         </section>
 
@@ -265,6 +265,10 @@
 
     import BackendWebsocketMixin from '../../../mixins/backend_websocket';
 
+    import {post} from '../../../util/fetch';
+
+    const BACKEND_URL = process.env.RESISTOPIA_BACKEND_API;
+
     function mapNormalizedProperty(state, stateMachine, property, value) {
         const config = state.stateMachines[stateMachine][property];
         if (typeof config.min === 'number' && typeof config.max === 'number') {
@@ -441,6 +445,10 @@
 
                 this.simulation.stateChanges = {};
             },
+            changeGlobal(changes) {
+                post(BACKEND_URL + '/globals', changes);
+                this.simulation.state.globals = merge(this.simulation.state.globals, changes);
+            },
             activeAlertsFor(tab) {
                 switch (tab) {
                     case 'dashboard':
@@ -550,7 +558,7 @@
             } catch (ignored) {
             }
 
-            this.registerBackendWebsocketListener('state', data => this.simulation.state.stateMachines = data);
+            this.registerBackendWebsocketListener('state', data => this.simulation.state = data);
 
             startUpdate();
         },

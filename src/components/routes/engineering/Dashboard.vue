@@ -148,23 +148,89 @@
             <div class="block" style="width: 33%;">
                 <h2 class="critical">{{ $t('base.mode.lockdown') }}</h2>
 
-                active: {{ globalState.lockdown }}
+                <div v-if="globalState.lockdown">
+                    <p>
+                        {{ $t('lockdown.enabled') }}
+                    </p>
+                    <p v-if="globalState.camouflage">
+                        {{ $t('lockdown.camouflageActive') }}
+                    </p>
+                    <button :disabled="!globalState.silentRunning && !globalState.camouflage" @click="disableLockdown">
+                        {{ $t('lockdown.disable') }}
+                    </button>
+                </div>
+                <div v-else>
+                    <p>
+                        {{ $t('lockdown.disabled') }}
+                    </p>
+                    <p v-if="globalState.silentRunning">
+                        {{ $t('lockdown.silentRunningActive') }}
+                    </p>
+                    <button @click="enableLockdown">
+                        {{ $t('lockdown.enable') }}
+                    </button>
+                </div>
             </div>
 
             <div class="block" style="width: 33%;">
                 <h2 class="warning">{{ $t('base.mode.silentRunning') }}</h2>
 
-                active: {{ globalState.silentRunning }}
+                <div v-if="globalState.silentRunning">
+                    <p>
+                        {{ $t('silentRunning.enabled') }}
+                    </p>
+                    <p v-if="globalState.camouflage">
+                        {{ $t('silentRunning.camouflageActive') }}
+                    </p>
+                    <button :disabled="!globalState.lockdown && !globalState.camouflage" @click="disableSilentRunning">
+                        {{ $t('silentRunning.disable') }}
+                    </button>
+                </div>
+                <div v-else>
+                    <p>
+                        {{ $t('silentRunning.disabled') }}
+                    </p>
+                    <p v-if="globalState.lockdown">
+                        {{ $t('silentRunning.lockdownActive') }}
+                    </p>
+                    <button @click="enableSilentRunning">
+                        {{ $t('silentRunning.enable') }}
+                    </button>
+                </div>
             </div>
 
             <div class="block" style="width: 33%;">
                 <h2 class="critical">{{ $t('stateMachine.core.name') }}</h2>
 
-                <span v-if="state.core.energySatisfaction.status.id === 'normal'">active</span>
-                <span v-else-if="state.core.energySatisfaction.status.id === 'warning'">active, not enough energy</span>
-                <span v-else>offline</span>
-                <br>
-                capacitor: {{ Math.round((state['energy-capacitor'].energy.value / state['energy-capacitor'].capacity.value) * 100)}}%
+                <div v-if="globalState.camouflage">
+                    <p>
+                        {{ $t('camouflage.enabled') }}
+                    </p>
+                    <p v-if="!globalState.lockdown && !globalState.silentRunning">
+                        {{ $t('camouflage.reducedSignatureRequired') }}
+                    </p>
+                    <button :disabled="!globalState.lockdown && !globalState.silentRunning"
+                            @click="disableCamouflage">
+                        {{ $t('camouflage.disable') }}
+                    </button>
+                </div>
+                <div v-else>
+                    <p>
+                        {{ $t('camouflage.disabled') }}
+                    </p>
+                    <button @click="enableCamouflage">
+                        {{ $t('camouflage.enable') }}
+                    </button>
+                </div>
+
+                <p v-if="false">
+                    <span v-if="state.core.energySatisfaction.status.id === 'normal'">active</span>
+                    <span
+                        v-else-if="state.core.energySatisfaction.status.id === 'warning'">active, not enough energy</span>
+                    <span v-else>offline</span>
+                    <br>
+                    capacitor: {{ Math.round((state['energy-capacitor'].energy.value / state['energy-capacitor'].capacity.value) * 100)}}%
+                </p>
             </div>
         </div>
     </section>
@@ -237,6 +303,26 @@
             },
             normalAlerts() {
                 return this.alerts.filter(alert => alert.type === AlertType.None);
+            },
+        },
+        methods: {
+            enableLockdown() {
+                this.$emit('changeGlobal', {lockdown: 1, silentRunning: 0});
+            },
+            disableLockdown() {
+                this.$emit('changeGlobal', {lockdown: 0});
+            },
+            enableSilentRunning() {
+                this.$emit('changeGlobal', {silentRunning: 1, lockdown: 0});
+            },
+            disableSilentRunning() {
+                this.$emit('changeGlobal', {silentRunning: 0});
+            },
+            enableCamouflage() {
+                this.$emit('changeGlobal', {camouflage: 1});
+            },
+            disableCamouflage() {
+                this.$emit('changeGlobal', {camouflage: 0});
             },
         },
         components: {

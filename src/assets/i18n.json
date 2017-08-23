@@ -171,6 +171,29 @@
             "water-treatment-resource-minerals-low": "Wasseraufbereitung: Wenig Mineralien",
             "water-treatment-resource-minerals-empty": "Wasseraufbereitung: Keine Mineralien"
         },
+        "lockdown": {
+            "enable": "Aktivieren",
+            "disable": "Aufheben",
+            "enabled": "Lockdown aktiv.",
+            "disabled": "Im Lockdown werden alle nicht überlebenswichtigen Systeme abgeschaltet.",
+            "camouflageActive": "Der Tarnkern kann jetzt mit minimalem Risiko abgeschaltet werden.",
+            "silentRunningActive": "Aktivierung hebt Silent Law auf."
+        },
+        "silentRunning": {
+            "enable": "Aktivieren",
+            "disable": "Aufheben",
+            "enabled": "Silent Law aktiv.",
+            "disabled": "Wenn Silent Law aktiv ist wird der Energieverbrauch der Basis auf Nötigste reduziert.",
+            "camouflageActive": "Der Tarnkern kann jetzt mit geringem Risiko abgeschaltet werden.",
+            "lockdownActive": "Aktivierung hebt Lockdown auf."
+        },
+        "camouflage": {
+            "enable": "Einschalten",
+            "disable": "Abschalten",
+            "enabled": "Tarnkern-KI läuft.",
+            "disabled": "Tarnkern-KI inaktiv.",
+            "reducedSignatureRequired": "Abschaltung benötigt Silent Law oder Lockdown."
+        },
         "backend": {
             "websocket": {
                 "closed": {
