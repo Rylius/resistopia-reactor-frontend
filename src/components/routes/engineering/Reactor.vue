@@ -91,7 +91,7 @@
         <div class="block-group">
             <div class="block" style="width: 33%;">
                 <camera :title="$t('camera.cooling')" type="cooling"
-                        :offline="['warning', 'critical'].includes(state['reactor']['heat'].status.id) || state['base']['powerSatisfaction'].value < 0.1"></camera>
+                        :offline="state['base']['powerSatisfaction'].value < 0.1"></camera>
             </div>
 
             <div class="block" style="width: 33%;">
@@ -102,7 +102,7 @@
 
             <div class="block" style="width: 33%;">
                 <camera :title="$t('camera.pump')" type="pump"
-                        :offline="['warning', 'critical'].includes(state['reactor']['heat'].status.id) || state['base']['powerSatisfaction'].value < 0.1"></camera>
+                        :offline="state['base']['powerSatisfaction'].value < 0.1"></camera>
             </div>
         </div>
     </section>

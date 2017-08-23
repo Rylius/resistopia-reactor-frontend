@@ -99,8 +99,8 @@ const config = {
             statusRanges: [
                 {from: -Infinity, to: 995, id: StatusType.Cold, color: 'blue',},
                 {from: 995, to: 2000, id: StatusType.Normal, color: 'green'},
-                {from: 2000, to: 4000, id: StatusType.Warning, color: 'orange'},
-                {from: 4000, to: Infinity, id: StatusType.Critical, color: 'red'},
+                {from: 2000, to: 2500, id: StatusType.Warning, color: 'orange'},
+                {from: 2500, to: Infinity, id: StatusType.Critical, color: 'red'},
             ],
         },
     },
