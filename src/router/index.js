@@ -10,6 +10,8 @@ import EngineeringStorage from '../components/routes/engineering/Storage.vue';
 
 import Alien from '../components/routes/alien/Alien.vue';
 
+import CoreSound from '../components/routes/sound/CoreSound.vue';
+
 import TestEverything from '../components/routes/test/TestEverything.vue';
 import TestAudio from '../components/routes/test/TestAudio.vue';
 
@@ -53,6 +55,17 @@ export default new Router({
         {
             path: '/alien',
             component: Alien,
+        },
+        {
+            path: '/sound',
+            component: EngineeringLayout,
+            children: [
+                {
+                    path: 'core',
+                    name: 'sound/core',
+                    component: CoreSound,
+                },
+            ],
         },
         {
             path: '/test/everything',
