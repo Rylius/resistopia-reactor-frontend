@@ -97,8 +97,8 @@ const config = {
         },
         heat: {
             statusRanges: [
-                {from: -Infinity, to: 1000, id: StatusType.Cold, color: 'blue',},
-                {from: 1000, to: 2000, id: StatusType.Normal, color: 'green'},
+                {from: -Infinity, to: 995, id: StatusType.Cold, color: 'blue',},
+                {from: 995, to: 2000, id: StatusType.Normal, color: 'green'},
                 {from: 2000, to: 4000, id: StatusType.Warning, color: 'orange'},
                 {from: 4000, to: Infinity, id: StatusType.Critical, color: 'red'},
             ],
