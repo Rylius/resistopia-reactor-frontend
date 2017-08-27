@@ -124,7 +124,8 @@
 
             <div class="block" style="width: 25%;">
                 <lazy>
-                    <power-chart :data="statistics.power.lastHour"></power-chart>
+                    <power-chart :production="statistics.power.lastHour"
+                                 :required="statistics.totalPowerRequired.lastHour"></power-chart>
                 </lazy>
             </div>
 

@@ -54,7 +54,8 @@
                 </temperature-display>
 
                 <lazy style="padding-left: 2em;">
-                    <power-chart :data="statistics.power.lastHour"
+                    <power-chart :production="statistics.power.lastHour"
+                                 :required="statistics.totalPowerRequired.lastHour"
                                  :options="{responsive: false, maintainAspectRatio: false}"
                                  :width="477" :height="300"></power-chart>
                 </lazy>

@@ -7,7 +7,10 @@
     export default Line.extend({
         name: 'power-chart',
         props: {
-            data: {
+            production: {
+                required: true,
+            },
+            required: {
                 required: true,
             },
             options: {
@@ -16,11 +19,14 @@
                 },
             },
         },
-        data() {
-            return {};
-        },
         watch: {
-            data: {
+            production: {
+                deep: true,
+                handler() {
+                    this._chart.update();
+                },
+            },
+            required: {
                 deep: true,
                 handler() {
                     this._chart.update();
@@ -31,16 +37,27 @@
             const vm = this;
 
             const data = {
-                labels: this.data.labels,
+                labels: this.production.labels,
                 datasets: [
                     {
                         label: this.$t('power.totalProduction'),
-                        data: this.data.values,
+                        data: this.production.values,
                         borderColor: '#f7b233', // @signal-orange-highlight
                         backgroundColor: '#f7b233', // @signal-orange-highlight
                         pointRadius: 0,
                         spanGaps: true,
                         lineTension: 0,
+                        xAxisID: 'time',
+                    },
+                    {
+                        label: this.$t('power.totalRequired'),
+                        data: this.required.values,
+                        borderColor: '#ff4629', // @signal-red-highlight
+                        backgroundColor: '#ff4629', // @signal-red-highlight
+                        pointRadius: 0,
+                        spanGaps: true,
+                        lineTension: 0,
+                        xAxisID: 'time',
                     },
                 ],
             };
@@ -53,6 +70,7 @@
                 scales: {
                     xAxes: [
                         {
+                            id: 'time',
                             type: 'time',
                             time: {
                                 unit: 'second',
@@ -92,7 +110,10 @@
                         },
                         label(item, data) {
                             const value = data.datasets[item.datasetIndex].data[item.index];
-                            return `${vm.$t('power.totalProduction')}: ${vm.$t('power.kilowattHours', {power: Math.round(value)})}`;
+
+                            const label = (item.datasetIndex > 0) ? vm.$t('power.totalRequired') : vm.$t('power.totalProduction');
+
+                            return `${label}: ${vm.$t('power.kilowattHours', {power: Math.round(value)})}`;
                         },
                     },
                 },

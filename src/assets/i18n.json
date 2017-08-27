@@ -91,6 +91,7 @@
         "power": {
             "name": "Strom",
             "totalProduction": "Produktion",
+            "totalRequired": "Benötigt",
             "fromBatteries": "Notstrom",
             "kilowattHours": "{power} kWh",
             "actual": "Ist",

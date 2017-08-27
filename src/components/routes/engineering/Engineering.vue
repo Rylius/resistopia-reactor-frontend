@@ -307,8 +307,8 @@
         return JSON.parse(localStorage.getItem(LOCAL_STORAGE_STATISTICS_KEY));
     }
 
-    function updateStatistic(statistic, value, maxValues = 60) {
-        statistic.labels.push(Date.now());
+    function updateStatistic(date, statistic, value, maxValues = 60) {
+        statistic.labels.push(date);
         statistic.values.push(value);
 
         if (statistic.values.length > maxValues) {
@@ -319,19 +319,20 @@
         }
     }
 
-    function updateStatisticsPerSecond(statistics, state) {
-        updateStatistic(statistics.reactorTemperature.lastTenMinutes, state['reactor'].heat.value, 600);
-        updateStatistic(statistics.power.lastMinute, state['power-distributor'].power.value);
+    function updateStatisticsPerSecond(date, statistics, state) {
+        updateStatistic(date, statistics.reactorTemperature.lastTenMinutes, state['reactor'].heat.value, 600);
+        updateStatistic(date, statistics.power.lastMinute, state['power-distributor'].power.value);
 
         saveStatistics(statistics);
     }
 
-    function updateStatisticsPerMinute(statistics, state) {
-        updateStatistic(statistics.reactorTemperature.lastHour, state['reactor'].heat.value);
-        updateStatistic(statistics.power.lastHour, state['power-distributor'].power.value);
-        updateStatistic(statistics.batteries.lastHour, state['power-capacitor'].power.value / state['power-capacitor'].capacity.value);
-        updateStatistic(statistics.waterTank.lastHour, state['water-tank'].water.value);
-        updateStatistic(statistics.basePowerRequired.lastHour, state['base'].powerRequired.value);
+    function updateStatisticsPerMinute(date, statistics, state) {
+        updateStatistic(date, statistics.reactorTemperature.lastHour, state['reactor'].heat.value);
+        updateStatistic(date, statistics.power.lastHour, state['power-distributor'].power.value);
+        updateStatistic(date, statistics.batteries.lastHour, state['power-capacitor'].power.value / state['power-capacitor'].capacity.value);
+        updateStatistic(date, statistics.waterTank.lastHour, state['water-tank'].water.value);
+        updateStatistic(date, statistics.basePowerRequired.lastHour, state['base'].powerRequired.value);
+        updateStatistic(date, statistics.totalPowerRequired.lastHour, state['base'].totalPowerRequired.value);
 
         saveStatistics(statistics);
     }
@@ -385,6 +386,12 @@
                         },
                     },
                     basePowerRequired: {
+                        lastHour: {
+                            labels: [],
+                            values: [],
+                        },
+                    },
+                    totalPowerRequired: {
                         lastHour: {
                             labels: [],
                             values: [],
@@ -533,9 +540,10 @@
 
                 this.simulation.state = Simulation.update(this.simulation.program, state);
 
-                updateStatisticsPerSecond(this.statistics, this.state.stateMachines);
+                const date = Date.now();
+                updateStatisticsPerSecond(date, this.statistics, this.state.stateMachines);
                 if (this.simulation.state.tick % 60 === 0) {
-                    updateStatisticsPerMinute(this.statistics, this.state.stateMachines);
+                    updateStatisticsPerMinute(date, this.statistics, this.state.stateMachines);
                 }
             }, 1000);
 
