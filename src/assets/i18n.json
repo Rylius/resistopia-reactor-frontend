@@ -183,7 +183,7 @@
             "enable": "Aktivieren",
             "disable": "Aufheben",
             "enabled": "Silent Law aktiv.",
-            "disabled": "Wenn Silent Law aktiv ist wird der Energieverbrauch der Basis auf Nötigste reduziert.",
+            "disabled": "Wenn Silent Law aktiv ist wird der Energieverbrauch der Basis auf das Nötigste reduziert.",
             "camouflageActive": "Der Tarnkern kann jetzt mit geringem Risiko abgeschaltet werden.",
             "lockdownActive": "Aktivierung hebt Lockdown auf."
         },

@@ -140,6 +140,7 @@ const config = {
                 {from: 180000, to: Infinity, id: StatusType.Normal, color: 'green'},
             ],
         },
+        capacity: {},
     },
     'energy-converter': {
         energyConversion: {
