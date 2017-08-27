@@ -54,15 +54,24 @@
             "base": {
                 "name": "Basis"
             },
+            "power-distributor": {
+                "name": "Energiewandler"
+            },
             "power-capacitor": {
                 "name": "Batterien",
+                "name1": "Batterien - Array #1",
+                "name2": "Batterien - Array #2",
+                "name3": "Batterien - Array #3",
+                "diesel1": "Diesel - Tank #1",
+                "diesel2": "Diesel - Tank #2",
                 "charging": "Laden mit {amount}"
             },
             "water-tank": {
                 "name": "Zisterne"
             },
             "water-treatment": {
-                "name": "Wasseraufbereitung"
+                "name": "Wasseraufbereitung",
+                "shortName": "Aufbereitung"
             },
             "pump-a": {
                 "name": "Pumpe A"
@@ -76,6 +85,7 @@
         },
         "temperature": {
             "name": "Temperatur",
+            "pluralName": "Temperaturenübersicht",
             "c": "{temp}°C"
         },
         "power": {

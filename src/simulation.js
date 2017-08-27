@@ -201,7 +201,7 @@ const config = {
                 return 43;
             },
             statusRanges: [
-                {from: 0, to: Infinity, id: StatusType.Normal, color: 'orange'},
+                {from: 0, to: Infinity, id: StatusType.Normal, color: 'green'},
             ],
         },
         difference: {},
