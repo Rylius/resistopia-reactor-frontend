@@ -196,6 +196,14 @@ const config = {
                 {from: 270000, to: 360000, id: StatusType.Normal, color: 'green'},
             ],
         },
+        heat: {
+            value() {
+                return 43;
+            },
+            statusRanges: [
+                {from: 0, to: Infinity, id: StatusType.Normal, color: 'orange'},
+            ],
+        },
         difference: {},
     },
     'reactor-cooling': {
@@ -314,6 +322,9 @@ const config = {
                 {from: 0.9, to: Infinity, id: StatusType.Normal, color: 'green'},
             ],
         },
+        powerConsumed: {
+            value: (config, state) => state['water-treatment']['requiredPower'] * state['water-treatment']['powerSatisfaction'],
+        },
         drinkingWater: {
             min: 0,
             max: 1000,
@@ -353,6 +364,18 @@ function createPumpConfig(id) {
                     id: StatusType.Normal,
                     color: 'green',
                 },
+            ],
+        },
+        powerConsumed: {
+            value: (config, state) => state[id]['powerRequired'] * state[id]['powerSatisfaction'],
+        },
+        powerSatisfaction: {
+            min: 0,
+            max: 1,
+            statusRanges: [
+                {from: -Infinity, to: 0.5, id: StatusType.Critical, color: 'red'},
+                {from: 0.5, to: 0.9, id: StatusType.Warning, color: 'orange'},
+                {from: 0.9, to: Infinity, id: StatusType.Normal, color: 'green'},
             ],
         },
     };
