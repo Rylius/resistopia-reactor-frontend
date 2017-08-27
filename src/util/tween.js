@@ -4,8 +4,8 @@ const INTERVAL = 100;
 
 let interval = null;
 
-export function startUpdate() {
-    interval = setInterval(() => TWEEN.update(), INTERVAL);
+export function startUpdate(interval = INTERVAL) {
+    interval = setInterval(() => TWEEN.update(), interval);
 }
 
 export function stopUpdate() {
