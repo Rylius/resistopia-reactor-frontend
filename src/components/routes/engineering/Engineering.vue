@@ -410,10 +410,10 @@
                         to: {name: 'engineering/water'},
                         text: AlertTab.Water,
                     },
-                    {
-                        to: {name: 'engineering/storage'},
-                        text: AlertTab.Storage,
-                    },
+//                    {
+//                        to: {name: 'engineering/storage'},
+//                        text: AlertTab.Storage,
+//                    },
                 ],
             };
         },
