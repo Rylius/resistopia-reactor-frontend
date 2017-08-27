@@ -1,30 +1,22 @@
 <template>
-    <section class="alien" :class="{'hide-cursor': production}">
-        <bokeh-lights style="position: absolute; top: 0; left: 0;" :enabled="effects.lights"></bokeh-lights>
+    <section class="alien" :class="{'hide-cursor': production}" @contextmenu.stop.prevent="prevent">
+        <input-circle :x="100" :y="416"
+                      @value="value => changeProperty('storage-matter', 'releasedMatterPerTick', value)"
+                      :value="stateMachines['storage-matter'].releasedMatterPerTick.normalizedValue"></input-circle>
 
-        <section class="energy-distributor">
-            <h1 v-if="!production">energy-distributor</h1>
-        </section>
-
-        <section class="energy-converter">
-            <h1 v-if="!production">energy-converter</h1>
-        </section>
+        <input-circle :x="584" :y="416"
+                      @value="value => changeProperty('storage-antimatter', 'releasedAntimatterPerTick', value)"
+                      :value="stateMachines['storage-antimatter'].releasedAntimatterPerTick.normalizedValue"></input-circle>
 
         <section class="energy-capacitor">
-            <energy-bar :elements="17"
+            <energy-bar :elements="32"
                         :value="stateMachines['energy-capacitor'].energy.value / stateMachines['energy-capacitor'].capacity.value">
             </energy-bar>
-        </section>
-
-        <section class="core">
-            <svg markup-inline src="../../../assets/svg/alien/core.svg"></svg>
         </section>
 
         <section class="offline-popup" v-if="!websocketOpen()">
             <!-- TODO -->
         </section>
-
-        <white-noise style="position: absolute; top: 0; left: 0;" :enabled="effects.whiteNoise"></white-noise>
     </section>
 </template>
 
@@ -55,7 +47,6 @@
 
         position: relative;
 
-        /*background: @alien-background2 linear-gradient(to bottom, @alien-background2, @alien-background, @alien-background2);*/
         background-image: url("../../../../static/img/alien_background.png");
 
         /* Disable text selection ('cause it looks bad) */
@@ -114,15 +105,13 @@
     import merge from 'deepmerge';
 
     import {createFrontendState} from '../../../simulation';
-    import createAlerts, {AlertTab, AlertType} from '../../../alerts';
 
     import {normalizedToRange} from '../../../util/math';
 
     import BackendWebsocketMixin from '../../../mixins/backend_websocket';
 
+    import InputCircle from './components/InputCircle.vue';
     import EnergyBar from './components/EnergyBar.vue';
-    import WhiteNoise from './components/WhiteNoise.vue';
-    import BokehLights from './components/BokehLights.vue';
 
     function mapNormalizedProperty(state, stateMachine, property, value) {
         const config = state.stateMachines[stateMachine][property];
@@ -147,10 +136,6 @@
                     state: Simulation.createInitialState(program),
                     stateChanges: {},
                     intervalId: null,
-                },
-                effects: {
-                    whiteNoise: false,
-                    lights: true,
                 },
             };
         },
@@ -182,6 +167,12 @@
 
                 this.simulation.stateChanges = {};
             },
+            prevent(event) {
+                if (this.production) {
+                    event.preventDefault();
+                    return false;
+                }
+            },
         },
         computed: {
             state() {
@@ -205,9 +196,9 @@
                 this.simulation.state = Simulation.update(this.simulation.program, state);
             }, 1000);
 
-            this.registerBackendWebsocketListener('state', data => this.simulation.state.stateMachines = data);
+            this.registerBackendWebsocketListener('state', data => this.simulation.state = data);
 
-            startUpdate();
+            startUpdate(10);
         },
         beforeDestroy() {
             if (this.simulation.intervalId) {
@@ -217,9 +208,8 @@
             stopUpdate();
         },
         components: {
+            InputCircle,
             EnergyBar,
-            WhiteNoise,
-            BokehLights,
         },
     };
 </script>

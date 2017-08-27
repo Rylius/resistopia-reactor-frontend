@@ -27,7 +27,7 @@
             border-radius: 1em;
 
             background: @element-color linear-gradient(to right, transparent, @element-color-highlight, transparent);
-            box-shadow: 0 0 10px 4px fade(@element-active-color, 50%);
+            box-shadow: 0 0 2px 3px fade(@element-active-color, 50%);
 
             .state {
                 width: 100%;
