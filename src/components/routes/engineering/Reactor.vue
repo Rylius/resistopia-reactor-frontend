@@ -16,14 +16,14 @@
                         <div class="block" style="width: 50%;">
                             <!-- FIXME Read max from config -->
                             {{ $t('reactor.input.matter', {amount: Math.round(state['storage-matter'].releasedMatterPerTick.value / 3)})}}
-                            <slider :vertical="false"
+                            <slider :vertical="false" v-if="!production"
                                     :value="state['storage-matter']['releasedMatterPerTick'].normalizedValue"
                                     @update="value => changeProperty('storage-matter', 'releasedMatterPerTick', value)"></slider>
                         </div>
                         <div class="block" style="width: 50%;">
                             <!-- FIXME Read max from config -->
                             {{ $t('reactor.input.antimatter', {amount: Math.round(state['storage-antimatter'].releasedAntimatterPerTick.value / 3)})}}
-                            <slider :vertical="false"
+                            <slider :vertical="false" v-if="!production"
                                     :value="state['storage-antimatter']['releasedAntimatterPerTick'].normalizedValue"
                                     @update="value => changeProperty('storage-antimatter', 'releasedAntimatterPerTick', value)"></slider>
                         </div>
@@ -122,6 +122,11 @@
         name: 'reactor',
         mixins: [EngineeringMixin],
         props: ['statistics'],
+        computed: {
+            production() {
+                return process.env.NODE_ENV !== 'development';
+            },
+        },
         components: {
             Lazy,
             TemperatureDisplay,
