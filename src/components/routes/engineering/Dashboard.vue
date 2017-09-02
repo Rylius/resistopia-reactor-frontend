@@ -210,16 +210,17 @@
                     <p v-if="!globalState.lockdown && !globalState.silentRunning">
                         {{ $t('camouflage.reducedSignatureRequired') }}
                     </p>
-                    <button :disabled="!globalState.lockdown && !globalState.silentRunning"
-                            @click="disableCamouflage">
-                        {{ $t('camouflage.disable') }}
-                    </button>
+                    <p v-else>
+                        <button class="core disable" @click="disableCamouflage">
+                            {{ $t('camouflage.disable') }}
+                        </button>
+                    </p>
                 </div>
                 <div v-else>
                     <p>
                         {{ $t('camouflage.disabled') }}
                     </p>
-                    <button @click="enableCamouflage">
+                    <button class="core enable" @click="enableCamouflage">
                         {{ $t('camouflage.enable') }}
                     </button>
                 </div>
@@ -269,6 +270,37 @@
 
             li + li {
                 margin-top: 0.5em;
+            }
+        }
+
+        button.core {
+            padding: 1em;
+
+            border-radius: 0.25em;
+
+            outline: none;
+            cursor: pointer;
+
+            &.disable {
+                background-color: @signal-red-highlight;
+                color: @text-color;
+                border: 3px solid darken(@signal-red, 10%);
+
+                &:hover {
+                    background-color: @signal-red;
+                    color: white;
+                }
+            }
+
+            &.enable {
+                background-color: @signal-green-highlight;
+                color: darken(@text-unused-color, 20%);
+                border: 3px solid darken(@signal-green, 10%);
+
+                &:hover {
+                    background-color: @signal-green;
+                    color: white;
+                }
             }
         }
     }
