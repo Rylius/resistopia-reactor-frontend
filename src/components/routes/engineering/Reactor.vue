@@ -45,19 +45,7 @@
                     <div class="block" style="width: 20%;">
                     </div>
                 </div>
-
-                <div class="block-group" style="height: 300px;">
-                    <div class="block" style="width: 50%;">
-                        <lazy>
-                            <reactor-temperature-chart :data="statistics.reactorTemperature.lastTenMinutes"
-                                                       :options="{responsive: false, maintainAspectRatio: false}"
-                                                       :width="497" :height="300">
-                            </reactor-temperature-chart>
-                        </lazy>
-                    </div>
-                </div>
             </div>
-
 
             <div class="block" style="width: 50%;">
                 <div class="block-group">
@@ -82,6 +70,27 @@
                                                    :label="$t('stateMachine.reactor-cooling.powerConsumption')">
                         </power-consumption-display>
                     </div>
+                </div>
+            </div>
+
+            <div class="block-group" style="height: 300px;">
+                <div class="block" style="width: 50%;">
+                    <lazy>
+                        <power-chart :production="statistics.power.lastMinute"
+                                     :required="statistics.totalPowerRequired.lastMinute"
+                                     :options="{responsive: false, maintainAspectRatio: false}"
+                                     :width="497" :height="300">
+                        </power-chart>
+                    </lazy>
+                </div>
+
+                <div class="block" style="width: 50%;">
+                    <lazy>
+                        <reactor-temperature-chart :data="statistics.reactorTemperature.lastTenMinutes"
+                                                   :options="{responsive: false, maintainAspectRatio: false}"
+                                                   :width="497" :height="300">
+                        </reactor-temperature-chart>
+                    </lazy>
                 </div>
             </div>
         </div>
@@ -114,6 +123,7 @@
     import Lazy from '../../Lazy';
     import TemperatureDisplay from '../../controls/engineering/TemperatureDisplay';
     import PowerConsumptionDisplay from '../../controls/engineering/PowerConsumptionDisplay';
+    import PowerChart from './components/PowerChart';
     import ReactorTemperatureChart from './components/ReactorTemperatureChart';
     import Camera from './components/Camera.vue';
     import Slider from '../../controls/Slider';
@@ -131,6 +141,7 @@
             Lazy,
             TemperatureDisplay,
             PowerConsumptionDisplay,
+            PowerChart,
             ReactorTemperatureChart,
             Camera,
             Slider,

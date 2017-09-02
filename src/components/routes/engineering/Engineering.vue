@@ -322,6 +322,7 @@
     function updateStatisticsPerSecond(date, statistics, state) {
         updateStatistic(date, statistics.reactorTemperature.lastTenMinutes, state['reactor'].heat.value, 600);
         updateStatistic(date, statistics.power.lastMinute, state['power-distributor'].power.value);
+        updateStatistic(date, statistics.totalPowerRequired.lastMinute, state['base'].totalPowerRequired.value);
 
         saveStatistics(statistics);
     }
@@ -393,6 +394,10 @@
                     },
                     totalPowerRequired: {
                         lastHour: {
+                            labels: [],
+                            values: [],
+                        },
+                        lastMinute: {
                             labels: [],
                             values: [],
                         },
