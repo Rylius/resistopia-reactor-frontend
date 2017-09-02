@@ -90,6 +90,7 @@
                         {
                             ticks: {
                                 min: 0,
+                                max: 250,
                                 stepSize: 50,
                                 fontColor: '#eee',
                                 callback(value) {
