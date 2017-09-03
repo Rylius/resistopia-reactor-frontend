@@ -16,7 +16,7 @@
                 <h3>
                     {{ $t('stateMachine.water-treatment.name') }}
                     <span class="status-indicator"
-                          :class="[state['water-treatment'].powerSatisfaction.value > 0 ? 'active' : 'disabled']"></span>
+                          :class="[(state['water-treatment'].requiredPower.value > 0 && state['water-treatment'].powerSatisfaction.value > 0) ? 'active' : 'disabled']"></span>
                 </h3>
                 <div class="block-group">
                     <div class="block" style="width: 80%;">
