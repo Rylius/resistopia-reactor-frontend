@@ -218,7 +218,7 @@
                 </div>
                 <div v-else>
                     <p>
-                        {{ $t('camouflage.disabled') }}
+                        <strong class="danger">{{ $t('camouflage.disabled') }}</strong>
                     </p>
                     <button class="core enable" @click="enableCamouflage">
                         {{ $t('camouflage.enable') }}
@@ -293,15 +293,19 @@
             }
 
             &.enable {
-                background-color: @signal-green-highlight;
+                background-color: @signal-orange-highlight;
                 color: darken(@text-unused-color, 20%);
-                border: 3px solid darken(@signal-green, 10%);
+                border: 3px solid darken(@signal-orange, 10%);
 
                 &:hover {
-                    background-color: @signal-green;
+                    background-color: @signal-orange;
                     color: white;
                 }
             }
+        }
+
+        .danger {
+            color: @signal-red-highlight;
         }
     }
 </style>
