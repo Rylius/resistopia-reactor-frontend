@@ -116,6 +116,7 @@
                 "enable": "Einschalten",
                 "disable": "Ausschalten",
                 "swapFilter": "Filter wechseln",
+                "swapFilterConfirm": "Filterwechsel bestätigen.\nNur benutzen, wenn ein Techniker im Feld war.",
                 "filterHealth": "Filterzustand: {health}%",
                 "production": "Zulauf: @:water.litersPerHour"
             },

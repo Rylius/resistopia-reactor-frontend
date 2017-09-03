@@ -105,10 +105,9 @@
                     <br>
                     {{ $t('water.pump.filterHealth', {health: Math.round((state[pump].filterHealth.value / state[pump].filterMaxHealth.value) * 100)})}}
                 </p>
-                <p>
-                    <!-- TODO Open confirm dialog -->
+                <p v-if="!state[pump].enabled.value">
                     <button :disabled="state[pump].filterHealth.value > state[pump].filterMaxHealth.value * 0.8"
-                            @click="() => changeProperty(pump, 'filterHealth', state[pump].filterMaxHealth.value)">
+                            @click="swapPumpFilter(pump)">
                         {{ $t('water.pump.swapFilter') }}
                     </button>
                 </p>
@@ -272,6 +271,18 @@
                     barLength: 100,
                 },
             };
+        },
+        methods: {
+            swapPumpFilter(pump) {
+                if (!!this.state[pump].enabled.value) {
+                    return;
+                }
+
+                // TODO Use a proper confirm dialog
+                if (confirm(this.$t('water.pump.swapFilterConfirm'))) {
+                    this.changeProperty(pump, 'filterHealth', state[pump].filterMaxHealth.value);
+                }
+            },
         },
         mounted() {
             document.querySelectorAll('.graph-container .graph-overlay').forEach(element => {
