@@ -464,7 +464,7 @@
             activeAlertsFor(tab) {
                 switch (tab) {
                     case 'dashboard':
-                        return [...this.reactorAlerts, ...this.powerAlerts, ...this.waterAlerts, ...this.storageAlerts];
+                        return this.activeAlerts;
                     case AlertTab.Reactor:
                         return this.reactorAlerts;
                     case AlertTab.Power:
