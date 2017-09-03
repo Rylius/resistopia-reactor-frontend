@@ -36,6 +36,25 @@ export default function createAlerts() {
             },
         },
 
+        // Misc
+
+        {
+            tab: null,
+            id: 'base-lockdown',
+            type: AlertType.Warning,
+            active(state, globals) {
+                return globals.lockdown;
+            },
+        },
+        {
+            tab: null,
+            id: 'base-silent-running',
+            type: AlertType.Warning,
+            active(state, globals) {
+                return globals.silentRunning;
+            },
+        },
+
         // Reactor
 
         {

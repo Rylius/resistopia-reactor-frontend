@@ -151,6 +151,8 @@
         },
         "alert": {
             "core-disabled": "Tarnkern abgeschaltet",
+            "base-lockdown": "Lockdown aktiv",
+            "base-silent-running": "Silent Law aktiv",
             "reactor-temperature-low": "Reaktortemperatur zu niedrig",
             "reactor-temperature-high": "Reaktortemperatur zu hoch",
             "reactor-temperature-critical": "Reaktortemperatur kritisch",
