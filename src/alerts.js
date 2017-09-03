@@ -25,6 +25,17 @@ export const AlertType = {
 export default function createAlerts() {
     return [
 
+        // Core
+
+        {
+            tab: null,
+            id: 'core-disabled',
+            type: AlertType.Critical,
+            active(state, globals) {
+                return !globals.camouflage;
+            },
+        },
+
         // Reactor
 
         {

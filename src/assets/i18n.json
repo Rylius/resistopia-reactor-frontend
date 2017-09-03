@@ -150,6 +150,7 @@
             }
         },
         "alert": {
+            "core-disabled": "Tarnkern abgeschaltet",
             "reactor-temperature-low": "Reaktortemperatur zu niedrig",
             "reactor-temperature-high": "Reaktortemperatur zu hoch",
             "reactor-temperature-critical": "Reaktortemperatur kritisch",
