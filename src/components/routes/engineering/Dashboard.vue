@@ -146,61 +146,76 @@
         <div class="warning-strip">&nbsp;</div>
 
         <div class="block-group">
-            <div class="block" style="width: 33%;">
-                <h2 class="critical">{{ $t('base.mode.lockdown') }}</h2>
+            <div class="block block-group" style="width: 70%;">
 
-                <div v-if="globalState.lockdown">
-                    <p>
-                        {{ $t('lockdown.enabled') }}
-                    </p>
-                    <p v-if="globalState.camouflage">
-                        {{ $t('lockdown.camouflageActive') }}
-                    </p>
-                    <button :disabled="!globalState.silentRunning && !globalState.camouflage" @click="disableLockdown">
-                        {{ $t('lockdown.disable') }}
-                    </button>
+                <div class="block" style="width: 33.33%">
+                    <h2 :class="{normal: !globalState.silentRunning && !globalState.lockdown}">
+                        {{ $t('base.mode.normal') }}
+                    </h2>
+
+                    <div v-if="!globalState.silentRunning && !globalState.lockdown">
+                        <p>
+                            {{ $t('base.normal.enabled') }}
+                        </p>
+                    </div>
+                    <div v-else>
+                        <p>
+                            {{ $t('base.normal.disabled') }}
+                        </p>
+                        <button class="warning" @click="disableSilentRunning(); disableLockdown()">
+                            {{ $t('base.normal.enable') }}
+                        </button>
+                    </div>
                 </div>
-                <div v-else>
-                    <p>
-                        {{ $t('lockdown.disabled') }}
-                    </p>
-                    <p v-if="globalState.silentRunning">
-                        {{ $t('lockdown.silentRunningActive') }}
-                    </p>
-                    <button @click="enableLockdown">
-                        {{ $t('lockdown.enable') }}
-                    </button>
+
+                <div class="block" style="width: 33.33%">
+                    <h2 :class="{warning: !!globalState.silentRunning}">
+                        {{ $t('base.mode.silentRunning') }}
+                    </h2>
+
+                    <div v-if="globalState.silentRunning">
+                        <p>
+                            {{ $t('silentRunning.enabled') }}
+                        </p>
+                        <p v-if="globalState.camouflage">
+                            {{ $t('silentRunning.camouflageActive') }}
+                        </p>
+                    </div>
+                    <div v-else>
+                        <p>
+                            {{ $t('silentRunning.disabled') }}
+                        </p>
+                        <button class="warning" @click="enableSilentRunning">
+                            {{ $t('silentRunning.enable') }}
+                        </button>
+                    </div>
+                </div>
+
+                <div class="block" style="width: 33.33%">
+                    <h2 :class="{critical: !!globalState.lockdown}">
+                        {{ $t('base.mode.lockdown') }}
+                    </h2>
+
+                    <div v-if="!!globalState.lockdown">
+                        <p>
+                            {{ $t('lockdown.enabled') }}
+                        </p>
+                        <p v-if="globalState.camouflage">
+                            {{ $t('lockdown.camouflageActive') }}
+                        </p>
+                    </div>
+                    <div v-else>
+                        <p>
+                            {{ $t('lockdown.disabled') }}
+                        </p>
+                        <button class="danger" @click="enableLockdown">
+                            {{ $t('lockdown.enable') }}
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div class="block" style="width: 33%;">
-                <h2 class="warning">{{ $t('base.mode.silentRunning') }}</h2>
-
-                <div v-if="globalState.silentRunning">
-                    <p>
-                        {{ $t('silentRunning.enabled') }}
-                    </p>
-                    <p v-if="globalState.camouflage">
-                        {{ $t('silentRunning.camouflageActive') }}
-                    </p>
-                    <button :disabled="!globalState.lockdown && !globalState.camouflage" @click="disableSilentRunning">
-                        {{ $t('silentRunning.disable') }}
-                    </button>
-                </div>
-                <div v-else>
-                    <p>
-                        {{ $t('silentRunning.disabled') }}
-                    </p>
-                    <p v-if="globalState.lockdown">
-                        {{ $t('silentRunning.lockdownActive') }}
-                    </p>
-                    <button @click="enableSilentRunning">
-                        {{ $t('silentRunning.enable') }}
-                    </button>
-                </div>
-            </div>
-
-            <div class="block" style="width: 33%;">
+            <div class="block" style="width: 30%;">
                 <h2 class="critical">{{ $t('stateMachine.core.name') }}</h2>
 
                 <div v-if="globalState.camouflage">
@@ -211,7 +226,7 @@
                         {{ $t('camouflage.reducedSignatureRequired') }}
                     </p>
                     <p v-else>
-                        <button class="core disable" @click="disableCamouflage">
+                        <button class="danger" @click="disableCamouflage">
                             {{ $t('camouflage.disable') }}
                         </button>
                     </p>
@@ -220,7 +235,7 @@
                     <p>
                         <strong class="danger">{{ $t('camouflage.disabled') }}</strong>
                     </p>
-                    <button class="core enable" @click="enableCamouflage">
+                    <button class="warning" @click="enableCamouflage">
                         {{ $t('camouflage.enable') }}
                     </button>
                 </div>
@@ -273,7 +288,7 @@
             }
         }
 
-        button.core {
+        button {
             padding: 1em;
 
             border-radius: 0.25em;
@@ -281,7 +296,7 @@
             outline: none;
             cursor: pointer;
 
-            &.disable {
+            &.danger {
                 background-color: @signal-red-highlight;
                 color: @text-color;
                 border: 3px solid darken(@signal-red, 10%);
@@ -292,13 +307,24 @@
                 }
             }
 
-            &.enable {
+            &.warning {
                 background-color: @signal-orange-highlight;
                 color: darken(@text-unused-color, 20%);
                 border: 3px solid darken(@signal-orange, 10%);
 
                 &:hover {
                     background-color: @signal-orange;
+                    color: white;
+                }
+            }
+
+            &.safe {
+                background-color: @signal-green-highlight;
+                color: darken(@text-unused-color, 20%);
+                border: 3px solid darken(@signal-green, 10%);
+
+                &:hover {
+                    background-color: @signal-green;
                     color: white;
                 }
             }

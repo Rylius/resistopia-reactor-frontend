@@ -32,8 +32,14 @@
         },
         "base": {
             "mode": {
+                "normal": "Normalbetrieb",
                 "lockdown": "Lockdown",
                 "silentRunning": "Silent Law"
+            },
+            "normal": {
+                "enabled": "Basis verbraucht die volle Menge Strom und Trinkwasser.",
+                "disabled": "Basis verbraucht die volle Menge Strom und Trinkwasser.",
+                "enable": "Aktivieren"
             },
             "currentPowerRequired": "Stromverbrauch",
             "currentDrinkingWaterRequired": "Trinkwasserbedarf",
