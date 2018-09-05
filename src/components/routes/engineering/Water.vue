@@ -280,7 +280,7 @@
 
                 // TODO Use a proper confirm dialog
                 if (confirm(this.$t('water.pump.swapFilterConfirm'))) {
-                    this.changeProperty(pump, 'filterHealth', state[pump].filterMaxHealth.value);
+                    this.changeProperty(pump, 'filterHealth', this.state[pump].filterMaxHealth.value);
                 }
             },
         },
