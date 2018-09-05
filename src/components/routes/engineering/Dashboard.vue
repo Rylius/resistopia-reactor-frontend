@@ -162,7 +162,7 @@
                         <p>
                             {{ $t('base.normal.disabled') }}
                         </p>
-                        <button class="warning" @click="disableSilentRunning(); disableLockdown()">
+                        <button class="warning" @click="disableSilentRunning(); disableLockdown(); enableCamouflage()">
                             {{ $t('base.normal.enable') }}
                         </button>
                     </div>
