@@ -2,7 +2,6 @@ var merge = require('webpack-merge');
 var prodEnv = require('./prod.env');
 
 module.exports = merge(prodEnv, {
-    // TODO Get backend server IP
-    RESISTOPIA_BACKEND_API: '"https://reactor-backend-server/api/v1"',
-    RESISTOPIA_BACKEND_WS: '"ws://reactor-backend-server/ws/frontend"',
+    RESISTOPIA_BACKEND_API: '"http://192.168.2.20:8081/api/v1"',
+    RESISTOPIA_BACKEND_WS: '"ws://192.168.2.20:8081/ws/frontend"',
 });
