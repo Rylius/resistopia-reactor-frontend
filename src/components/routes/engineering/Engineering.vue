@@ -261,7 +261,7 @@
     import {createFrontendState} from '../../../simulation';
     import createAlerts, {AlertTab, AlertType} from '../../../alerts';
 
-    import {normalizedToRange} from '../../../util/math';
+    import {clamp, normalizedToRange} from '../../../util/math';
 
     import BackendWebsocketMixin from '../../../mixins/backend_websocket';
 
@@ -427,6 +427,102 @@
 //                        text: AlertTab.Storage,
 //                    },
                 ],
+                shortcuts: [
+                    {
+                        key: 'f',
+                        action() {
+                            this.changeProperty('reactor-cooling', 'cooling', clamp(this.state.stateMachines['reactor-cooling'].cooling.normalizedValue - 0.05, 0, 1));
+                        },
+                    },
+                    {
+                        key: 'd',
+                        action() {
+                            this.changeProperty('reactor-cooling', 'cooling', clamp(this.state.stateMachines['reactor-cooling'].cooling.normalizedValue + 0.05, 0, 1));
+                        },
+                    },
+                    {
+                        key: 'k',
+                        action() {
+                            this.changeProperty('storage-matter', 'releasedMatterPerTick', clamp(this.state.stateMachines['storage-matter'].releasedMatterPerTick.normalizedValue - 0.05, 0, 1));
+                        },
+                    },
+                    {
+                        key: 'j',
+                        action() {
+                            this.changeProperty('storage-matter', 'releasedMatterPerTick', clamp(this.state.stateMachines['storage-matter'].releasedMatterPerTick.normalizedValue + 0.05, 0, 1));
+                        },
+                    },
+                    {
+                        key: 'l',
+                        action() {
+                            this.changeProperty('storage-antimatter', 'releasedAntimatterPerTick', clamp(this.state.stateMachines['storage-antimatter'].releasedAntimatterPerTick.normalizedValue - 0.05, 0, 1));
+                        },
+                    },
+                    {
+                        key: 'u',
+                        action() {
+                            this.changeProperty('storage-antimatter', 'releasedAntimatterPerTick', clamp(this.state.stateMachines['storage-antimatter'].releasedAntimatterPerTick.normalizedValue + 0.05, 0, 1));
+                        },
+                    },
+                    {
+                        key: 'p',
+                        action() {
+                            if (!this.state.globals.silentRunning && !this.state.globals.lockdown) {
+                                this.changeGlobal({camouflage: 1});
+                                return;
+                            }
+
+                            this.changeGlobal({camouflage: !this.state.globals.camouflage});
+                        },
+                    },
+                    {
+                        key: 'e',
+                        action() {
+                            this.changeProperty('pump-a', 'enabled', +!this.state.stateMachines['pump-a'].enabled.value);
+                        },
+                    },
+                    {
+                        key: 'u',
+                        action() {
+                            this.changeProperty('pump-b', 'enabled', +!this.state.stateMachines['pump-b'].enabled.value);
+                        },
+                    },
+                    {
+                        key: 'r',
+                        action() {
+                            this.changeProperty('pump-c', 'enabled', +!this.state.stateMachines['pump-c'].enabled.value);
+                        },
+                    },
+                ],
+                shortcutToggles: [
+//                    {
+//                        key: '1',
+//                        down() {
+//                            this.changeProperty('pump-a', 'enabled', 1);
+//                        },
+//                        up() {
+//                            this.changeProperty('pump-a', 'enabled', 0);
+//                        },
+//                    },
+//                    {
+//                        key: '2',
+//                        down() {
+//                            this.changeProperty('pump-b', 'enabled', 1);
+//                        },
+//                        up() {
+//                            this.changeProperty('pump-b', 'enabled', 0);
+//                        },
+//                    },
+//                    {
+//                        key: '3',
+//                        down() {
+//                            this.changeProperty('pump-c', 'enabled', 1);
+//                        },
+//                        up() {
+//                            this.changeProperty('pump-c', 'enabled', 0);
+//                        },
+//                    },
+                ],
             };
         },
         methods: {
@@ -498,6 +594,19 @@
             },
             hideAlerts(tab) {
                 this.shownAlertsTab = null;
+            },
+            onKeyDown(ev) {
+                this.shortcuts.filter(shortcut => shortcut.key === ev.key).forEach(shortcut => {
+                    shortcut.action.bind(this).call();
+                });
+                this.shortcutToggles.filter(shortcut => shortcut.key === ev.key).forEach(shortcut => {
+                    shortcut.down.bind(this).call();
+                });
+            },
+            onKeyUp(ev) {
+                this.shortcutToggles.filter(shortcut => shortcut.key === ev.key).forEach(shortcut => {
+                    shortcut.up.bind(this).call();
+                });
             },
         },
         computed: {
@@ -572,6 +681,9 @@
             }
 
             this.registerBackendWebsocketListener('state', data => this.simulation.state = data);
+
+            window.onkeydown = this.onKeyDown.bind(this);
+            window.onkeyup = this.onKeyUp.bind(this);
 
             startUpdate();
         },
